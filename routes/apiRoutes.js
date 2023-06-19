@@ -8,9 +8,6 @@ apiRouter.get("/recoverpassword", apiController.recoverPassword);// recover pass
 apiRouter.get("/restorepassword", apiController.restorePassword);// restorepassword (user and admin)
 
 //POSTs
-apiRouter.post("/user", apiController.userSignUp);// signup (user)
-apiRouter.post("/login", apiController.userLogin);//login (user and admin)
-apiRouter.post("/logout", apiController.logOut);//logout (user and admin)
 apiRouter.post("/project", apiController.createNewProject);//create new project (admin)
 apiRouter.post("/favs", apiController.saveFav);//save porject to fav list (user)
 

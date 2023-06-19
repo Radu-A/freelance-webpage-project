@@ -14,18 +14,6 @@ const restorePassword = () => {
 
 
 //POSTs
-// signup (user)
-const userSignUp = () => {
-    
-};
-//login (user and admin)
-const userLogin = () => {
-
-}
-//logout (user and admin)
-const logOut = () => {
-
-}
 //create new project (admin)
 const createNewProject = () => {
 
@@ -65,9 +53,6 @@ module.exports = {
     getSearchResults,
     recoverPassword,
     restorePassword,
-    userSignUp,
-    userLogin,
-    logOut,
     createNewProject,
     saveFav,
     editUserProfile,
