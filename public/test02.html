@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>FWP LOGIN</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id" content="TU_CLIENT_ID_DE_GOOGLE" />
+  </head>
+  <body>
+    <form>
+      <h2>FWP Login</h2>
+
+      <article class="g-signin2" data-onsuccess="onSignIn"></article>
+
+      <article class="form-group">
+        <label for="email">Mail:</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="email"
+          required
+        />
+      </article>
+
+      <article class="form-group">
+        <label for="password">Pass:</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder=" password"
+          required
+        />
+      </article>
+
+      <button type="submit">Submit</button>
+    </form>
+
+    <script src="script.js"></script>
+  </body>
+</html>

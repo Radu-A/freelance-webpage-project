@@ -1,3 +1,24 @@
-body
-    h1 Sign in 
-    a(class="button google" href="/auth/google") Sign in with Google
+doctype html
+html(lang="en")
+    include head.pug
+    body
+        header
+            include header.pug
+        main
+
+            a(class="button google" href="/api/login/federated/google") Sign in with Google
+        
+            form
+            h2 Login
+        
+            div.form-group
+                input(type="email", id="email", name="email", placeholder="mail" required)
+
+            div.form-group
+                input(type="password", id="password", name="password", placeholder="password" required)
+
+            button#loginSubmit(type="submit") Submit
+
+        script(src="script.js")
+
+        footer
