@@ -1,31 +1,24 @@
 doctype html
 html(lang="en")
-head
-    title fwp login
-    meta(name="viewport", content="width=device-width, initial-scale=1")
-    link(rel="stylesheet", type="text/css", href="styles.css")
-    script(src="https://apis.google.com/js/platform.js", async, defer)
-    meta(name="google-signin-client_id", content="TU_CLIENT_ID_DE_GOOGLE")
-body
-    header
-        include header.pug
-    main
+    include head.pug
+    body
+        header
+            include header.pug
+        main
 
-        a(class="button google" href="/api/login/federated/google") Sign in with Google
+            a(class="button google" href="/api/login/federated/google") Sign in with Google
         
-        form
-        h2 Login
+            form
+            h2 Login
         
-        div.form-group
-            label(for="email") Mail:
-            input(type="email", id="email", name="email", placeholder="mail" required)
+            div.form-group
+                input(type="email", id="email", name="email", placeholder="mail" required)
 
-        div.form-group
-            label(for="password") Pass:
-            input(type="password", id="password", name="password", placeholder="password" required)
+            div.form-group
+                input(type="password", id="password", name="password", placeholder="password" required)
 
-        button(type="submit") Submit
+            button#loginSubmit(type="submit") Submit
 
-    script(src="script.js")
+        script(src="script.js")
 
-    footer
+        footer
