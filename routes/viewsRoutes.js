@@ -4,7 +4,7 @@ const viewsController = require ('../controllers/viewsController');
 
 //GETs
 // Users and admin
-viewsRouter.get("/user", viewsController.getIndexView);
+viewsRouter.get("/", viewsController.getIndexView);
 viewsRouter.get("/signup", viewsController.getSignUpView);
 viewsRouter.get("/login", viewsController.getLoginView);
 viewsRouter.get("/favs", viewsController.getFavsView);
