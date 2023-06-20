@@ -4,6 +4,7 @@ const indexController = require ('../controllers/indexController');
 
 //GETs
 // Users and admin
+indexRouter.get("/", indexController.getIndexView);
 indexRouter.get("/user", indexController.getIndexView);
 indexRouter.get("/signup", indexController.getSignUpView);
 indexRouter.get("/login", indexController.getLoginView);

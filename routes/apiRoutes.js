@@ -24,4 +24,4 @@ apiRouter.delete("/project", apiController.deleteProject); // Delete a project f
 apiRouter.delete("/favs", apiController.deleteFavorite); // Delete user's favorite project from DDBB (user)
 
 
-module.exports = indexRouter;
+module.exports = apiRouter;

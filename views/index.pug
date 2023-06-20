@@ -1,17 +1,17 @@
 doctype html
 html(lang='en')
- head
-   title fwp home
- body
+  head
+    title fwp home
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    link(rel="stylesheet", type="text/css", href="styles.css")
+    script(src="https://apis.google.com/js/platform.js", async, defer)
+  body
     header
       include header.pug
     main
-        h1 fwp home 
-        section.search
-	        input#search(
-    	      type='text'
-    	      name='search'
-    	      placeholder='Type a tag you wanna search'
-        	)
-        section.showSearchResults
+      h1 fwp home 
+      section.search
+        input(type='text', name='search', placeholder='Type your search')
+      section.showSearchResults
     footer
+    script(src="script.js")
