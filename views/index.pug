@@ -1,17 +1,14 @@
 doctype html
 html(lang='en')
- head
-   title fwp home
- body
+  include head.pug
+    title fwp index
+  body
     header
       include header.pug
     main
-        h1 fwp home 
-        section.search
-	        input#search(
-    	      type='text'
-    	      name='search'
-    	      placeholder='Type a tag you wanna search'
-        	)
-        section.showSearchResults
+      h1 fwp home 
+      section.search
+        input(type='text', name='search', placeholder='Type your search')
+      section.showSearchResults
     footer
+    script(src="script.js")

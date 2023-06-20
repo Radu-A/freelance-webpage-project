@@ -1,7 +1,7 @@
 const express = require('express');
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
-const logger = require("./utils/morgan");
+//const logger = require("./utils/morgan");
 const session = require("express-session");
 require("./utils/auth.js");
 
@@ -34,7 +34,7 @@ app.set('views', './views');
 // Middlewares
 app.use(express.json()); // Habilitar tipo de dato a recibir
 app.use(express.urlencoded({ extended: true }));
-app.use(logger(':method :host :status :param[id] - :response-time ms :body'));
+//app.use(logger(':method :host :status :param[id] - :response-time ms :body'));
 
 //Public folder
 app.use(express.static('public'));
