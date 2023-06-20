@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "jest",
+    "scr": "node scraper/indexScraper.js",
     "start": "node app.js",
     "dev": "nodemon app.js"
   },
@@ -15,7 +16,8 @@
     "passport": "^0.6.0",
     "passport-google-oidc": "^0.1.0",
     "pg": "^8.11.0",
-    "pug": "^3.0.2"
+    "pug": "^3.0.2",
+    "puppeteer": "^20.7.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.22",
