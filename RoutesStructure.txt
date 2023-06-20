@@ -1,0 +1,72 @@
+
+----- Estructura 1 -----
+
+usersApiRoutes > usersApiController > users (model) > bd_sql
+projectsApiRoutes > projectsApiController > projects (model) > bd_mongo
+viewsRoutes > viewsController
+
+
+
+
+----- Estructura 2 -----
+
+app.js
+
+    app.use("/", projectsRoutes);
+    app.use("/", projectsApiRoutes);
+    app.use("/", userRoutes);
+    app.use("/", userApiRoutes);
+    app.use("/", authRoutes);
+
+/routes
+
+    projectsRoutes (log in not needed)
+        [GET] / - Vista de inicio de la app
+        [GET] /signup - Vista de registro de usuario
+    projectsApiRoutes (log in not needed)
+        [POST] /api/login - Hacer login en la aplicación
+        [GET] /api/search - Listado de resultados de la búsqueda
+        [GET] /recoverpassword - Recuperar password
+        [GET] /restorepassword - Cambiar password
+
+    userRoutes
+        [GET] /login - Vista de ingreso de usuario ya registrado
+        [GET] /favorites - Vista del usuario con sus favoritos
+        [GET] /profile - Vista del usuario o el administrador con sus datos de perfil
+        (admin)
+        [GET] /users - Vista del administrador con el listado de usuario registrados (admin)
+        [GET] /dashboard - Vista del administrador para crear y visualizar sus anuncios (admin)
+    userApiRoutes
+        [POST] /api/user - Registrarse en la aplicación
+        [PUT] /api/user - Editar datos del perfil del usuario o administrador
+        [POST] /api/favorites - Guardar favorito del usuario
+        [DELETE] /api/favorites - Borrar favorito del usuario
+        [POST] /api/logout - Salir
+        (admin)
+        [DELETE] /api/user - Borrar un usuario de la base de datos (admin)
+        [POST] /api/ads - Crear nueva oferta de trabajo/subvención/evento (admin)
+        [PUT] /api/ads - Editar datos de una oferta de trabajo/subvención/evento (admin)
+        [DELETE] /api/ads - Borrar una oferta de trabajo/subvención/evento de la base de datos (admin)
+
+    authRoutes (Passport+Google)
+
+
+/controllers
+
+    projectsController (log in not needed)
+    projectsApiController (log in not needed)
+
+    userController (user or admin)
+    userApiController (user or admin)
+
+    authController (Passport+Google)
+
+/models
+
+    projects (Schema + Model) (NoSQL)
+
+    userQueries (SQL)
+    user (use queries)
+    
+
+

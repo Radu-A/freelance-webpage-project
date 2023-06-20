@@ -19,7 +19,8 @@ const getSignUpView = (req,res) => {
 const getLoginView = (req,res) => {
     try {
         // check if user is logged in 
-        res.render("login.pug");
+        // Authentification needs to be added to "login.pug" : <h1>Sign in</h1> <a class="button google" href="/api/login/federated/google">Sign in with Google</a>
+        res.render("login.pug"); 
     } catch (error) {
         console.log(`Error: ${error}`);
     }
@@ -43,7 +44,7 @@ const getProfileView = (req,res) => {
     }
 };
 /* 
-const getUsers = () => {
+const getUsersView = () => {
     //ADMIN exclusive
     try {
         // check if ADMIN is logged in
@@ -53,7 +54,7 @@ const getUsers = () => {
     }
 };
 
-const getDashboard = () => {
+const getDashboardView = () => {
     //ADMIN exclusive
     try {
         // check if ADMIN is logged in
@@ -70,6 +71,6 @@ module.exports = {
     getLoginView,
     getFavsView,
     getProfileView/* ,
-    getUsers,
-    getDashboard */
+    getUsersView,
+    getDashboardView */
 }
