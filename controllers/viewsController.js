@@ -44,7 +44,7 @@ const getProfileView = (req,res) => {
     }
 };
 /* 
-const getUsers = () => {
+const getUsersView = () => {
     //ADMIN exclusive
     try {
         // check if ADMIN is logged in
@@ -54,7 +54,7 @@ const getUsers = () => {
     }
 };
 
-const getDashboard = () => {
+const getDashboardView = () => {
     //ADMIN exclusive
     try {
         // check if ADMIN is logged in
@@ -71,6 +71,6 @@ module.exports = {
     getLoginView,
     getFavsView,
     getProfileView/* ,
-    getUsers,
-    getDashboard */
+    getUsersView,
+    getDashboardView */
 }

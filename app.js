@@ -22,8 +22,9 @@ app.use(passport.session());
 require("./utils/db_mongo");
 
 // Módulos de Rutas
-const indexRoutes = require('./routes/indexRoutes');
-const apiRoutes = require('./routes/apiRoutes');
+const viewsRoutes = require('./routes/viewsRoutes');
+const projectsApiRoutes = require('./routes/projectsApiRoutes');
+const usersApiRoutes = require('./routes/usersApiRoutes');
 const authRoutes = require('./routes/authRoutes');
 
 // Template engine
@@ -39,9 +40,11 @@ app.use(logger(':method :host :status :param[id] - :response-time ms :body'));
 app.use(express.static('public'));
 
 //Rutas 
-app.use('/',indexRoutes); // Vista de inicio de la app
-app.use('/api/',apiRoutes);
-app.use('/',authRoutes);
+app.use('/',viewsRoutes); // App views
+app.use('/api/projects',projectsApiRoutes); // Project routes
+app.use('/api/users',usersApiRoutes); // Users routes
+
+app.use('/',authRoutes); // Passport + Google routes
 
 
 const server = app.listen(port, () => {
