@@ -7,8 +7,11 @@ html(lang='en')
       include header.pug
     main
       h1 fwp home 
-      section.search
-        input(type='text', name='search', placeholder='Type your search')
-      section.showSearchResults
+      section.search-form
+        //- form(action='/api/projects/search', method='get')
+        form#search-projects(action='/api/projects/search', method='get')
+          input#keyword(type='text', name='keyword', placeholder='Get all projects')
+          button(type='submit') Search
+      section.search-results
     footer
     script(src="script.js")
