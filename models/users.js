@@ -93,7 +93,7 @@ const deleteUser = async(id_user) => {
 
 // createUser('admin@gmail.com', 'abc123', 'admin', true, 'john', 'doe');
 // createUser('user@gmail.com', 'abc123', 'user', false, 'jane', 'dee');
-// getAllUsers()
+getAllUsers()
 // getUsersById(6)
 // updateUser(6, 'jane@gmail.com', 'abc123', false, 'jane', 'dee');
 // deleteUser(4)

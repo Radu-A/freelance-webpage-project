@@ -9,8 +9,9 @@ viewsRouter.get("/signup", viewsController.getSignUpView);
 viewsRouter.get("/login", viewsController.getLoginView);
 viewsRouter.get("/favs", viewsController.getFavsView);
 viewsRouter.get("/profile", viewsController.getProfileView);
+
 // Admin
-/* indexRouter.get("/users", viewsController.getUsersView);
-indexRouter.get("/dashboard", viewsController.getDashboardView); */
+viewsRouter.get("/users", viewsController.getUsersView);
+viewsRouter.get("/dashboard", viewsController.getDashboardView);
 
 module.exports = viewsRouter;
