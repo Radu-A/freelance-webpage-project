@@ -108,4 +108,4 @@ const scraperObjectUpwork = {
 	
 }
 
-module.exports = scraperObjectUpwork;
+module.exports = scraperObjectFreelancer;

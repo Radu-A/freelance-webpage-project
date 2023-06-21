@@ -8,7 +8,9 @@ html(lang='en')
     main
       h1 fwp home 
       section.search
-        input(type='text', name='search', placeholder='Type your search')
+        form(action="get")
+          input(type='text', name='search', placeholder='Type your search')
+          input(type='text', name='search', placeholder='Type your search')
       section.showSearchResults
     footer
     script(src="script.js")

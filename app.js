@@ -46,7 +46,6 @@ app.use('/api/users',usersApiRoutes); // Users routes
 
 app.use('/',authRoutes); // Passport + Google routes
 
-
 const server = app.listen(port, () => {
     console.log(`****Conected in port ${port}`);
 })
