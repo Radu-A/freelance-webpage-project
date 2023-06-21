@@ -43,8 +43,8 @@ const getProfileView = (req,res) => {
         console.log(`Error: ${error}`);
     }
 };
-/* 
-const getUsersView = () => {
+ 
+const getUsersView = (req,res) => {
     //ADMIN exclusive
     try {
         // check if ADMIN is logged in
@@ -54,7 +54,7 @@ const getUsersView = () => {
     }
 };
 
-const getDashboardView = () => {
+const getDashboardView = (req,res) => {
     //ADMIN exclusive
     try {
         // check if ADMIN is logged in
@@ -64,13 +64,13 @@ const getDashboardView = () => {
     }
 };
 
- */
+
 module.exports = {
     getIndexView,
     getSignUpView,
     getLoginView,
     getFavsView,
-    getProfileView/* ,
+    getProfileView ,
     getUsersView,
-    getDashboardView */
+    getDashboardView
 }

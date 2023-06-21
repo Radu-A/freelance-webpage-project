@@ -1,0 +1,25 @@
+doctype html
+html(lang="en")
+    include head.pug
+        title fwp signup
+    body
+        header
+            include header.pug
+        main
+
+            a(class="button google" href="/api/login/federated/google") Sign in with Google
+        
+            form
+            h2 Signup
+        
+            div.form-group
+                input(type="email", id="email", name="email", placeholder="mail" required)
+
+            div.form-group
+                input(type="password", id="password", name="password", placeholder="password" required)
+
+            button#loginSubmit(type="submit") Submit
+
+        script(src="script.js")
+
+        footer
