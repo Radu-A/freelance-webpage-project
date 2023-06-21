@@ -1,49 +1,49 @@
-const Project = require('../models/projects'); // Models from Mongo(Atlas);
+const mongoose = require('mongoose');
+const { ObjectId } = require('mongodb');
+const Project = require('../models/projects');
+require('../utils/db_mongo');
 
 //GETs
-// search results list (user and admin)
-//example: http://localhost:3000/api/projects/search?title=hello&budget=900&date=1234
-//Query is supposed to be added to the endpoint from the search "form";
-const getSearchResults = async (req,res) => {
-    let query = Object.keys(req.query); 
-    let value = Object.values(req.query); 
 
-    if(query) {
-        try {
-            let projects = await Project.find({[query]:value},'-_id -__v'); //[{}]
-            console.log(projects);
-    
-            if(projects[0]){
-                res.status(200).json(projects); // Respuesta de la API para 1 producto {}
-            } else {
-                console.log("We could not find any project by those search values.")
-                res.status(200).json({}); // Respuesta de la API cuando no hay productos
-            }
-        } catch (error) {
-            console.log(`ERROR: ${error.stack}`);
-                res.status(400).json({
-                    msj: `ERROR: ${error}`
-            });
-        };
+const getProjects = async (req, res) => {
+    if (req.query) {
+        getProjectsByKeyword(req, res);
     } else {
-        try {
-            let projects = await Project.find({},'-_id -__v'); //[{}]
-            console.log(projects);
-    
-            if(projects[0]){
-                res.status(200).json(projects); // Respuesta de la API para 1 producto {}
-            } else {
-                console.log("We could not find any project.")
-                res.status(200).json({}); // Respuesta de la API cuando no hay productos
-            }
-        } catch (error) {
-            console.log(`ERROR: ${error.stack}`);
-                res.status(400).json({
-                    msj: `ERROR: ${error}`
-            });
-        };
-    };
+        getAllProjects(req, res);
+    }
+}
+
+// search results list (user and admin
+const getAllProjects = async (req, res) => {
+    try {
+        const data = await Project.find({});
+        res.status(200).json(data);
+        console.log(data);
+    } catch (error) {
+        res.status(404).json({
+            "Error": `${error}`
+        })
+        console.log(error);
+    }
 };
+// Get project by matching a word in the title
+const getProjectsByKeyword = async (req, res) => {
+    try {
+        console.log(req.query.keyword)
+        // It shoud be able to search by isolated word
+        const re = new RegExp(req.query.keyword, 'i');
+        // const re = new RegExp(`\b(?:${req.params.keyword})\b`, "i");
+        const data = await Project.find( { $or: [ { title: re }, { description: re } ] } )
+        res.status(200).json(data);
+        console.log(data);
+    } catch (error) {
+        res.status(404).json({
+            "Error": `${error}`
+        })
+        console.log(error);
+    }
+}
+
 
 //POSTs
 //create new project (admin)
@@ -81,10 +81,8 @@ const editProject = () => {
 const deleteProject = () => {
 };
 
-
-
 module.exports = {
-    getSearchResults,
+    getProjects,
     createNewProject,
     editProject,
     deleteProject
