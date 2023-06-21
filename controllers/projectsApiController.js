@@ -4,8 +4,17 @@ const Project = require('../models/projects');
 require('../utils/db_mongo');
 
 //GETs
-// search results list (user and admin)
-const getProyects = async (req, res) => {
+
+const getProjects = async (req, res) => {
+    if (req.query) {
+        getProjectsByKeyword(req, res);
+    } else {
+        getAllProjects(req, res);
+    }
+}
+
+// search results list (user and admin
+const getAllProjects = async (req, res) => {
     try {
         const data = await Project.find({});
         res.status(200).json(data);
@@ -18,11 +27,11 @@ const getProyects = async (req, res) => {
     }
 };
 // Get project by matching a word in the title
-const getProyectsByKeyword = async (req, res) => {
+const getProjectsByKeyword = async (req, res) => {
     try {
-        console.log(req.params.keyword)
+        console.log(req.query.keyword)
         // It shoud be able to search by isolated word
-        const re = new RegExp(req.params.keyword, 'i');
+        const re = new RegExp(req.query.keyword, 'i');
         // const re = new RegExp(`\b(?:${req.params.keyword})\b`, "i");
         const data = await Project.find( { $or: [ { title: re }, { description: re } ] } )
         res.status(200).json(data);
@@ -53,8 +62,7 @@ const deleteProject = () => {
 };
 
 module.exports = {
-    getProyects,
-    getProyectsByKeyword,
+    getProjects,
     createNewProject,
     editProject,
     deleteProject
