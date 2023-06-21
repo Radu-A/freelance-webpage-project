@@ -1,3 +1,5 @@
+const users = require("../models/users");
+
 // GETs
 const getIndexView = (req,res) => {
     try {
@@ -35,10 +37,16 @@ const getFavsView = (req,res) => {
     }
 };
 
-const getProfileView = (req,res) => {
+const getProfileView = async (req,res) => {
+    let data;
     try {
+        // Some function that gets User id when logged in (user_id)
+        let user_id = 7; // Depends on login
+        console.log("profile.pug - rendered")
         // check if user is logged in 
-        res.render("profile.pug");
+        data = await users.getUsersById(user_id);
+
+        res.render("profile.pug",{"userInfo": data[0]});
     } catch (error) {
         console.log(`Error: ${error}`);
     }

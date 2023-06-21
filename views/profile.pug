@@ -7,6 +7,14 @@ html(lang='en')
         include headerUser.pug
     main
         h1 fwp profile
-        section.showFavs
+        section.profile_info
+          p #{userInfo.id_user}
+          p #{userInfo.email}
+          p #{userInfo.user_name}
+          p #{userInfo.firstname}
+          p #{userInfo.surename}
+          button#editUserData Edit User Data
+        section#formUserData
 	        
     footer
+    script(src="script.js")

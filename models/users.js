@@ -25,7 +25,7 @@ const getUsersById = async (id_user) => {
         client = await pool.connect();
         let data = await client.query(usersQueries.getUserById, [id_user]);
         result = data.rows;
-        console.log(result);
+        //console.log(result);
     } catch(err) {
         console.log(err);
         throw err;
@@ -97,6 +97,7 @@ getAllUsers()
 // getUsersById(6)
 // updateUser(6, 'jane@gmail.com', 'abc123', false, 'jane', 'dee');
 // deleteUser(4)
+console.log("SQL DDBB Conected")
 
 module.exports = {
     getAllUsers,

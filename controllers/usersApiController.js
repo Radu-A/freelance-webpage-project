@@ -1,3 +1,5 @@
+const users = require("../models/users");
+
 //GETs
 // recover password (user and admin)
 const recoverPassword = () => {
@@ -16,7 +18,20 @@ const saveFav = () => {
 
 //PUTs
 // Edit user profile (user and admin)
-const editUserProfile = () => {
+const editUserProfile = async (req,res) => {
+    let userInfo = req.body; // {user_id, name, surname, ...}
+    try {
+        console.log(userInfo)
+        // "user_id" goes in "userInfo" to search the user row in the DDBB
+        let editedInfo = await users.updateUser(userInfo);
+
+        res.status(200).json({
+            "items_updated": editedInfo,
+            "msj": "Items edited successfully"
+        });
+    } catch (error) {
+        console.log(`Error: ${error}`);
+    }
 }; 
 
 //DELETEs
