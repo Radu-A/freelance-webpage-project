@@ -6,6 +6,7 @@ const usersApiController = require ('../controllers/usersApiController');
 usersApiRouter.get("/recoverpassword", usersApiController.recoverPassword);// recover password (user and admin)
 usersApiRouter.get("/restorepassword", usersApiController.restorePassword);// restorepassword (user and admin)
 //POSTs
+usersApiRouter.post("/user", usersApiController.createUser);// Create user
 usersApiRouter.post("/favs", usersApiController.saveFav);// Save porject to fav list (user)
 //PUTs
 usersApiRouter.put("/user", usersApiController.editUserProfile); // Edit user profile (user and admin)
