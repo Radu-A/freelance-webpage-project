@@ -16,3 +16,6 @@ main{
 #loginSubmit{
 	width: 176px;
 }
+.dashboard .project-card:hover {
+	cursor: pointer;
+}

@@ -118,7 +118,7 @@ function printProjectCard(projects) {
 		project.description = project.description.substr(0,550);
 
 		const articleProjectCard = document.createElement('article');
-		articleProjectCard.classList.add('.project-card');
+		articleProjectCard.classList.add('project-card');
 		articleProjectCard.id = `project-card-${i+1}`
 		articleProjectCard.innerHTML = `
 		<div class="project-title">
@@ -172,35 +172,69 @@ if (searchProjectsForm) {
 // http://localhost:3000/dashboard
 const dashboardResultsSection = document.querySelector('.dashboard');
 
-function printDetail(projects, i) {
+
+
+async function printDetail(projects, i) {
 	dashboardResultsSection.innerHTML = `
-				<article>
-					<h1>Project edition</h1>
-				</article>
-				<article>
-					<div class="project-title">
-						<h2>${projects[i].title}</h2>
-					</div>
-					<div class="project-description">
-						<p>${projects[i].description}</p>
-					</div>
-					<div class="project-budget">
-						<p>${projects[i].budget}</p>
-					</div>
-				</article>
-				<article>
-					<button>Edit</button>
-					<button>Delete</button>
-				</article>`;
+	<article>
+		<h1>Project edition</h1>
+		<button id='back-dashboard'>Back to dashboard</button>
+	</article>
+	<article>
+		<div class="detail-title">
+			<h2>${projects[i].title}</h2>
+		</div>
+		<div class="detail-description">
+			<p>${projects[i].description}</p>
+		</div>
+		<div class="detail-budget">
+			<p>${projects[i].budget}</p>
+		</div>
+	</article>
+	<article>
+		<button id='edit-project'>Edit</button>
+		<button id='delete-project'>Delete</button>
+	</article>`;
+	// Back button
+	const backDashboardButton = document.getElementById('back-dashboard');
+	backDashboardButton.addEventListener('click', ()=> {
+		location.reload();
+	})
+	// Delete button
+	const deleteProjectButton = document.getElementById('delete-project');
+	deleteProjectButton.addEventListener('click', ()=> {
+		console.log(projects[i]._id)
+		fetch(`http://localhost:3000/api/projects/project/${projects[i]._id}`, {
+			method: 'DELETE',
+		  })
+		  .then(location.reload())
+		  .catch(error=>console.log(error));
+	})
+	// Edit button
+	const editProjectButton = document.getElementById('edit-project');
+	editProjectButton.addEventListener('click', (event)=> {
+		event.preventDefault();
+		console.log(projects[i].description);
+		const editProjectArticle = document.createElement('article');
+		editProjectArticle.id = 'edit-project-article';
+		editProjectArticle.innerHTML = `
+		<form id="edit-project-form" action="">
+			<input id="edit-title" type="text" name="title" value="${projects[i].title}">
+			<textarea id="edit-description" name="description" cols="30" rows="10">${projects[i].description}</textarea>
+			<input id="edit-budget" type="edit-budget" name="budget" value="${projects[i].budget}">
+			<button id="edit-save" type="submit">Save</button>
+		</form>`;
+		dashboardResultsSection.appendChild(editProjectArticle);
+	})
 }
 
 if (dashboardResultsSection) {
 	// getAndAwaitProjects();
 	getProjects().then(projects=>{
-		const projectCardArticle =  document.querySelectorAll('.dashboard article');
+		const projectCardArticle =  document.querySelectorAll('.project-card');
 		projectCardArticle.forEach((article, i)=>{
 			article.addEventListener('click', () => {
-				printDetail(projects, i)
+				printDetail(projects, i);
 			})
 		})
 	})
