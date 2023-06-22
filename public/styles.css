@@ -1,5 +1,7 @@
 body{
 	background-color: rgb(190, 200, 210);
+	font: 13px/20px "Lucida Grande", Tahoma, Verdana, sans-serif;
+	color:rgb(40, 50, 70);
 }
 
 main{
@@ -11,6 +13,20 @@ main{
 .form-group{
 	padding-bottom: 10px;
 	width: 176px;
+}
+
+.search-results{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.project-card{
+	background-color: #f2f2f2;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 2px solid rgb(40, 50, 70);
 }
 
 #loginSubmit{

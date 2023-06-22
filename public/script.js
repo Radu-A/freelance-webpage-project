@@ -108,7 +108,7 @@ function printProjectCard(projects) {
 		project.description = project.description.substr(0,550);
 
 		const articleProjectCard = document.createElement('article');
-		articleProjectCard.classList.add('.project-card');
+		articleProjectCard.classList.add('project-card');
 		articleProjectCard.innerHTML = `
 		<div class="project-title">
 			<h2>${project.title}</h2>
