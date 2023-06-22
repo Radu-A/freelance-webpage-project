@@ -28,7 +28,7 @@ const getLoginView = (req,res) => {
     }
 };
 
-const getFavsView = (req,res) => {
+const getFavsView = async(req,res) => {
     try {
         // check if user is logged in 
         res.render("favs.pug");
@@ -38,15 +38,14 @@ const getFavsView = (req,res) => {
 };
 
 const getProfileView = async (req,res) => {
-    let data;
     try {
         // Some function that gets User id when logged in (user_id)
         let user_id = 7; // Depends on login
         console.log("profile.pug - rendered")
         // check if user is logged in 
-        data = await users.getUsersById(user_id);
+        let data = await users.getUsersById(user_id);
 
-        res.render("profile.pug",{"userInfo": data[0]});
+        res.render("profile.pug",{"userInfo": data});
     } catch (error) {
         console.log(`Error: ${error}`);
     }

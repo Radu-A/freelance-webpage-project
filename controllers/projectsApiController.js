@@ -78,12 +78,23 @@ const editProject = () => {
 
 //DELETEs
 //Delete a project from DDBB (admin)
-const deleteProject = () => {
+const deleteProjectById = async (req, res) => {
+    try {
+        console.log(req.params.id);
+        const data = await Project.deleteOne({_id : req.params.id});
+        res.status(200).json(data);
+        console.log(data);
+    } catch (error) {
+        res.status(404).json({
+            "Error": `${error}`
+        })
+        console.log(error);
+    }
 };
 
 module.exports = {
     getProjects,
     createNewProject,
     editProject,
-    deleteProject
+    deleteProjectById
 }

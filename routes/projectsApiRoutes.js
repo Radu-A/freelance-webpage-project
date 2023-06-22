@@ -10,7 +10,7 @@ projectsApiRouter.post("/project", projectsApiController.createNewProject);//cre
 //PUTs
 projectsApiRouter.put("/project", projectsApiController.editProject); // Edit project (admin)
 //DELETEs
-projectsApiRouter.delete("/project", projectsApiController.deleteProject); // Delete a project from DDBB (admin)
+projectsApiRouter.delete("/project/:id", projectsApiController.deleteProjectById); // Delete a project from DDBB (admin)
 
 
 
