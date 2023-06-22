@@ -3,6 +3,7 @@ const usersApiRouter = express.Router();
 const usersApiController = require ('../controllers/usersApiController');
 
 //GETs
+usersApiRouter.get("/favs/:id_user", usersApiController.getUserFavouritesIds); // Gets user's favourite projects ids
 usersApiRouter.get("/recoverpassword", usersApiController.recoverPassword);// recover password (user and admin)
 usersApiRouter.get("/restorepassword", usersApiController.restorePassword);// restorepassword (user and admin)
 //POSTs

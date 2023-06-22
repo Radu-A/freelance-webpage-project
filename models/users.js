@@ -1,5 +1,6 @@
 const pool = require('../utils/db_pgsql');
 const usersQueries = require('../queries/users.queries');
+const favouritesQueries = require("../queries/favourites.queries");
 
 // This will be used when "admin" load "users view"
 const getAllUsers = async () => {
@@ -72,14 +73,13 @@ const updateUser = async(id_user, email, password, user_name, firstname, surenam
     return result
 };
 
-// Update user will be done by admin in "users view"
+// Delete user will be done by admin in "users view" AND could be donde by the user himself
 const deleteUser = async(id_user) => {
     let client, result;
     try{
         client = await pool.connect();
         // Admin field is not here cause the user is not allowed to change it
-        const data = await client.query(usersQueries.deleteUser,
-        [id_user]);
+        const data = await client.query(usersQueries.deleteUser,[id_user]);
         result = data.rowCount;
         console.log(result);
     }catch(err){
@@ -90,6 +90,58 @@ const deleteUser = async(id_user) => {
     }
     return result
 };
+
+// Add a project to user's favourite list (user)
+const addFavourite = async(id_user, id_project) => {
+    let client, result;
+    try{
+        client = await pool.connect();
+        const data = await client.query(favouritesQueries.addFavourite,[id_user, id_project]);
+        result = data.rowCount;
+        console.log(result);
+    }catch(err){
+        console.log(err);
+        throw(err);
+    }finally{
+        client.release()
+    }
+    return result
+};
+
+// Delete a project from user's favourite list (user)
+const deleteFavourite = async(id_user, id_project) => {
+    let client, result;
+    try{
+        client = await pool.connect();
+        const data = await client.query(favouritesQueries.deleteFavourite,[id_user, id_project]);
+        result = data.rowCount;
+        if(result==0){
+            console.log("Warning: id_user or id_project not found in SQL DDBB");
+        }
+    }catch(err){
+        console.log(err);
+        throw(err);
+    }finally{
+        client.release()
+    }
+    return result
+};
+
+const getAllFavourites = async(id_user) => {
+    let client, result;
+    try {
+        client = await pool.connect();
+        const data = await client.query(favouritesQueries.getAllFavouritesIDs, [id_user]);
+        result = data.rows;
+        console.log(result);
+    } catch(err) {
+        console.log(err);
+        throw err;
+    } finally {
+        client.release();
+    }
+    return result;
+}
 
 // createUser('admin@gmail.com', 'abc123', 'admin', true, 'john', 'doe');
 // createUser('user@gmail.com', 'abc123', 'user', false, 'jane', 'dee');
@@ -104,5 +156,8 @@ module.exports = {
     getUsersById,
     createUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    addFavourite,
+    deleteFavourite,
+    getAllFavourites
 }

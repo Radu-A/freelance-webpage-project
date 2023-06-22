@@ -1,5 +1,14 @@
 
-// Example POST method implementation:
+// REQUESTS
+//GETs
+async function getData(url = "") {
+    let response = await fetch(url, {
+      method: "GET"
+    });
+    return response.json();
+}
+
+//PUTs
 async function putData(url = "", data = {}) {
     // Default options are marked with *
     let response = await fetch(url, {
@@ -17,6 +26,17 @@ async function putData(url = "", data = {}) {
     });
     
     return response.json(); // parses JSON response into native JavaScript objects
+}
+//POSTs
+async function postData(url = "", data = {}) {
+    let response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    return response.json();
 }
 
 
@@ -45,7 +65,6 @@ editUserData.addEventListener("click", function(event) {
     passwordInput.type = "password";
     passwordInput.placeholder = "password";
     passwordInput.name = "password";
-
     emailInput.type = "email";
     emailInput.placeholder = "Email";
     emailInput.name = "email";
@@ -99,14 +118,24 @@ editUserData.addEventListener("click", function(event) {
 }
 
 
-
-
-//LOGUEARSE CON GOOGLE
-function onSignIn(googleUser) {
-	var id_token = googleUser.getAuthResponse().id_token;
-	// Enviar el token al servidor para verificar la autenticación
-    // ...
+if(window.location.pathname == "/favs"){ //Check the visited page
+	
 }
+
+async function getFavouriteProjectsInfo(id_user){
+	try {
+		let id_user = 10;
+		let data = await getData(`http://localhost:3000/api/users/favs/${id_user}`); 
+		console.log("Data from favs: ", data)
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+
+
+
+
 
 // ---------------SEARCH PROJECTS------------------
 const searchResultsSection = document.querySelector('.search-results');
@@ -129,8 +158,28 @@ function printProjectCard(projects) {
 		</div>
 		<div class="project-budget">
 			<p>${project.budget}</p>
-		</div>`
+		</div>
+		<div class="project-buttons">
+			<button id="addFav">Add to favourites</button>
+		</div>`;
+		
 		searchResultsSection.appendChild(articleProjectCard);
+
+		let addFavButton = document.querySelector(`#project-card-${i+1} div.project-buttons button#addFav`);
+		addFavButton.addEventListener("click", (event) => {
+			event.preventDefault();
+			let favouriteInfo = {
+				"id_user": 10,
+				"id_project": project._id
+			};
+			try {
+				postData("http://localhost:3000/api/users/favs", favouriteInfo).then((data) => {
+				console.log("Post from script.js: ", data);
+				}); 
+			} catch (error) {
+				console.error(error);
+			}
+		})
 	});
 }
 

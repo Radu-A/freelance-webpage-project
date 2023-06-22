@@ -1,6 +1,23 @@
 const users = require("../models/users");
 
 //GETs
+// get favourites Ids with user id:
+const getUserFavouritesIds = async (req,res) => {
+    let id_user = req.params.id_user;
+    try {
+        let data = await users.getAllFavourites(id_user);
+        let projectIdArr = data.map(item => item.id_project);
+        console.log("from Favs views controller: ", projectIdArr);
+
+        res.status(200).json({
+            "project_ids": projectIdArr,
+            "msj": "Favourite projects ids supplied"
+        });
+    } catch (error) {
+        console.log(`Error: ${error}`);
+    }
+}
+
 // recover password (user and admin)
 const recoverPassword = () => {
 
@@ -27,8 +44,18 @@ const createUser = async (req,res) => {
     }
 };
 //save porject to fav list (user)
-const saveFav = () => {
+const saveFav = async(req,res) => {
+    let {id_user, id_project} = req.body;
+    try {
+        let savedInfo = await users.addFavourite(id_user, id_project);
 
+        res.status(200).json({
+            "saved favourite": `user id:${id_user} saved project id:${id_project}`,
+            "msj": "Project added to favourites"
+        });
+    } catch (error) {
+        console.log(`Error: ${error}`);
+    }
 }
 
 //PUTs
@@ -64,14 +91,25 @@ const deleteUser = async (req,res) => {
         console.log(`Error: ${error}`);
     }
 };
- // Delete user's favorite project from DDBB (user)
- const deleteFavorite = () => {
-    
- };
+// Delete user's favorite project from DDBB (user)
+const deleteFavorite = async(req, res) => {
+    let {id_user, id_project} = req.body;
+    try {
+        let deletedInfo = await users.deleteFavourite(id_user, id_project);
+        console.log(deletedInfo)
+        res.status(200).json({
+            "deleted favourite": `user id:${id_user} deleted project id:${id_project}`,
+            "msj": "Project deleted from favourites"
+        });
+    } catch (error) {
+        console.log(`Error: ${error}`);
+    }
+};
 
 
  
  module.exports = {
+    getUserFavouritesIds,
     recoverPassword,
     restorePassword,
     createUser,
