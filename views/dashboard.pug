@@ -6,12 +6,14 @@ html(lang='en')
     header 
         include headerAdmin.pug
     main
-        h1 fwp dashboard
-        h2 where the admin do stuff with projects
-        section.showProjects
-        section.createProjects
-        section.editProjects
-        section.deleteProjects
+        section
+          h1 Dashboard
+          h2 where the admin do stuff with projects
+        section.dashboard.search-results
+        //- section.createProjects
+        //- section.editProjects
+        //- section.deleteProjects
 
 	        
     footer
+    script(src="script.js")

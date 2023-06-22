@@ -1,4 +1,3 @@
-console.log("hola")
 
 // Example POST method implementation:
 async function putData(url = "", data = {}) {
@@ -27,7 +26,7 @@ const formUserData = document.getElementById("formUserData");
 const editUserData = document.getElementById("editUserData");
 
 
-  
+if (formUserData){
 editUserData.addEventListener("click", function(event) {
     event.preventDefault();
 
@@ -97,7 +96,7 @@ editUserData.addEventListener("click", function(event) {
   
 
 });
-
+}
 
 
 
@@ -115,11 +114,12 @@ const searchProjectsForm = document.querySelector('#search-projects');
 
 // It prints project card
 function printProjectCard(projects) {
-	projects.forEach(project=>{
+	projects.forEach((project, i)=>{
 		project.description = project.description.substr(0,550);
 
 		const articleProjectCard = document.createElement('article');
 		articleProjectCard.classList.add('.project-card');
+		articleProjectCard.id = `project-card-${i+1}`
 		articleProjectCard.innerHTML = `
 		<div class="project-title">
 			<h2>${project.title}</h2>
@@ -156,11 +156,52 @@ async function getProjects(keyword) {
 		}
 	}
 }
+if (searchProjectsForm) {
+	searchProjectsForm.addEventListener('submit', (event) => {
+		event.preventDefault();
+	
+		searchResultsSection.innerHTML = '';
+		const keywordInput = document.querySelector('#keyword');
+		getProjects(keywordInput.value);
+	})
+}
 
-searchProjectsForm.addEventListener('submit', (event) => {
-	event.preventDefault();
 
-	searchResultsSection.innerHTML = '';
-	const keywordInput = document.querySelector('#keyword');
-	getProjects(keywordInput.value);
-})
+
+// -------------------DASHBOARD-------------------------------
+// http://localhost:3000/dashboard
+const dashboardResultsSection = document.querySelector('.dashboard');
+
+function printDetail(projects, i) {
+	dashboardResultsSection.innerHTML = `
+				<article>
+					<h1>Project edition</h1>
+				</article>
+				<article>
+					<div class="project-title">
+						<h2>${projects[i].title}</h2>
+					</div>
+					<div class="project-description">
+						<p>${projects[i].description}</p>
+					</div>
+					<div class="project-budget">
+						<p>${projects[i].budget}</p>
+					</div>
+				</article>
+				<article>
+					<button>Edit</button>
+					<button>Delete</button>
+				</article>`;
+}
+
+if (dashboardResultsSection) {
+	// getAndAwaitProjects();
+	getProjects().then(projects=>{
+		const projectCardArticle =  document.querySelectorAll('.dashboard article');
+		projectCardArticle.forEach((article, i)=>{
+			article.addEventListener('click', () => {
+				printDetail(projects, i)
+			})
+		})
+	})
+}
