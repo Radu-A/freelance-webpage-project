@@ -1,12 +1,19 @@
 const Project = require('../models/projects');
 
 // Scraper object working on Freelance.com
+
+
+// https://www.freelancer.com/jobs/3/?keyword=java
+// https://www.freelancer.com/jobs/3/
+// https://www.freelancer.com/jobs/
+// https://www.freelancer.com/jobs/?results=100
 const scraperObjectFreelancer = {
     url: 'https://www.freelancer.com/jobs/',
-    async scraper(browser){
+    async scraper(browser, keyword){
+		let newUrl = this.url + '?keyword=' + keyword ;
         let page = await browser.newPage();
-        console.log(`Navigating to ${this.url}...`);
-        await page.goto(this.url);
+        console.log(`Navigating to ${newUrl}...`);
+        await page.goto(newUrl);
         // Wait for the required DOM to be rendered
         await page.waitForSelector('.JobSearchCard-list');
         // Get the link to all the required books
@@ -30,6 +37,8 @@ const scraperObjectFreelancer = {
 			// })
 			dataObj['description'] = await newPage.$eval('.PageProjectViewLogout-detail p:nth-child(2)', text => text.textContent);
 			// dataObj['upc'] = await newPage.$eval('.table.table-striped > tbody > tr > td', table => table.textContent);
+			dataObj['url'] = link;
+			dataObj['skills'] = await newPage.$$eval('.PageProjectViewLogout-detail-tags-link--highlight', skills => skills.map(el=>el.textContent.split("\n").join("").trim()));
 			resolve(dataObj);
 
 			await newPage.close();
@@ -40,11 +49,13 @@ const scraperObjectFreelancer = {
 			// scrapedData.push(currentPageData);
 
 			// Pasamos los datos a la base de datos en Atlas
-			const { title, budget, description } = currentPageData;
+			const { title, budget, description, url, skills } = currentPageData;
 			const newProject = new Project({
 				title,
 				budget,
-				description
+				description,
+				url,
+				skills
 			})
 			newProject.save();
 
@@ -79,11 +90,9 @@ const scraperObjectUpwork = {
 			await newPage.goto(link);
 			dataObj['title'] = await newPage.$eval('h1', text => text.textContent.split("\n").join("").trim());
 			dataObj['budget'] = await newPage.$eval('.up-card-section ul > li:first-child strong', text => text.textContent.split("\n").join("").trim());
-			// let descriptionParagraphs = await .split("    ").join("")newPage.$$eval('.PageProjectViewLogout-detail p', paragraphs => {
-			// 	paragraphs.forEach(paragraph => console.log(paragraph));
-			// })
 			dataObj['description'] = await newPage.$eval('.job-description div', text => text.textContent.split("\n").join("").trim());
-			// dataObj['upc'] = await newPage.$eval('.table.table-striped > tbody > tr > td', table => table.textContent);
+			dataObj['url'] = link;
+			dataObj['skills'] = await newPage.$$eval('.cfe-ui-job-skill', skills => skills.map(el=>el.textContent));
 			resolve(dataObj);
 
 			await newPage.close();
@@ -94,11 +103,13 @@ const scraperObjectUpwork = {
 			// scrapedData.push(currentPageData);
 
 			// Pasamos los datos a la base de datos en Atlas
-			const { title, budget, description } = currentPageData;
+			const { title, budget, description, url, skills } = currentPageData;
 			const newProject = new Project({
 				title,
 				budget,
-				description
+				description,
+				url,
+				skills
 			})
 			newProject.save();
 

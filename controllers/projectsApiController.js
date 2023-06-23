@@ -18,7 +18,6 @@ const getAllProjects = async (req, res) => {
     try {
         const data = await Project.find({});
         res.status(200).json(data);
-        console.log(data);
     } catch (error) {
         res.status(404).json({
             "Error": `${error}`
@@ -35,7 +34,6 @@ const getProjectsByKeyword = async (req, res) => {
         // const re = new RegExp(`\b(?:${req.params.keyword})\b`, "i");
         const data = await Project.find( { $or: [ { title: re }, { description: re } ] } )
         res.status(200).json(data);
-        console.log(data);
     } catch (error) {
         res.status(404).json({
             "Error": `${error}`
@@ -49,17 +47,18 @@ const getProjectsByKeyword = async (req, res) => {
 //create new project (admin)
 const createNewProject = async (req,res) => {
     console.log("Check new project data: ", req.body);
-    const newProject = req.body;
-    
     // The form must check that every field is complete and with the correct data type.
-
     try {
-        let response = await new Project (newProject);
-        let answer = await response.save();
-    
+        let newProject = await new Project ({
+            "title": req.body.title,
+            "budget": req.body.budget,
+            "description": req.body.description
+          });
+        const data = await newProject.save();
+        console.log(data);
         res.status(201).json({
-            msj: `Producto ${answer.title} guardado en el sistema con ID: ${answer.id}`,
-            "product": answer
+            msj: `Producto ${data.title} guardado en el sistema con ID: ${data.id}`,
+            "product": data
         });
     }        
     
@@ -73,7 +72,18 @@ const createNewProject = async (req,res) => {
 
 //PUTs
 // Edit project (admin)
-const editProject = () => {
+const editProject = async (req, res) => {
+    try {
+        const data = await Project.replaceOne( {"_id": new ObjectId(req.body._id)}, { "title": req.body.title, "budget": req.body.budget, "description": req.body.description});
+        res.status(200).json(data);
+        console.log(json(data));
+
+    } catch (error) {
+        console.log(`ERROR: ${error}`);
+        res.status(400).json({
+            msj: `ERROR: ${error}`
+        });
+    }
 }; 
 
 //DELETEs
