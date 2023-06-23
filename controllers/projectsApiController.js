@@ -41,6 +41,23 @@ const getProjectsByKeyword = async (req, res) => {
         console.log(error);
     }
 }
+//Get projects by Id
+const getProjectsById = async(req, res) => {
+    let param = req.params.ids;
+    let projectIds = param.split(",");
+    console.log("projects id",projectIds);
+    try {
+        const data = await Project.find().where("_id").in(projectIds).exec();
+        
+        res.status(200).json(data);
+        console.log(data);
+    } catch (error) {
+        res.status(404).json({
+            "Error": `${error}`
+        })
+        console.log(error);
+    }
+}
 
 
 //POSTs
@@ -104,6 +121,7 @@ const deleteProjectById = async (req, res) => {
 
 module.exports = {
     getProjects,
+    getProjectsById,
     createNewProject,
     editProject,
     deleteProjectById

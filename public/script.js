@@ -7,7 +7,6 @@ async function getData(url = "") {
     });
     return response.json();
 }
-
 //PUTs
 async function putData(url = "", data = {}) {
     // Default options are marked with *
@@ -31,6 +30,17 @@ async function putData(url = "", data = {}) {
 async function postData(url = "", data = {}) {
     let response = await fetch(url, {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    return response.json();
+}
+//DELETEs
+async function deleteData(url = "", data = {}) {
+    let response = await fetch(url, {
+      method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
@@ -117,20 +127,28 @@ editUserData.addEventListener("click", function(event) {
 });
 }
 
-
-if(window.location.pathname == "/favs"){ //Check the visited page
-	
-}
-
+let id_user = 10;
 async function getFavouriteProjectsInfo(id_user){
 	try {
-		let id_user = 10;
-		let data = await getData(`http://localhost:3000/api/users/favs/${id_user}`); 
-		console.log("Data from favs: ", data)
+		//gets user's favourite projects ids
+		let favouritesIds = await getData(`http://localhost:3000/api/users/favs/${id_user}`);
+		let paramValue = favouritesIds.project_ids.toString();
+
+		//gets favourite projects Info
+		let favouritesInfo = await getData(`http://localhost:3000/api/projects/${paramValue}`);
+		console.log("Favs data from script.js: ", favouritesInfo)
+		
+		//prints favourite projects cards
+		printProjectCard(favouritesInfo);
 	} catch (error) {
 		console.error(error);
 	}
 }
+
+if(window.location.pathname == "/favs"){ //Check the visited page
+	getFavouriteProjectsInfo(id_user);
+}
+
 
 
 
@@ -160,26 +178,50 @@ function printProjectCard(projects) {
 			<p>${project.budget}</p>
 		</div>
 		<div class="project-buttons">
-			<button id="addFav">Add to favourites</button>
+			<button id="add_delete"></button>
 		</div>`;
 		
 		searchResultsSection.appendChild(articleProjectCard);
 
-		let addFavButton = document.querySelector(`#project-card-${i+1} div.project-buttons button#addFav`);
-		addFavButton.addEventListener("click", (event) => {
-			event.preventDefault();
-			let favouriteInfo = {
-				"id_user": 10,
-				"id_project": project._id
-			};
-			try {
-				postData("http://localhost:3000/api/users/favs", favouriteInfo).then((data) => {
-				console.log("Post from script.js: ", data);
-				}); 
-			} catch (error) {
-				console.error(error);
-			}
-		})
+		let addDeleteButton = document.querySelector(`#project-card-${i+1} div.project-buttons button#add_delete`);
+
+		if(window.location.pathname == "/"){ //Check the visited page
+			addDeleteButton.textContent = "Add to favourites";
+			addDeleteButton.addEventListener("click", (event) => {
+				event.preventDefault();
+				let favouriteInfo = {
+					"id_user": 10,
+					"id_project": project._id
+				};
+				try {
+					postData("http://localhost:3000/api/users/favs", favouriteInfo).then((data) => {
+					console.log("Post from script.js: ", data);
+					}); 
+				} catch (error) {
+					console.error(error);
+				}
+			})
+		};
+
+		if(window.location.pathname == "/favs"){ //Check the visited page
+			addDeleteButton.textContent = "Delete from favourites";
+			addDeleteButton.addEventListener("click", (event) => {
+				event.preventDefault();
+				let favouriteInfo = {
+					"id_user": 10,
+					"id_project": project._id
+				};
+				try {
+					deleteData("http://localhost:3000/api/users/favs", favouriteInfo).then((data) => {
+					console.log("Post from script.js: ", data);
+					}); 
+
+					articleProjectCard.remove();
+				} catch (error) {
+					console.error(error);
+				}
+			})
+		}
 	});
 }
 

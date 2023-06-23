@@ -35,14 +35,32 @@ const getUsersById = async (id_user) => {
     }
     return result
 }
+// get user by email to check if an user already exists
+const getUserByEmail = async (email) => {
+    let client, result;
+    try {
+        client = await pool.connect();
+        let data = await client.query(usersQueries.getUserByEmail, [email]);
+        result = data.rows;
+        //console.log(result);
+    } catch(err) {
+        console.log(err);
+        throw err;
+    } finally {
+        client.release();
+    }
+    return result
+}
+
 
 // Users will be created in the sign in
 const createUser = async(email, password, user_name, admin, firstname, surename) => {
     let client, result;
     try{
+        console.log("INFO FROM CREATEUSER", email, password, user_name, admin, firstname, surename)
         client = await pool.connect();
         const data = await client.query(usersQueries.createUser,
-        [email, password, user_name, admin, firstname, surename]);
+            [email, password, user_name, admin, firstname, surename]);
         result = data.rowCount;
         console.log(result);
     }catch(err){
@@ -127,7 +145,7 @@ const deleteFavourite = async(id_user, id_project) => {
     return result
 };
 
-const getAllFavourites = async(id_user) => {
+const getAllFavouritesIds = async(id_user) => {
     let client, result;
     try {
         client = await pool.connect();
@@ -145,7 +163,7 @@ const getAllFavourites = async(id_user) => {
 
 // createUser('admin@gmail.com', 'abc123', 'admin', true, 'john', 'doe');
 // createUser('user@gmail.com', 'abc123', 'user', false, 'jane', 'dee');
-getAllUsers()
+ getAllUsers()
 // getUsersById(6)
 // updateUser(6, 'jane@gmail.com', 'abc123', false, 'jane', 'dee');
 // deleteUser(4)
@@ -154,10 +172,11 @@ console.log("SQL DDBB Conected")
 module.exports = {
     getAllUsers,
     getUsersById,
+    getUserByEmail,
     createUser,
     updateUser,
     deleteUser,
     addFavourite,
     deleteFavourite,
-    getAllFavourites
+    getAllFavouritesIds
 }
