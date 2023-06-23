@@ -50,6 +50,7 @@ const getProjectsById = async(req, res) => {
     console.log("projects id",projectIds);
     try {
         const data = await Project.find().where("_id").in(projectIds).exec();
+        
         res.status(200).json(data);
         console.log(data);
     } catch (error) {

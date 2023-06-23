@@ -34,7 +34,7 @@ const createUser = async (req,res) => {
     try {
         // "user_id" is automatically added by SQL DDBB
         let createInfo = await users.createUser(email, password, user_name, admin, firstname, surename);
-
+        
         res.status(200).json({
             "user created": createInfo,
             "msj": "User created successfully"
