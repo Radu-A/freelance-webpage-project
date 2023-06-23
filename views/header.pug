@@ -1,9 +1,13 @@
-nav
-          button.hamburger(type="button")
-            ul.menu
-              li.menu-item
-                a(href="/") Index
-              li.menu-item
-                a(href="/signup") Signup
-              li.menu-item
-                a(href="/login") Login
+section.top-nav
+  div
+    | Logo Here
+  input#menu-toggle(type='checkbox')
+  label.menu-button-container(for='menu-toggle')
+    .menu-button
+  ul.menu
+    li.menu-item
+      a.menu-link(href="/") Index
+    li.menu-item
+      a.menu-link(href="/signup") Signup
+    li.menu-item
+      a.menu-link(href="/login") Login
