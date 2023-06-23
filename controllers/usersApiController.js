@@ -5,7 +5,7 @@ const users = require("../models/users");
 const getUserFavouritesIds = async (req,res) => {
     let id_user = req.params.id_user;
     try {
-        let data = await users.getAllFavourites(id_user);
+        let data = await users.getAllFavouritesIds(id_user);
         let projectIdArr = data.map(item => item.id_project);
         console.log("from Favs views controller: ", projectIdArr);
 

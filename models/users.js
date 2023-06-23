@@ -127,7 +127,7 @@ const deleteFavourite = async(id_user, id_project) => {
     return result
 };
 
-const getAllFavourites = async(id_user) => {
+const getAllFavouritesIds = async(id_user) => {
     let client, result;
     try {
         client = await pool.connect();
@@ -159,5 +159,5 @@ module.exports = {
     deleteUser,
     addFavourite,
     deleteFavourite,
-    getAllFavourites
+    getAllFavouritesIds
 }
