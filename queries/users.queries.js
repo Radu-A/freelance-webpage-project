@@ -18,6 +18,16 @@ const usersQueries = {
         surename
     FROM public.users
     WHERE id_user = $1`,
+    getUserByEmail:`SELECT 
+        id_user, 
+        email, 
+        password, 
+        user_name, 
+        admin, 
+        firstname, 
+        surename
+    FROM public.users
+    WHERE email = $1`,
     createUser:`INSERT INTO users(
         email, 
         password, 
