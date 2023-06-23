@@ -18,8 +18,6 @@ const scraperObjectFreelancer = {
         await page.waitForSelector('.JobSearchCard-list');
         // Get the link to all the required books
         let urls = await page.$$eval('.JobSearchCard-primary-heading', links => {
-            // links = links.filter(link => link.querySelector('.instock.availability > i').textContent !== "In stock")
-            // Extract the links from the data
             links = links.map(el => el.querySelector('a').href)
             return links;
         });
@@ -32,11 +30,7 @@ const scraperObjectFreelancer = {
 			await newPage.goto(link);
 			dataObj['title'] = await newPage.$eval('h1', text => text.textContent);
 			dataObj['budget'] = await newPage.$eval('.Grid-col--tablet-4 p', text => text.textContent);
-			// let descriptionParagraphs = await newPage.$$eval('.PageProjectViewLogout-detail p', paragraphs => {
-			// 	paragraphs.forEach(paragraph => console.log(paragraph));
-			// })
 			dataObj['description'] = await newPage.$eval('.PageProjectViewLogout-detail p:nth-child(2)', text => text.textContent);
-			// dataObj['upc'] = await newPage.$eval('.table.table-striped > tbody > tr > td', table => table.textContent);
 			dataObj['url'] = link;
 			dataObj['skills'] = await newPage.$$eval('.PageProjectViewLogout-detail-tags-link--highlight', skills => skills.map(el=>el.textContent.split("\n").join("").trim()));
 			resolve(dataObj);
@@ -119,4 +113,4 @@ const scraperObjectUpwork = {
 	
 }
 
-module.exports = scraperObjectFreelancer;
+module.exports = scraperObjectUpwork;

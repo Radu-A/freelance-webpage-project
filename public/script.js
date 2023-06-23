@@ -169,7 +169,7 @@ function printProjectCard(projects) {
 		articleProjectCard.id = `project-card-${i+1}`
 		articleProjectCard.innerHTML = `
 		<div class="project-title">
-			<h2>${project.title}</h2>
+			<h2><a href="${project.url}">${project.title}</a></h2>
 		</div>
 		<div class="project-description">
 			<p>${project.description}</p>
@@ -180,7 +180,14 @@ function printProjectCard(projects) {
 		<div class="project-buttons">
 			<button id="add_delete"></button>
 		</div>`;
-		
+		const projectSkillsDiv = document.createElement('div');
+		projectSkillsDiv.classList.add('project-skills');
+		project.skills.forEach(skill=>{
+			const skillParagraph = document.createElement('p');
+			skillParagraph.innerText = skill;
+			projectSkillsDiv.appendChild(skillParagraph);
+		})
+		articleProjectCard.appendChild(projectSkillsDiv);
 		searchResultsSection.appendChild(articleProjectCard);
 
 		let addDeleteButton = document.querySelector(`#project-card-${i+1} div.project-buttons button#add_delete`);
@@ -224,8 +231,7 @@ function printProjectCard(projects) {
 		}
 	});
 }
-
-
+// It search projects
 async function getProjects(keyword) {
 	if (keyword) {
 		try {
@@ -247,6 +253,7 @@ async function getProjects(keyword) {
 		}
 	}
 }
+// If search-projects-form exists, add submit event listener
 if (searchProjectsForm) {
 	searchProjectsForm.addEventListener('submit', (event) => {
 		event.preventDefault();
@@ -263,7 +270,7 @@ if (searchProjectsForm) {
 // http://localhost:3000/dashboard
 const dashboardResultsSection = document.querySelector('.dashboard');
 
-async function printDetail(projects, i) {
+async function printDashboardDetail(projects, i) {
 	dashboardResultsSection.innerHTML = `
 	<article>
 		<h1>Project edition</h1>
@@ -271,7 +278,7 @@ async function printDetail(projects, i) {
 	</article>
 	<article>
 		<div class="detail-title">
-			<h2>${projects[i].title}</h2>
+			<h2><a href="${projects[i].url}">${projects[i].title}</a></h2>
 		</div>
 		<div class="detail-description">
 			<p>${projects[i].description}</p>
@@ -385,7 +392,7 @@ if (dashboardResultsSection) {
 		const projectCardArticle =  document.querySelectorAll('.project-card');
 		projectCardArticle.forEach((article, i)=>{
 			article.addEventListener('click', () => {
-				printDetail(projects, i);
+				printDashboardDetail(projects, i);
 			})
 		})
 	})
