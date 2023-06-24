@@ -43,6 +43,7 @@ const getProjectsByKeyword = async (req, res) => {
 }
 //Get projects by Id
 const getProjectsById = async(req, res) => {
+    // WHAT IF THERE ARE NO PROJECTS IN FAVOURITES?
     let param = req.params.ids;
     let projectIds = param.split(",");
     console.log("projects id",projectIds);

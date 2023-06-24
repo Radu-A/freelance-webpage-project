@@ -36,7 +36,6 @@ const createAndStoreToken = (req,res)=>{
         httpOnly: true,
         sameSite: "strict",
     }).redirect("/profile");
-    //.send("Welcome! You are now authenticated with google! <br><br> <a href='/logout'>Click here to logout!</a>");
 }
 
 //Authentification failure
