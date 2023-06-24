@@ -49,7 +49,7 @@ const getUserByEmail = async (email) => {
     } finally {
         client.release();
     }
-    return result
+    return result[0]
 }
 
 
@@ -161,6 +161,22 @@ const getAllFavouritesIds = async(id_user) => {
     return result;
 }
 
+const changeUserState = async(email) => {
+    let client, result;
+    try {
+        client = await pool.connect();
+        let data = await client.query(usersQueries.changeUserState, [email]);
+        result = data.rows;
+        //console.log(result);
+    } catch(err) {
+        console.log(err);
+        throw err;
+    } finally {
+        client.release();
+    }
+    return result
+}
+
 // createUser('admin@gmail.com', 'abc123', 'admin', true, 'john', 'doe');
 // createUser('user@gmail.com', 'abc123', 'user', false, 'jane', 'dee');
  getAllUsers()
@@ -178,5 +194,6 @@ module.exports = {
     deleteUser,
     addFavourite,
     deleteFavourite,
-    getAllFavouritesIds
+    getAllFavouritesIds,
+    changeUserState
 }

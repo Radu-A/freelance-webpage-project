@@ -1,5 +1,8 @@
 const passport = require('passport');
 const jwt = require("jsonwebtoken");
+require("dotenv").config();
+let jwtSecret = process.env.JWT_SECRET;
+let users = require("../models/users");
 
 
 
@@ -12,35 +15,45 @@ const redirectBecauseOfFailure = passport.authenticate('google', { failureRedire
 
 //Función exitosa
 const createAndStoreToken = (req,res)=>{
+    // Because the user is logging in, we have to change the user state in the table "users": 
+    users.changeUserState(req.user.email);
+
     //En el cuerpo de esta función podemos almacenar usuarios en nuestra bbdd con el objeto que nos proporciona req.user (Para ello es necesario hacer la función asíncrona)
-  
+    console.log("lets see req.user.email: ",req.user.email);
     //Estos son los pasos para crear un token si la autenticación es exitosa
     const payload = {
         //save here data
-        check: true
+        check: true,
+        email: req.user.email
     };
-    const token = jwt.sign(payload, `secret_key`, {
+    
+    const token = jwt.sign(payload, jwtSecret, {
         expiresIn: "20m"
     });
-  
+
     //Almacenamos el token en las cookies
     res.cookie("access-token", token, {
         httpOnly: true,
         sameSite: "strict",
-    }).send("Welcome! You are now authenticated with google! <br><br> <a href='/logout'>Click here to logout!</a>");
+    }).redirect("/profile");
+    //.send("Welcome! You are now authenticated with google! <br><br> <a href='/logout'>Click here to logout!</a>");
 }
 
 //Authentification failure
 const notifyOfAuthFailure = (req, res) => {
-    res.send('Something went wrong..')  
+    res.send('Something went wrong..')
 }
 
 //Destroy session and clear cookies
 const destroySessionAndClearCookies = (req, res) => {
+    // Now we have to change the user state because he is logging out:
+    let email = req.decoded.email;
+    users.changeUserState(email);
+
     req.logout(function(err) {
         if (err) { return next(err); }
         req.session.destroy();
-        res.clearCookie("access-token").send('Goodbye! <br><br> <a href="/auth/google">Authenticate again</a>');
+        res.clearCookie("access-token").redirect('/login');
     });
 }
 
