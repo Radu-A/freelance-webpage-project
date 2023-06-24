@@ -1,6 +1,8 @@
 const express = require('express');
 const authRouter = express.Router();
 const authController = require ('../controllers/authController');
+const authMiddleware = require("../middlewares/authMiddleware")
+
 
 
 //Ruta que renderiza el prompt de Google con las cuentas
@@ -13,7 +15,7 @@ authRouter.get("/google/callBack", authController.redirectBecauseOfFailure, auth
 authRouter.get('/auth/failure', authController.notifyOfAuthFailure);
 
 //Definimos la ruta de logout, donde eliminamos la sesión y limpiamos el token de las cookies.
-authRouter.get('/logout', authController.destroySessionAndClearCookies);
+authRouter.get('/logout', authMiddleware.authCheck, authController.destroySessionAndClearCookies);
 
 
 module.exports = authRouter

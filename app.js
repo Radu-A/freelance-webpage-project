@@ -3,7 +3,10 @@ const jwt = require("jsonwebtoken");
 const passport = require("passport");
 //const logger = require("./utils/morgan");
 const session = require("express-session");
+const cookieParser = require("cookie-parser");
 require("./utils/auth.js");
+require("dotenv").config();
+
 
 // Initialize server
 const app = express();
@@ -11,7 +14,7 @@ const port = 3000;
 
 //Passport and session
 app.use(session({
-    secret: 'SECRET',
+    secret: process.env.COOKIE_SECRET,
     resave: true,
     saveUninitialized: true
 }));
@@ -31,9 +34,11 @@ const authRoutes = require('./routes/authRoutes');
 app.set('view engine', 'pug');
 app.set('views', './views');
 
+
 // Middlewares
 app.use(express.json()); // Habilitar tipo de dato a recibir
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser()); //Better access to cookies
 //app.use(logger(':method :host :status :param[id] - :response-time ms :body'));
 
 //Public folder

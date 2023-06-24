@@ -25,7 +25,8 @@ const usersQueries = {
         user_name, 
         admin, 
         firstname, 
-        surename
+        surename,
+        logged
     FROM public.users
     WHERE email = $1`,
     createUser:`INSERT INTO users(
@@ -46,7 +47,11 @@ const usersQueries = {
     WHERE id_user=$1;`,
     deleteUser:`
     DELETE FROM users
-    WHERE id_user=$1;`
+    WHERE id_user=$1;`,
+    changeUserState:`
+    UPDATE users
+    SET logged = NOT logged
+    WHERE email=$1;`,
 }
 
 module.exports = usersQueries;
