@@ -397,6 +397,7 @@ if (dashboardResultsSection) {
 			.catch(error=>console.log(error));
 		})
 	})
+	// It print all projects
 	getProjects().then(projects=>{
 		const projectCardArticle =  document.querySelectorAll('.project-card');
 		projectCardArticle.forEach((article, i)=>{
