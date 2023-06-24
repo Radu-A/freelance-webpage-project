@@ -13,7 +13,7 @@ const getProjects = async (req, res) => {
     }
 }
 
-// search results list (user and admin
+// Get results list (user and admin)
 const getAllProjects = async (req, res) => {
     try {
         const data = await Project.find({});
@@ -25,14 +25,30 @@ const getAllProjects = async (req, res) => {
         console.log(error);
     }
 };
-// Get project by matching a word in the title
+// Get project by matching a word on title or description
 const getProjectsByKeyword = async (req, res) => {
     try {
         console.log(req.query.keyword)
         // It shoud be able to search by isolated word
         const re = new RegExp(req.query.keyword, 'i');
         // const re = new RegExp(`\b(?:${req.params.keyword})\b`, "i");
-        const data = await Project.find( { $or: [ { title: re }, { description: re } ] } )
+        const data = await Project.find( { title: "API Integration" } )
+        res.status(200).json(data);
+    } catch (error) {
+        res.status(404).json({
+            "Error": `${error}`
+        })
+        console.log(error);
+    }
+}
+// Get project by "skill"
+const getProjectsBySkill = async (req, res) => {
+    try {
+        console.log(req.query.skill)
+        // It shoud be able to search by isolated word
+        const re = new RegExp(req.query.keyword, 'i');
+        // const re = new RegExp(`\b(?:${req.params.keyword})\b`, "i");
+        const data = await Project.find( { title } )
         res.status(200).json(data);
     } catch (error) {
         res.status(404).json({

@@ -1,7 +1,26 @@
+const { json } = require('express');
 const Project = require('../models/projects');
+const Skill = require('../models/skills');
+
+// async function saveNewSkill(skill) {
+
+// 	try {
+// 		const data = await Project.findOne( { title: skill } );
+// 		const result = JSON(data);
+// 		console.log(`Buscamos este skill: ${skill}`);
+// 		console.log(`Esto es lo que sale: ${result}`);
+// 		if (null) {
+// 			const newSkill = new Skill({
+// 				title: skill
+// 			})
+// 			newSkill.save();
+// 		}
+// 	} catch (error) {
+		
+// 	}
+// }
 
 // Scraper object working on Freelance.com
-
 
 // https://www.freelancer.com/jobs/3/?keyword=java
 // https://www.freelancer.com/jobs/3/
@@ -52,6 +71,14 @@ const scraperObjectFreelancer = {
 				skills
 			})
 			newProject.save();
+
+			
+			skills.forEach(skill=>{
+				const newSkill = new Skill({
+					title: skill
+				})
+				newSkill.save();
+			})
 
 			console.log(currentPageData);
 		}
@@ -106,6 +133,13 @@ const scraperObjectUpwork = {
 				skills
 			})
 			newProject.save();
+			
+			skills.forEach(skill=>{
+				const newSkill = new Skill({
+					title: skill
+				})
+				newSkill.save();
+			})
 
 			console.log(currentPageData);
 		}
@@ -113,4 +147,4 @@ const scraperObjectUpwork = {
 	
 }
 
-module.exports = scraperObjectUpwork;
+module.exports = scraperObjectFreelancer;

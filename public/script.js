@@ -180,12 +180,15 @@ function printProjectCard(projects) {
 		<div class="project-buttons">
 			<button id="add_delete"></button>
 		</div>`;
+		
 		const projectSkillsDiv = document.createElement('div');
 		projectSkillsDiv.classList.add('project-skills');
-		project.skills.forEach(skill=>{
-			const skillParagraph = document.createElement('p');
-			skillParagraph.innerText = skill;
-			projectSkillsDiv.appendChild(skillParagraph);
+		project.skills.forEach((skill, i)=>{
+			if (i < 6) {
+				const skillParagraph = document.createElement('p');
+				skillParagraph.innerText = skill;
+				projectSkillsDiv.appendChild(skillParagraph);
+			}
 		})
 		articleProjectCard.appendChild(projectSkillsDiv);
 		searchResultsSection.appendChild(articleProjectCard);
