@@ -6,29 +6,13 @@ const objectSchema = {
     title: {
         type: String,
         required: true
-    },
-    budget: {
-        type: String,
-        required: true
-    },
-    description: {
-        type: String,
-        required: true
-    },
-    url: {
-        type: String,
-        required: true
-    },
-    skills: {
-        type: Array,
-        required: true
     }
 }
 // Creamos el esqueña
-const projectSchema = mongoose.Schema(objectSchema);
+const skillSchema = mongoose.Schema(objectSchema);
 
 // Creamos el modelo
-const Project = mongoose.model('Project', projectSchema);
+const Skill = mongoose.model('Skill', skillSchema);
 
 // const newProject = new Project({
 //     title: "Desarrollador Web",
@@ -38,4 +22,4 @@ const Project = mongoose.model('Project', projectSchema);
 
 // newProject.save().then((data)=>console.log(data));
 
-module.exports = Project;
+module.exports = Skill;

@@ -30,7 +30,7 @@ const getLoginView = (req,res) => {
 
 const getFavsView = async(req,res) => {
     try {
-        // check if user is logged in 
+        // check if user is logged in
         res.render("favs.pug");
     } catch (error) {
         console.log(`Error: ${error}`);
@@ -39,12 +39,12 @@ const getFavsView = async(req,res) => {
 
 const getProfileView = async (req,res) => {
     try {
-        // Some function that gets User id when logged in (user_id)
-        let user_id = 7; // Depends on login
-        console.log("profile.pug - rendered")
-        // check if user is logged in 
-        let data = await users.getUsersById(user_id);
+        // the user email is passed from the "authCheck" Middleware in the request (req.decoded.email);
+        console.log("print email", req.decoded)
+        let userEmail = req.decoded.email; // Depends on login
 
+        // check if user is logged in 
+        let data = await users.getUserByEmail(userEmail);
         res.render("profile.pug",{"userInfo": data});
     } catch (error) {
         console.log(`Error: ${error}`);

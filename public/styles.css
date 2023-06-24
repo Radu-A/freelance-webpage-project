@@ -36,6 +36,14 @@ main{
     border: 2px solid rgb(40, 50, 70);
 }
 
+.project-skills {
+	display: flex;
+	flex-direction: row;
+	justify-content: left;
+	align-items: space-around;
+	gap: 1rem;
+}
+
 #loginSubmit{
 	width: 176px;
 }

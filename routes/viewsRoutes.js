@@ -1,6 +1,7 @@
 const express = require('express');
 const viewsRouter = express.Router();
 const viewsController = require ('../controllers/viewsController');
+const authMiddleware = require("../middlewares/authMiddleware"); // Middlewares related to token uses
 
 //GETs
 // Users and admin
@@ -8,7 +9,7 @@ viewsRouter.get("/", viewsController.getIndexView);
 viewsRouter.get("/signup", viewsController.getSignUpView);
 viewsRouter.get("/login", viewsController.getLoginView);
 viewsRouter.get("/favs", viewsController.getFavsView);
-viewsRouter.get("/profile", viewsController.getProfileView);
+viewsRouter.get("/profile", authMiddleware.authCheck, viewsController.getProfileView);
 
 // Admin
 viewsRouter.get("/users", viewsController.getUsersView);

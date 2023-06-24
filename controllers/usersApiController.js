@@ -3,9 +3,11 @@ const users = require("../models/users");
 //GETs
 // get favourites Ids with user id:
 const getUserFavouritesIds = async (req,res) => {
-    let id_user = req.params.id_user;
     try {
+        let {id_user} = req.decoded.data;
+        console.log("WHAT DO WE HAVE HERE", id_user)
         let data = await users.getAllFavouritesIds(id_user);
+        console.log("WHAT DO WE HAVE HERE", data)
         let projectIdArr = data.map(item => item.id_project);
         console.log("from Favs views controller: ", projectIdArr);
 
@@ -45,7 +47,8 @@ const createUser = async (req,res) => {
 };
 //save porject to fav list (user)
 const saveFav = async(req,res) => {
-    let {id_user, id_project} = req.body;
+    let {id_user} = req.decoded.data;
+    let {id_project} = req.body;
     try {
         let savedInfo = await users.addFavourite(id_user, id_project);
 
@@ -93,7 +96,8 @@ const deleteUser = async (req,res) => {
 };
 // Delete user's favorite project from DDBB (user)
 const deleteFavorite = async(req, res) => {
-    let {id_user, id_project} = req.body;
+    let {id_user} = req.decoded.data;
+    let {id_project} = req.body;
     try {
         let deletedInfo = await users.deleteFavourite(id_user, id_project);
         console.log(deletedInfo)
