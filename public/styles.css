@@ -1,3 +1,8 @@
+html, body {
+	margin: 0;
+	height: 100%;
+  }
+
 body{
 	background-color: rgb(190, 200, 210);
 	font: 13px/20px "Lucida Grande", Tahoma, Verdana, sans-serif;
@@ -35,28 +40,18 @@ main{
 	width: 176px;
 }
 
-
-/*test03*/
-
-/*
-@import url(https://fonts.googleapis.com/css?family=Raleway);
-h2 {
-  vertical-align: center;
-  text-align: center;
-}
-*/
-html, body {
-  margin: 0;
-  height: 100%;
+#editUserDataForm {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
-/*
-* {
-  font-family: "Raleway";
-  box-sizing: border-box;
+#editUserDataForm * {
+	margin-top: 10px;
 }
-*/
 
+
+/*HAMBURGER MENU*/
 .top-nav {
   display: flex;
   flex-direction: row;

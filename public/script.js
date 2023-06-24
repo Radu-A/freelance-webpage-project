@@ -61,6 +61,7 @@ editUserData.addEventListener("click", function(event) {
     event.preventDefault();
 
     const form = document.createElement("form");
+	form.setAttribute("id", "editUserDataForm");
     const id_userInput = document.createElement("input");
     const passwordInput = document.createElement("input");
     const emailInput = document.createElement("input");
@@ -100,6 +101,11 @@ editUserData.addEventListener("click", function(event) {
     form.appendChild(submitButton);
   
     formUserData.appendChild(form);
+
+	/* Eliminar el event listener después de que se haya ejecutado 
+		xa evitar que se creen n formularios si se clica n veces el botón.
+	*/
+	editUserData.removeEventListener("click", arguments.callee);
   
     // Send user info event
     form.addEventListener("submit", (e) => {
