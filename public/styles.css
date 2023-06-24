@@ -220,4 +220,18 @@ main{
 	text-decoration: none;
 }
 
+/*DASHBOARD*/
+#create-project {
+	margin-bottom: 30px;	
+}
+
+.project-title a {
+	color: rgb(40, 50, 70);
+	text-decoration: none;
+  }
+
+.project-budget p {
+	font-weight: bold;
+}
+
 
