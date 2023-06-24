@@ -7,14 +7,17 @@ const getUserFavouritesIds = async (req,res) => {
         let {id_user} = req.decoded.data;
         console.log("WHAT DO WE HAVE HERE", id_user)
         let data = await users.getAllFavouritesIds(id_user);
-        console.log("WHAT DO WE HAVE HERE", data)
-        let projectIdArr = data.map(item => item.id_project);
-        console.log("from Favs views controller: ", projectIdArr);
-
-        res.status(200).json({
-            "project_ids": projectIdArr,
-            "msj": "Favourite projects ids supplied"
-        });
+        if (!data[0]){
+            console.log("There are no favourite projects");
+        } else {
+            console.log("WHAT DO WE HAVE HERE", data)
+            let projectIdArr = data.map(item => item.id_project);
+            console.log("from Favs views controller: ", projectIdArr);
+            res.status(200).json({
+                "project_ids": projectIdArr,
+                "msj": "Favourite projects ids supplied"
+            });
+        }
     } catch (error) {
         console.log(`Error: ${error}`);
     }
