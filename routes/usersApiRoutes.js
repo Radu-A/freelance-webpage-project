@@ -4,7 +4,7 @@ const usersApiController = require ('../controllers/usersApiController');
 const authMiddleware = require("../middlewares/authMiddleware")
 
 //GETs
-usersApiRouter.get("/favs/:id_user", authMiddleware.authCheck, usersApiController.getUserFavouritesIds); // Gets user's favourite projects ids
+usersApiRouter.get("/favs", authMiddleware.authCheck, usersApiController.getUserFavouritesIds); // Gets user's favourite projects ids
 usersApiRouter.get("/recoverpassword", usersApiController.recoverPassword);// recover password (user and admin)
 usersApiRouter.get("/restorepassword", usersApiController.restorePassword);// restorepassword (user and admin)
 //POSTs

@@ -14,14 +14,15 @@ async function addGoogleUserToDDBB(profile, done){
     } else {
       console.log("Adding new user into data base");
       // users.createUser(email, password, user_name, admin, firstname, surename);
-      users.createUser(email, "not_needed/GoogleOAuth", given_name+sub, false, given_name, family_name);
+      users.createUser(email, "not_needed/GoogleOAuth", given_name+sub, false, given_name, family_name, true);
       let newUser = {
         "email": email,
         "password": "not_needed/GoogleOAuth",
         "user_name": `${given_name}${sub}`,
         "admin": false,
         "firstname": given_name,
-        "surename": family_name
+        "surename": family_name,
+        "logged": true
       }
       done(null, newUser);
     }

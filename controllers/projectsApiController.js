@@ -61,11 +61,13 @@ const getProjectsBySkill = async (req, res) => {
 const getProjectsById = async(req, res) => {
     // WHAT IF THERE ARE NO PROJECTS IN FAVOURITES?
     let param = req.params.ids;
+    console.log("PARAM: ",param);
     let projectIds = param.split(",");
     console.log("projects id",projectIds);
     try {
-        const data = await Project.find().where("_id").in(projectIds).exec();
-        
+        // THERE IS AN ERROR WITH THE QUERIE!
+        const data = await Project.find().where("_id").in(projectIds).exec(); 
+        console.log("THIS IS WHAT YOU GET: ", data)
         res.status(200).json(data);
         console.log(data);
     } catch (error) {
