@@ -169,7 +169,7 @@ function printProjectCard(projects) {
 		articleProjectCard.id = `project-card-${i+1}`
 		articleProjectCard.innerHTML = `
 		<div class="project-title">
-			<h2>${project.title}</h2>
+			<h2><a href="${project.url}">${project.title}</a></h2>
 		</div>
 		<div class="project-description">
 			<p>${project.description}</p>
@@ -180,7 +180,14 @@ function printProjectCard(projects) {
 		<div class="project-buttons">
 			<button id="add_delete"></button>
 		</div>`;
-		
+		const projectSkillsDiv = document.createElement('div');
+		projectSkillsDiv.classList.add('project-skills');
+		project.skills.forEach(skill=>{
+			const skillParagraph = document.createElement('p');
+			skillParagraph.innerText = skill;
+			projectSkillsDiv.appendChild(skillParagraph);
+		})
+		articleProjectCard.appendChild(projectSkillsDiv);
 		searchResultsSection.appendChild(articleProjectCard);
 
 		let addDeleteButton = document.querySelector(`#project-card-${i+1} div.project-buttons button#add_delete`);
@@ -224,8 +231,7 @@ function printProjectCard(projects) {
 		}
 	});
 }
-
-
+// It search projects
 async function getProjects(keyword) {
 	if (keyword) {
 		try {
@@ -247,6 +253,7 @@ async function getProjects(keyword) {
 		}
 	}
 }
+// If search-projects-form exists, add submit event listener
 if (searchProjectsForm) {
 	searchProjectsForm.addEventListener('submit', (event) => {
 		event.preventDefault();
@@ -263,9 +270,7 @@ if (searchProjectsForm) {
 // http://localhost:3000/dashboard
 const dashboardResultsSection = document.querySelector('.dashboard');
 
-
-
-async function printDetail(projects, i) {
+async function printDashboardDetail(projects, i) {
 	dashboardResultsSection.innerHTML = `
 	<article>
 		<h1>Project edition</h1>
@@ -273,7 +278,7 @@ async function printDetail(projects, i) {
 	</article>
 	<article>
 		<div class="detail-title">
-			<h2>${projects[i].title}</h2>
+			<h2><a href="${projects[i].url}">${projects[i].title}</a></h2>
 		</div>
 		<div class="detail-description">
 			<p>${projects[i].description}</p>
@@ -290,7 +295,7 @@ async function printDetail(projects, i) {
 	const backDashboardButton = document.getElementById('back-dashboard');
 	backDashboardButton.addEventListener('click', ()=> {
 		location.reload();
-	})
+	});
 	// Delete button
 	const deleteProjectButton = document.getElementById('delete-project');
 	deleteProjectButton.addEventListener('click', ()=> {
@@ -300,15 +305,15 @@ async function printDetail(projects, i) {
 		  })
 		  .then(location.reload())
 		  .catch(error=>console.log(error));
-	})
+	});
 	// Edit button
 	const editProjectButton = document.getElementById('edit-project');
 	editProjectButton.addEventListener('click', (event)=> {
 		event.preventDefault();
-		console.log(projects[i].description);
 		const editProjectArticle = document.createElement('article');
 		editProjectArticle.id = 'edit-project-article';
 		editProjectArticle.innerHTML = `
+		<h3>Edit project</h3>
 		<form id="edit-project-form" action="">
 			<input id="edit-title" type="text" name="title" value="${projects[i].title}">
 			<textarea id="edit-description" name="description" cols="30" rows="10">${projects[i].description}</textarea>
@@ -316,16 +321,78 @@ async function printDetail(projects, i) {
 			<button id="edit-save" type="submit">Save</button>
 		</form>`;
 		dashboardResultsSection.appendChild(editProjectArticle);
+		editProjectButton.disabled = true;
+
+
+		const editProjectForm = document.getElementById('edit-project-form');
+		editProjectForm.addEventListener('submit', (event) => {
+			event.preventDefault();
+
+			const editTitle = document.getElementById('edit-title').value;
+			const editBudget = document.getElementById('edit-budget').value;
+			const editDescription = document.getElementById('edit-description').value;
+
+
+			fetch(`http://localhost:3000/api/projects/project`,
+			{
+				method: 'PUT',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ 
+					"_id": projects[i]._id,
+					"title": editTitle, 
+					"budget": editBudget, 
+					"description": editDescription
+				})
+			})
+			.then(window.location.reload())
+			.catch(error=>console.log(error));
+		})
 	})
 }
 
 if (dashboardResultsSection) {
 	// getAndAwaitProjects();
+	const createButtonArticle = document.createElement('article');
+	createButtonArticle.innerHTML = `
+	<article>
+		<button id='create-project'>Create project</button>
+	</article>`;
+	dashboardResultsSection.appendChild(createButtonArticle);
+	createButtonArticle.addEventListener('click', ()=>{
+		dashboardResultsSection.innerHTML = `
+		<h3>Create new project</h3>
+		<form id="create-project-form" action="">
+			<input id="create-title" type="text" name="title" placeholder="Title">
+			<textarea id="create-description" name="description" cols="30" rows="10" placeholder="Description"></textarea>
+			<input id="create-budget" type="edit-budget" name="budget" placeholder="Budget">
+			<button id="create-save" type="submit">Save</button>
+		</form>`;
+		const createProjectForm = document.getElementById('create-project-form');
+		createProjectForm.addEventListener('submit', (event)=>{
+			event.preventDefault();
+			const createTitle = document.getElementById('create-title').value;
+			const createDescription = document.getElementById('create-description').value;
+			const createBudget = document.getElementById('create-budget').value;
+
+			fetch(`http://localhost:3000/api/projects/project`,
+			{
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ 
+					"title": createTitle, 
+					"budget": createBudget, 
+					"description": createDescription
+				})
+			})
+			.then(window.location.reload())
+			.catch(error=>console.log(error));
+		})
+	})
 	getProjects().then(projects=>{
 		const projectCardArticle =  document.querySelectorAll('.project-card');
 		projectCardArticle.forEach((article, i)=>{
 			article.addEventListener('click', () => {
-				printDetail(projects, i);
+				printDashboardDetail(projects, i);
 			})
 		})
 	})

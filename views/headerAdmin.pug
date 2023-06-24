@@ -1,13 +1,15 @@
-nav
-    button.hamburger(type="button")
-        ul.menu
-            li.menu-item
-                a(href="/") Index
-            li.menu-item
-                a(href="/profile") Profile
-            li.menu-item
-                a(href="/users") Users
-            li.menu-item
-                a(href="/dashboard") Dashboard
-            li.menu-item
-                a(href="/logout") Logout
+section.top-nav
+  div
+    | Logo Here
+  input#menu-toggle(type='checkbox')
+  label.menu-button-container(for='menu-toggle')
+    .menu-button
+  ul.menu
+    li.menu-item
+      a.menu-link(href="/") Index
+    li.menu-item
+      a.menu-link(href="/users") Users
+    li.menu-item
+      a.menu-link(href="/dashboard") Dashboard
+    li.menu-item
+      a.menu-link(href="/logout") Logout

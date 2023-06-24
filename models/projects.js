@@ -14,6 +14,14 @@ const objectSchema = {
     description: {
         type: String,
         required: true
+    },
+    url: {
+        type: String,
+        required: true
+    },
+    skills: {
+        type: Array,
+        required: true
     }
 }
 // Creamos el esqueña
