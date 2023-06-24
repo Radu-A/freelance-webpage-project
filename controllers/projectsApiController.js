@@ -32,7 +32,7 @@ const getProjectsByKeyword = async (req, res) => {
         // It shoud be able to search by isolated word
         const re = new RegExp(req.query.keyword, 'i');
         // const re = new RegExp(`\b(?:${req.params.keyword})\b`, "i");
-        const data = await Project.find( { title: "API Integration" } )
+        const data = await Project.find( { $or: [ { title: re }, { description: re } ] } )
         res.status(200).json(data);
     } catch (error) {
         res.status(404).json({
@@ -44,11 +44,11 @@ const getProjectsByKeyword = async (req, res) => {
 // Get project by "skill"
 const getProjectsBySkill = async (req, res) => {
     try {
-        console.log(req.query.skill)
+        console.log(req.query.keyword)
         // It shoud be able to search by isolated word
         const re = new RegExp(req.query.keyword, 'i');
         // const re = new RegExp(`\b(?:${req.params.keyword})\b`, "i");
-        const data = await Project.find( { title } )
+        const data = await Project.find( { $or: [ { title: re }, { description: re } ] } )
         res.status(200).json(data);
     } catch (error) {
         res.status(404).json({
@@ -59,7 +59,6 @@ const getProjectsBySkill = async (req, res) => {
 }
 //Get projects by Id
 const getProjectsById = async(req, res) => {
-    // WHAT IF THERE ARE NO PROJECTS IN FAVOURITES?
     let param = req.params.ids;
     console.log("PARAM: ",param);
     let projectIds = param.split(",");
