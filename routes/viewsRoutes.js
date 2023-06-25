@@ -13,6 +13,6 @@ viewsRouter.get("/profile", authMiddleware.authCheck, viewsController.getProfile
 
 // Admin
 viewsRouter.get("/users", viewsController.getUsersView);
-viewsRouter.get("/dashboard", viewsController.getDashboardView);
+viewsRouter.get("/dashboard", authMiddleware.authCheck, authMiddleware.adminAuthCheck, viewsController.getDashboardView);
 
 module.exports = viewsRouter;

@@ -35,8 +35,9 @@ const usersQueries = {
         user_name, 
         admin, 
         firstname, 
-        surename)
-    VALUES ($1, $2, $3, $4, $5, $6)`,
+        surename,
+        logged)
+    VALUES ($1, $2, $3, $4, $5, $6, $7)`,
     updateUser:`
     UPDATE users
     SET email=$2, 
@@ -51,6 +52,14 @@ const usersQueries = {
     changeUserState:`
     UPDATE users
     SET logged = NOT logged
+    WHERE email=$1;`,
+    loggedTrue:`
+    UPDATE users
+    SET logged = true
+    WHERE email=$1;`,
+    loggedFalse:`
+    UPDATE users
+    SET logged = false
     WHERE email=$1;`,
 }
 

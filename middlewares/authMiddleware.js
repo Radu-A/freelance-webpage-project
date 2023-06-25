@@ -18,18 +18,34 @@ const authCheck = (req, res, next) => {
                 req.decoded.data = data;
                 next();
             } else {
-                return res.json({message: "Invalid token"});
+                console.log("Invalid token");
+                req.logout(function(err) {
+                    if (err) { return next(err); }
+                    req.session.destroy();
+                    res.clearCookie("access-token").redirect('/login');
+                });
             }
         })
     } else {
-        res.send({
-            message: "Token not provided"
-        })
+        console.log("Token not provided");
+        res.redirect("/login");
     }
 }
 
+const adminAuthCheck = (req, res, next) => {
+    console.log(req.decoded.data);
+    let admin = req.decoded.data.admin;
+    if(admin){
+        console.log("access granted");
+        next();
+    } else {
+        console.log("restricted access");
+        res.redirect("/");
+    }
+}
 
 //module.exports = protectedRoutes;
 module.exports = {
-    authCheck
+    authCheck,
+    adminAuthCheck
 }

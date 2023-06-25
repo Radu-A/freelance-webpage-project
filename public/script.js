@@ -62,7 +62,6 @@ editUserData.addEventListener("click", function(event) {
 
     const form = document.createElement("form");
 	form.setAttribute("id", "editUserDataForm");
-    const id_userInput = document.createElement("input");
     const passwordInput = document.createElement("input");
     const emailInput = document.createElement("input");
     const userNameInput = document.createElement("input");
@@ -70,9 +69,6 @@ editUserData.addEventListener("click", function(event) {
     const surnameInput = document.createElement("input");
     const submitButton = document.createElement("button");
 
-    id_userInput.type = "number";
-    id_userInput.placeholder = "id --> Just for tests";
-    id_userInput.name = "id_user";
     passwordInput.type = "password";
     passwordInput.placeholder = "password";
     passwordInput.name = "password";
@@ -92,7 +88,6 @@ editUserData.addEventListener("click", function(event) {
     submitButton.type = "submit";
     submitButton.innerText = "Save edit";
   
-    form.appendChild(id_userInput);
     form.appendChild(passwordInput);
     form.appendChild(emailInput);
     form.appendChild(userNameInput);
@@ -112,7 +107,6 @@ editUserData.addEventListener("click", function(event) {
       e.preventDefault();
       
       let newInfo = {
-          id_user: e.target.id_user.value,
           email: e.target.email.value,
           password: e.target.password.value,
           userName: e.target.userName.value,
