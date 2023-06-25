@@ -1,6 +1,19 @@
 const users = require("../models/users");
 
 //GETs
+//get user's info:
+const getUserInfo = async (req,res) => {
+    try {
+        let {email} = req.decoded.data;
+        let data = await users.getUserByEmail(email);
+        res.status(200).json({
+            "data": data,
+            "msj": "User info supplied"
+        });
+    } catch (error) {
+        console.log(`Error: ${error}`);
+    }
+}
 // get favourites Ids with user id:
 const getUserFavouritesIds = async (req,res) => {
     try {
@@ -66,8 +79,25 @@ const saveFav = async(req,res) => {
 // Edit user profile (user and admin)
 const editUserProfile = async (req,res) => {
     try {
-        console.log(req.body)
-        let {id_user, email, password, userName, firstName, sureName} = req.body;
+        let {id_user} = req.decoded.data;
+        let {email, password, userName, firstName, sureName} = req.body;
+        // If a field is not filled, do it with the current value
+        if(email == ""){
+            email = req.decoded.data.email;
+        };
+        if (password == "") {
+            password = req.decoded.data.password;
+        };
+        if (userName == "") {
+            userName = req.decoded.data.user_name;
+        };
+        if (firstName == "") {
+            firstName = req.decoded.data.firstname;
+        };
+        if (sureName == "") {
+            sureName = req.decoded.data.surename;
+        };
+
         // "user_id" goes in "userInfo" to search the user row in the DDBB.
         let editedInfo = await users.updateUser(id_user, email, password, userName, firstName, sureName);
 
@@ -114,6 +144,7 @@ const deleteFavorite = async(req, res) => {
 
  
  module.exports = {
+    getUserInfo,
     getUserFavouritesIds,
     recoverPassword,
     restorePassword,

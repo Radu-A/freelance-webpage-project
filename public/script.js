@@ -1,4 +1,3 @@
-
 // REQUESTS
 //GETs
 async function getData(url = "") {
@@ -62,7 +61,6 @@ editUserData.addEventListener("click", function(event) {
 
     const form = document.createElement("form");
 	form.setAttribute("id", "editUserDataForm");
-    const id_userInput = document.createElement("input");
     const passwordInput = document.createElement("input");
     const emailInput = document.createElement("input");
     const userNameInput = document.createElement("input");
@@ -70,9 +68,6 @@ editUserData.addEventListener("click", function(event) {
     const surnameInput = document.createElement("input");
     const submitButton = document.createElement("button");
 
-    id_userInput.type = "number";
-    id_userInput.placeholder = "id --> Just for tests";
-    id_userInput.name = "id_user";
     passwordInput.type = "password";
     passwordInput.placeholder = "password";
     passwordInput.name = "password";
@@ -92,7 +87,6 @@ editUserData.addEventListener("click", function(event) {
     submitButton.type = "submit";
     submitButton.innerText = "Save edit";
   
-    form.appendChild(id_userInput);
     form.appendChild(passwordInput);
     form.appendChild(emailInput);
     form.appendChild(userNameInput);
@@ -112,7 +106,6 @@ editUserData.addEventListener("click", function(event) {
       e.preventDefault();
       
       let newInfo = {
-          id_user: e.target.id_user.value,
           email: e.target.email.value,
           password: e.target.password.value,
           userName: e.target.userName.value,
@@ -151,12 +144,25 @@ async function getFavouriteProjectsInfo(){
 	}
 }
 
-if(window.location.pathname == "/favs"){ //Check the visited page
+if(window.location.pathname == "/favs"){
 	getFavouriteProjectsInfo();
 }
 
 
+async function setNavBar () {
+	let userInfo = await getData("http://localhost:3000/api/users/user");
+	let {id_user, email, password, user_name, admin, firstname, surename, logged} = userInfo;
+	if(admin && logged){
+		//admin navBar
+		
+	} else if (!admin && logged) {
+		//user navBar
 
+	} else {
+		//not logged in
+
+	}
+}
 
 
 
@@ -360,14 +366,27 @@ async function printDashboardDetail(projects, i) {
 }
 
 if (dashboardResultsSection) {
-	// getAndAwaitProjects();
+	const updateResultsButton = document.createElement('article');
+	updateResultsButton.innerHTML = `
+	<article>
+		<button id='update-results-button'>Update results</button>
+	</article>`
+	dashboardResultsSection.appendChild(updateResultsButton);
+	updateResultsButton.addEventListener('click', ()=>{
+		fetch(`http://localhost:3000/api/projects/search/scrap`).catch(error=>console.log(error));
+	})
+
+
+	// To create "create-project" button
 	const createButtonArticle = document.createElement('article');
 	createButtonArticle.innerHTML = `
 	<article>
 		<button id='create-project'>Create project</button>
 	</article>`;
 	dashboardResultsSection.appendChild(createButtonArticle);
+	// To manage the event of "create-project" button
 	createButtonArticle.addEventListener('click', ()=>{
+		// To print "create-project-form"
 		dashboardResultsSection.innerHTML = `
 		<h3>Create new project</h3>
 		<form id="create-project-form" action="">
@@ -377,12 +396,13 @@ if (dashboardResultsSection) {
 			<button id="create-save" type="submit">Save</button>
 		</form>`;
 		const createProjectForm = document.getElementById('create-project-form');
+		// To manage the event of "create-project-form"
 		createProjectForm.addEventListener('submit', (event)=>{
 			event.preventDefault();
 			const createTitle = document.getElementById('create-title').value;
 			const createDescription = document.getElementById('create-description').value;
 			const createBudget = document.getElementById('create-budget').value;
-
+			// To save data on MongoDB
 			fetch(`http://localhost:3000/api/projects/project`,
 			{
 				method: 'POST',
@@ -397,6 +417,7 @@ if (dashboardResultsSection) {
 			.catch(error=>console.log(error));
 		})
 	})
+	// It print all projects
 	getProjects().then(projects=>{
 		const projectCardArticle =  document.querySelectorAll('.project-card');
 		projectCardArticle.forEach((article, i)=>{

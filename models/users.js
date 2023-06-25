@@ -54,13 +54,13 @@ const getUserByEmail = async (email) => {
 
 
 // Users will be created in the sign in
-const createUser = async(email, password, user_name, admin, firstname, surename) => {
+const createUser = async(email, password, user_name, admin, firstname, surename, logged) => {
     let client, result;
     try{
-        console.log("INFO FROM CREATEUSER", email, password, user_name, admin, firstname, surename)
+        console.log("INFO FROM CREATEUSER", email, password, user_name, admin, firstname, surename, logged)
         client = await pool.connect();
         const data = await client.query(usersQueries.createUser,
-            [email, password, user_name, admin, firstname, surename]);
+            [email, password, user_name, admin, firstname, surename, logged]);
         result = data.rowCount;
         console.log(result);
     }catch(err){
@@ -76,6 +76,7 @@ const createUser = async(email, password, user_name, admin, firstname, surename)
 const updateUser = async(id_user, email, password, user_name, firstname, surename) => {
     let client, result;
     try{
+        console.log("<<__",id_user, email, password, user_name, firstname, surename)
         client = await pool.connect();
         // Admin field is not here cause the user is not allowed to change it
         const data = await client.query(usersQueries.updateUser,
@@ -165,9 +166,39 @@ const changeUserState = async(email) => {
     let client, result;
     try {
         client = await pool.connect();
+        console.log("change user stated ",email);
         let data = await client.query(usersQueries.changeUserState, [email]);
         result = data.rows;
-        //console.log(result);
+        console.log("change user stated ",result);
+    } catch(err) {
+        console.log(err);
+        throw err;
+    } finally {
+        client.release();
+    }
+    return result
+}
+
+const logInUserTrue = async(email) => {
+    let client, result;
+    try {
+        client = await pool.connect();
+        let data = await client.query(usersQueries.loggedTrue, [email]);
+        result = data.rows;
+    } catch(err) {
+        console.log(err);
+        throw err;
+    } finally {
+        client.release();
+    }
+    return result
+}
+const logInUserFalse = async(email) => {
+    let client, result;
+    try {
+        client = await pool.connect();
+        let data = await client.query(usersQueries.loggedFalse, [email]);
+        result = data.rows;
     } catch(err) {
         console.log(err);
         throw err;
@@ -195,5 +226,7 @@ module.exports = {
     addFavourite,
     deleteFavourite,
     getAllFavouritesIds,
-    changeUserState
+    changeUserState,
+    logInUserTrue,
+    logInUserFalse
 }

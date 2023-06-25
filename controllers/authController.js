@@ -15,9 +15,6 @@ const redirectBecauseOfFailure = passport.authenticate('google', { failureRedire
 
 //Función exitosa
 const createAndStoreToken = (req,res)=>{
-    // Because the user is logging in, we have to change the user state in the table "users": 
-    users.changeUserState(req.user.email);
-
     //En el cuerpo de esta función podemos almacenar usuarios en nuestra bbdd con el objeto que nos proporciona req.user (Para ello es necesario hacer la función asíncrona)
 
     //Estos son los pasos para crear un token si la autenticación es exitosa
@@ -47,7 +44,7 @@ const notifyOfAuthFailure = (req, res) => {
 const destroySessionAndClearCookies = (req, res) => {
     // Now we have to change the user state because he is logging out:
     let email = req.decoded.email;
-    users.changeUserState(email);
+    users.logInUserFalse(email);
 
     req.logout(function(err) {
         if (err) { return next(err); }

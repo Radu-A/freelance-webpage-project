@@ -10,6 +10,7 @@ async function addGoogleUserToDDBB(profile, done){
     //Check if user exists in DDBB
     if(user){
       console.log("User already exists in DDBB");
+      users.logInUserTrue(email);
       done(null, user);
     } else {
       console.log("Adding new user into data base");

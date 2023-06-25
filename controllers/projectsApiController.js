@@ -1,21 +1,25 @@
 const mongoose = require('mongoose');
 const { ObjectId } = require('mongodb');
 const Project = require('../models/projects');
+const scrap = require('../scraper/indexScraper');
 require('../utils/db_mongo');
 
 //GETs
-
+// Get projects
 const getProjects = async (req, res) => {
-    if (req.query) {
-        getProjectsByKeyword(req, res);
-    } else {
-        getAllProjects(req, res);
-    }
+        if (req.query.keyword) {
+            getProjectsByKeyword(req, res);
+        } else if (req.query.skill) {
+            getProjectsBySkill(req, res);
+        } else {
+            getAllProjects(req, res);
+        }
 }
 
 // Get results list (user and admin)
 const getAllProjects = async (req, res) => {
     try {
+        console.log('You have searched all');
         const data = await Project.find({});
         res.status(200).json(data);
     } catch (error) {
@@ -28,11 +32,11 @@ const getAllProjects = async (req, res) => {
 // Get project by matching a word on title or description
 const getProjectsByKeyword = async (req, res) => {
     try {
-        console.log(req.query.keyword)
         // It shoud be able to search by isolated word
+        console.log('You have searched by keyword');
+        console.log(req.query.keyword)
         const re = new RegExp(req.query.keyword, 'i');
-        // const re = new RegExp(`\b(?:${req.params.keyword})\b`, "i");
-        const data = await Project.find( { $or: [ { title: re }, { description: re } ] } )
+        const data = await Project.find( { $or: [ { title: re }, { description: re }, {skills: re} ] } )
         res.status(200).json(data);
     } catch (error) {
         res.status(404).json({
@@ -44,11 +48,10 @@ const getProjectsByKeyword = async (req, res) => {
 // Get project by "skill"
 const getProjectsBySkill = async (req, res) => {
     try {
-        console.log(req.query.keyword)
-        // It shoud be able to search by isolated word
-        const re = new RegExp(req.query.keyword, 'i');
-        // const re = new RegExp(`\b(?:${req.params.keyword})\b`, "i");
-        const data = await Project.find( { $or: [ { title: re }, { description: re } ] } )
+        console.log('You have searched by skill');
+        console.log(req.query.skill);
+        const skill = req.query.skill
+        const data = await Project.find({skills: skill});
         res.status(200).json(data);
     } catch (error) {
         res.status(404).json({
@@ -69,6 +72,17 @@ const getProjectsById = async(req, res) => {
         console.log("THIS IS WHAT YOU GET: ", data)
         res.status(200).json(data);
         console.log(data);
+    } catch (error) {
+        res.status(404).json({
+            "Error": `${error}`
+        })
+        console.log(error);
+    }
+}
+// Scrap projects
+async function scrapProjects() {
+    try {
+        scrap();
     } catch (error) {
         res.status(404).json({
             "Error": `${error}`
@@ -141,6 +155,7 @@ module.exports = {
     getProjects,
     getProjectsById,
     createNewProject,
+    scrapProjects,
     editProject,
     deleteProjectById
 }
