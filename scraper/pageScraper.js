@@ -2,26 +2,49 @@ const { json } = require('express');
 const Project = require('../models/projects');
 const Skill = require('../models/skills');
 
-// async function saveNewSkill(skill) {
+// To avoid saving repeted skills
+async function saveSkill(skill) {
+	try {
+        const data = await Skill.find({title: skill});
+        if (data.length === 0) {
+			const newSkill = new Skill({
+				title: skill
+			})
+			newSkill.save();
+		}
+	} catch (error) {
+		console.log(error);
+	}
+}
 
-// 	try {
-// 		const data = await Project.findOne( { title: skill } );
-// 		const result = JSON(data);
-// 		console.log(`Buscamos este skill: ${skill}`);
-// 		console.log(`Esto es lo que sale: ${result}`);
-// 		if (null) {
-// 			const newSkill = new Skill({
-// 				title: skill
-// 			})
-// 			newSkill.save();
-// 		}
-// 	} catch (error) {
-		
-// 	}
-// }
+// To avoid saving repeted projects
+async function saveProject(project) {
+	try {
+		const { title, date, source, budget, description, url, skills } = project;
+        const data = await Project.find({title: title});
+		console.log('Buscando');
+		console.log(title);
+		console.log('Esto es lo que devuelve la búsqueda');
+		console.log(data);
+        if (data.length === 0) {
+			// Pasamos los datos a la base de datos en Atlas
+			const newProject = new Project({
+				title,
+				date,
+				source,
+				budget,
+				description,
+				url,
+				skills
+			})
+			newProject.save();
+		}
+	} catch (error) {
+		console.log(error);
+	}
+}
 
 // Scraper object working on Freelance.com
-
 // https://www.freelancer.com/jobs/3/?keyword=java
 // https://www.freelancer.com/jobs/3/
 // https://www.freelancer.com/jobs/
@@ -48,6 +71,8 @@ const scraperObjectFreelancer = {
 			let newPage = await browser.newPage();
 			await newPage.goto(link);
 			dataObj['title'] = await newPage.$eval('h1', text => text.textContent);
+			dataObj['date'] = new Date();
+			dataObj['source'] = 'freelancer';
 			dataObj['budget'] = await newPage.$eval('.Grid-col--tablet-4 p', text => text.textContent);
 			dataObj['description'] = await newPage.$eval('.PageProjectViewLogout-detail p:nth-child(2)', text => text.textContent);
 			dataObj['url'] = link;
@@ -61,29 +86,17 @@ const scraperObjectFreelancer = {
 			let currentPageData = await pagePromise(urls[link]);
 			// scrapedData.push(currentPageData);
 
-			// Pasamos los datos a la base de datos en Atlas
-			const { title, budget, description, url, skills } = currentPageData;
-			const newProject = new Project({
-				title,
-				budget,
-				description,
-				url,
-				skills
-			})
-			newProject.save();
+			saveProject(currentPageData);
 
-			
-			skills.forEach(skill=>{
-				const newSkill = new Skill({
-					title: skill
-				})
-				newSkill.save();
+			currentPageData.skills.forEach(skill=>{
+				saveSkill(skill);
 			})
 
 			console.log(currentPageData);
 		}
     }
 }
+
 
 // Scraper object from upwork.com
 const scraperObjectUpwork = {
@@ -110,6 +123,8 @@ const scraperObjectUpwork = {
 			let newPage = await browser.newPage();
 			await newPage.goto(link);
 			dataObj['title'] = await newPage.$eval('h1', text => text.textContent.split("\n").join("").trim());
+			dataObj['date'] = new Date();
+			dataObj['source'] = 'freelancer';
 			dataObj['budget'] = await newPage.$eval('.up-card-section ul > li:first-child strong', text => text.textContent.split("\n").join("").trim());
 			dataObj['description'] = await newPage.$eval('.job-description div', text => text.textContent.split("\n").join("").trim());
 			dataObj['url'] = link;
@@ -123,28 +138,15 @@ const scraperObjectUpwork = {
 			let currentPageData = await pagePromise(urls[link]);
 			// scrapedData.push(currentPageData);
 
-			// Pasamos los datos a la base de datos en Atlas
-			const { title, budget, description, url, skills } = currentPageData;
-			const newProject = new Project({
-				title,
-				budget,
-				description,
-				url,
-				skills
-			})
-			newProject.save();
-			
-			skills.forEach(skill=>{
-				const newSkill = new Skill({
-					title: skill
-				})
-				newSkill.save();
+			saveProject(currentPageData);
+
+			currentPageData.skills.forEach(skill=>{
+				saveSkill(skill);
 			})
 
 			console.log(currentPageData);
 		}
     }
-	
 }
 
 module.exports = scraperObjectFreelancer;

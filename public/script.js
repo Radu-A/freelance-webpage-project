@@ -360,14 +360,16 @@ async function printDashboardDetail(projects, i) {
 }
 
 if (dashboardResultsSection) {
-	// getAndAwaitProjects();
+	// To create "create-project" button
 	const createButtonArticle = document.createElement('article');
 	createButtonArticle.innerHTML = `
 	<article>
 		<button id='create-project'>Create project</button>
 	</article>`;
 	dashboardResultsSection.appendChild(createButtonArticle);
+	// To manage the event of "create-project" button
 	createButtonArticle.addEventListener('click', ()=>{
+		// To print "create-project-form"
 		dashboardResultsSection.innerHTML = `
 		<h3>Create new project</h3>
 		<form id="create-project-form" action="">
@@ -377,12 +379,13 @@ if (dashboardResultsSection) {
 			<button id="create-save" type="submit">Save</button>
 		</form>`;
 		const createProjectForm = document.getElementById('create-project-form');
+		// To manage the event of "create-project-form"
 		createProjectForm.addEventListener('submit', (event)=>{
 			event.preventDefault();
 			const createTitle = document.getElementById('create-title').value;
 			const createDescription = document.getElementById('create-description').value;
 			const createBudget = document.getElementById('create-budget').value;
-
+			// To save data on MongoDB
 			fetch(`http://localhost:3000/api/projects/project`,
 			{
 				method: 'POST',
