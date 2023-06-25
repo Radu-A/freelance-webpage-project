@@ -157,6 +157,16 @@ if(window.location.pathname == "/favs"){ //Check the visited page
 // ---------------SEARCH PROJECTS------------------
 const searchResultsSection = document.querySelector('.search-results');
 const searchProjectsForm = document.querySelector('#search-projects');
+const skillList = ['Python', 'Java', 'PHP', 'JavaScript', '.NET', 'CSS', 'HTML5'];
+
+function autoComplete(ciudad) {
+		return skillList.filter((valor) => {
+			const valorMinuscula = valor.toLowerCase()
+			const ciudadMinuscula = valor.toLowerCase()
+	
+				return valorMinuscula.includes(ciudadMinuscula)
+			})
+	}
 
 // It prints project card
 function printProjectCard(projects) {
@@ -255,8 +265,34 @@ async function getProjects(keyword) {
 		}
 	}
 }
+async function printLinks() {
+	const skillLinksArticle = document.createElement('article');
+	skillLinksArticle.id = 'skill-links-article';
+	skillList.forEach((skill, i)=>{
+		const skillLinkDiv = document.createElement('div');
+		skillLinkDiv.classList.add = 'skill-link-div'
+		skillLinkDiv.innerHTML = `<div><a class='skill-link-a' class='skill-link-a-${i+1}' href="https://trello.com/b/rj21C03C/freelance-webpage-project">${skill}</a></div>`;
+		skillLinksArticle.appendChild(skillLinkDiv);
+	})
+	searchResultsSection.appendChild(skillLinksArticle);
+
+	const skillLinkAnchors = document.querySelectorAll('.skill-link-a');
+	skillLinkAnchors.forEach((item, i)=>{
+		item.addEventListener('click', (event)=>{
+			event.preventDefault()
+			console.log(item);
+			searchResultsSection.innerHTML = '';
+			printLinks()
+			getProjects(skillList[i]);
+		})
+	})
+}
 // If search-projects-form exists, add submit event listener
 if (searchProjectsForm) {
+	getProjects();
+	printLinks();
+	
+	
 	searchProjectsForm.addEventListener('submit', (event) => {
 		event.preventDefault();
 	
