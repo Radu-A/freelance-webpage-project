@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const { ObjectId } = require('mongodb');
 const Project = require('../models/projects');
+const scrap = require('../scraper/indexScraper');
 require('../utils/db_mongo');
 
 //GETs
@@ -78,6 +79,17 @@ const getProjectsById = async(req, res) => {
         console.log(error);
     }
 }
+// Scrap projects
+async function scrapProjects() {
+    try {
+        scrap();
+    } catch (error) {
+        res.status(404).json({
+            "Error": `${error}`
+        })
+        console.log(error);
+    }
+}
 
 
 //POSTs
@@ -143,6 +155,7 @@ module.exports = {
     getProjects,
     getProjectsById,
     createNewProject,
+    scrapProjects,
     editProject,
     deleteProjectById
 }

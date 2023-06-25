@@ -1,4 +1,3 @@
-
 // REQUESTS
 //GETs
 async function getData(url = "") {
@@ -360,6 +359,17 @@ async function printDashboardDetail(projects, i) {
 }
 
 if (dashboardResultsSection) {
+	const updateResultsButton = document.createElement('article');
+	updateResultsButton.innerHTML = `
+	<article>
+		<button id='update-results-button'>Update results</button>
+	</article>`
+	dashboardResultsSection.appendChild(updateResultsButton);
+	updateResultsButton.addEventListener('click', ()=>{
+		fetch(`http://localhost:3000/api/projects/search/scrap`).catch(error=>console.log(error));
+	})
+
+
 	// To create "create-project" button
 	const createButtonArticle = document.createElement('article');
 	createButtonArticle.innerHTML = `

@@ -50,12 +50,12 @@ async function saveProject(project) {
 // https://www.freelancer.com/jobs/
 // https://www.freelancer.com/jobs/?results=100
 const scraperObjectFreelancer = {
-    url: 'https://www.freelancer.com/jobs/',
+    url: 'https://www.freelancer.com/jobs/software-development',
     async scraper(browser, keyword){
 		let newUrl = this.url + '?keyword=' + keyword ;
         let page = await browser.newPage();
-        console.log(`Navigating to ${newUrl}...`);
-        await page.goto(newUrl);
+        console.log(`Navigating to ${this.url}...`);
+        await page.goto(this.url);
         // Wait for the required DOM to be rendered
         await page.waitForSelector('.JobSearchCard-list');
         // Get the link to all the required books
@@ -70,7 +70,7 @@ const scraperObjectFreelancer = {
 			let dataObj = {};
 			let newPage = await browser.newPage();
 			await newPage.goto(link);
-			dataObj['title'] = await newPage.$eval('h1', text => text.textContent);
+			dataObj['title'] = await newPage.$eval('.PageProjectViewLogout-header-title', text => text.textContent);
 			dataObj['date'] = new Date();
 			dataObj['source'] = 'freelancer';
 			dataObj['budget'] = await newPage.$eval('.Grid-col--tablet-4 p', text => text.textContent);
@@ -124,7 +124,7 @@ const scraperObjectUpwork = {
 			await newPage.goto(link);
 			dataObj['title'] = await newPage.$eval('h1', text => text.textContent.split("\n").join("").trim());
 			dataObj['date'] = new Date();
-			dataObj['source'] = 'freelancer';
+			dataObj['source'] = 'upwork';
 			dataObj['budget'] = await newPage.$eval('.up-card-section ul > li:first-child strong', text => text.textContent.split("\n").join("").trim());
 			dataObj['description'] = await newPage.$eval('.job-description div', text => text.textContent.split("\n").join("").trim());
 			dataObj['url'] = link;
@@ -149,4 +149,7 @@ const scraperObjectUpwork = {
     }
 }
 
-module.exports = scraperObjectFreelancer;
+module.exports = {
+	scraperObjectFreelancer,
+	scraperObjectUpwork
+} 
