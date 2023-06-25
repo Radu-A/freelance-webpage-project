@@ -9,6 +9,4 @@ function scrap(keyword) {
     pageController(browserInstance, keyword);
 }
 
-scrap('python');
-
-module.exports = scrap();
+module.exports = scrap;

@@ -7,6 +7,7 @@ const authMiddleware = require("../middlewares/authMiddleware");
 projectsApiRouter.get("/search?", projectsApiController.getProjects);// search results list (user and admin)
 // projectsApiRouter.get("/search?", projectsApiController.getProjects);// search results list (user and admin)
 projectsApiRouter.get("/:ids?", projectsApiController.getProjectsById);// search results list (user and admin)
+projectsApiRouter.get("/search/scrap", projectsApiController.scrapProjects);// search results list (user and admin)
 //POSTs
 projectsApiRouter.post("/project", authMiddleware.authCheck, authMiddleware.adminAuthCheck, projectsApiController.createNewProject);//create new project (admin)
 //PUTs

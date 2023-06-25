@@ -7,6 +7,14 @@ const objectSchema = {
         type: String,
         required: true
     },
+    date: {
+        type: Date,
+        required: true
+    },
+    source: {
+        type: String,
+        required: true
+    },
     budget: {
         type: String,
         required: true

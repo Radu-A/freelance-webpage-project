@@ -1,4 +1,3 @@
-
 // REQUESTS
 //GETs
 async function getData(url = "") {
@@ -354,14 +353,27 @@ async function printDashboardDetail(projects, i) {
 }
 
 if (dashboardResultsSection) {
-	// getAndAwaitProjects();
+	const updateResultsButton = document.createElement('article');
+	updateResultsButton.innerHTML = `
+	<article>
+		<button id='update-results-button'>Update results</button>
+	</article>`
+	dashboardResultsSection.appendChild(updateResultsButton);
+	updateResultsButton.addEventListener('click', ()=>{
+		fetch(`http://localhost:3000/api/projects/search/scrap`).catch(error=>console.log(error));
+	})
+
+
+	// To create "create-project" button
 	const createButtonArticle = document.createElement('article');
 	createButtonArticle.innerHTML = `
 	<article>
 		<button id='create-project'>Create project</button>
 	</article>`;
 	dashboardResultsSection.appendChild(createButtonArticle);
+	// To manage the event of "create-project" button
 	createButtonArticle.addEventListener('click', ()=>{
+		// To print "create-project-form"
 		dashboardResultsSection.innerHTML = `
 		<h3>Create new project</h3>
 		<form id="create-project-form" action="">
@@ -371,12 +383,13 @@ if (dashboardResultsSection) {
 			<button id="create-save" type="submit">Save</button>
 		</form>`;
 		const createProjectForm = document.getElementById('create-project-form');
+		// To manage the event of "create-project-form"
 		createProjectForm.addEventListener('submit', (event)=>{
 			event.preventDefault();
 			const createTitle = document.getElementById('create-title').value;
 			const createDescription = document.getElementById('create-description').value;
 			const createBudget = document.getElementById('create-budget').value;
-
+			// To save data on MongoDB
 			fetch(`http://localhost:3000/api/projects/project`,
 			{
 				method: 'POST',
@@ -391,6 +404,7 @@ if (dashboardResultsSection) {
 			.catch(error=>console.log(error));
 		})
 	})
+	// It print all projects
 	getProjects().then(projects=>{
 		const projectCardArticle =  document.querySelectorAll('.project-card');
 		projectCardArticle.forEach((article, i)=>{
