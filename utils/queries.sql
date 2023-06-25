@@ -14,7 +14,7 @@ CREATE TABLE users (
   user_name varchar(255) UNIQUE,
   admin boolean NOT NULL, 
   firstname varchar(45) NOT NULL, 
-  surename varchar(100) NOT NULL,
+  surename varchar(100),
   logged boolean
 );
 
