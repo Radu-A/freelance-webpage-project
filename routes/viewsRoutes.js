@@ -8,7 +8,7 @@ const authMiddleware = require("../middlewares/authMiddleware"); // Middlewares 
 viewsRouter.get("/", viewsController.getIndexView);
 viewsRouter.get("/signup", viewsController.getSignUpView);
 viewsRouter.get("/login", viewsController.getLoginView);
-viewsRouter.get("/favs", viewsController.getFavsView);
+viewsRouter.get("/favs", authMiddleware.authCheck, viewsController.getFavsView);
 viewsRouter.get("/profile", authMiddleware.authCheck, viewsController.getProfileView);
 
 // Admin

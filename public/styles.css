@@ -58,6 +58,39 @@ main{
 	margin-top: 10px;
 }
 
+/*boton de google*/
+.button {
+	display: inline-block;
+	padding: 0.5em 1em;
+	border-radius: 0.25em;
+	text-decoration: none;
+	font-weight: bold;
+	color: rgb(40, 50, 70);
+	margin-bottom: 30px;
+  }
+  
+  .google {
+	background-color: rgb(255, 255, 255);
+	border-radius: 5px;
+	width: 150px;
+    border: 1px solid rgb(40, 50, 70);
+  }
+  
+  .google .icon {
+	display: inline-block;
+	vertical-align: middle;
+  }
+  
+  .google .icon img {
+	height: 1em;
+  }
+  
+  .google .text {
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 0.5em;
+  }
+
 
 /*HAMBURGER MENU*/
 .top-nav {
@@ -185,6 +218,20 @@ main{
 .menu-link:visited {
 	color: white;
 	text-decoration: none;
+}
+
+/*DASHBOARD*/
+#create-project {
+	margin-bottom: 30px;	
+}
+
+.project-title a {
+	color: rgb(40, 50, 70);
+	text-decoration: none;
+  }
+
+.project-budget p {
+	font-weight: bold;
 }
 
 

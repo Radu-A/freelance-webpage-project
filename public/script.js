@@ -133,11 +133,11 @@ editUserData.addEventListener("click", function(event) {
 });
 }
 
-let id_user = 10;
-async function getFavouriteProjectsInfo(id_user){
+
+async function getFavouriteProjectsInfo(){
 	try {
 		//gets user's favourite projects ids
-		let favouritesIds = await getData(`http://localhost:3000/api/users/favs/${id_user}`);
+		let favouritesIds = await getData(`http://localhost:3000/api/users/favs/`);
 		let paramValue = favouritesIds.project_ids.toString();
 
 		//gets favourite projects Info
@@ -152,7 +152,7 @@ async function getFavouriteProjectsInfo(id_user){
 }
 
 if(window.location.pathname == "/favs"){ //Check the visited page
-	getFavouriteProjectsInfo(id_user);
+	getFavouriteProjectsInfo();
 }
 
 

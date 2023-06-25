@@ -19,7 +19,7 @@ const createAndStoreToken = (req,res)=>{
     users.changeUserState(req.user.email);
 
     //En el cuerpo de esta función podemos almacenar usuarios en nuestra bbdd con el objeto que nos proporciona req.user (Para ello es necesario hacer la función asíncrona)
-    console.log("lets see req.user.email: ",req.user.email);
+
     //Estos son los pasos para crear un token si la autenticación es exitosa
     const payload = {
         //save here data
@@ -35,7 +35,7 @@ const createAndStoreToken = (req,res)=>{
     res.cookie("access-token", token, {
         httpOnly: true,
         sameSite: "strict",
-    }).redirect("/profile");
+    }).redirect("/");
 }
 
 //Authentification failure
