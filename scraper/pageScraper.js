@@ -58,9 +58,13 @@ const scraperObjectFreelancer = {
         await page.goto(this.url);
         // Wait for the required DOM to be rendered
         await page.waitForSelector('.JobSearchCard-list');
+
         // Get the link to all the required books
         let urls = await page.$$eval('.JobSearchCard-primary-heading', links => {
-            links = links.map(el => el.querySelector('a').href)
+			const regex = /\bPrivate project or contest\b/gm;
+			// Filtering only projects with "budget"
+            links = links.filter(link =>!link.querySelector('a').textContent.match(regex));
+            links = links.map(el => el.querySelector('a').href);
             return links;
         });
         console.log(urls);
