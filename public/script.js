@@ -144,12 +144,25 @@ async function getFavouriteProjectsInfo(){
 	}
 }
 
-if(window.location.pathname == "/favs"){ //Check the visited page
+if(window.location.pathname == "/favs"){
 	getFavouriteProjectsInfo();
 }
 
 
+async function setNavBar () {
+	let userInfo = await getData("http://localhost:3000/api/users/user");
+	let {id_user, email, password, user_name, admin, firstname, surename, logged} = userInfo;
+	if(admin && logged){
+		//admin navBar
+		
+	} else if (!admin && logged) {
+		//user navBar
 
+	} else {
+		//not logged in
+
+	}
+}
 
 
 
