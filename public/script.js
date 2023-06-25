@@ -204,9 +204,13 @@ async function setHeader() {
 	}
   
 	// Add the header to the DOM
-	document.body.insertAdjacentHTML("afterbegin", header);
+	//document.body.insertAdjacentHTML("afterbegin", header);
+	let documentHeader = document.getElementsByTagName("header");
+	console.log(documentHeader);
+	documentHeader.innerHTML+= header;
   }
 
+  //setHeader();
 
 
 
