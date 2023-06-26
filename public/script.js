@@ -221,6 +221,7 @@ setHeader();
 const searchResultsSection = document.querySelector('.search-results');
 const searchProjectsForm = document.querySelector('#search-projects');
 const skillList = ['Python', 'Java', 'PHP', 'JavaScript', '.NET', 'CSS', 'HTML5'];
+const skillsList2 = ['Linux', 'C++ Programming', 'C# Programming', 'Objective C', 'Ruby on Rails', 'Amazon Web Services', 'WordPress'];
 
 // It prints project card
 function printProjectCard(projects) {
@@ -328,19 +329,41 @@ async function getProjects(keyword) {
 		}
 	}
 }
+
 async function printLinks() {
-	const skillLinksArticle = document.createElement('article');
-	skillLinksArticle.id = 'skill-links-article';
+	const skillLinksArticle1 = document.createElement('article');
+	skillLinksArticle1.id = 'skill-links-article-1';
 	skillList.forEach((skill, i)=>{
 		const skillLinkDiv = document.createElement('div');
 		skillLinkDiv.classList.add = 'skill-link-div'
 		skillLinkDiv.innerHTML = `<div><a class='skill-link-a' class='skill-link-a-${i+1}' href="https://trello.com/b/rj21C03C/freelance-webpage-project">${skill}</a></div>`;
-		skillLinksArticle.appendChild(skillLinkDiv);
+		skillLinksArticle1.appendChild(skillLinkDiv);
 	})
-	searchResultsSection.appendChild(skillLinksArticle);
+	searchResultsSection.appendChild(skillLinksArticle1);
 
-	const skillLinkAnchors = document.querySelectorAll('.skill-link-a');
-	skillLinkAnchors.forEach((item, i)=>{
+	const skillLinkAnchors1 = document.querySelectorAll('.skill-link-a-1');
+	skillLinkAnchors1.forEach((item, i)=>{
+		item.addEventListener('click', (event)=>{
+			event.preventDefault()
+			console.log(item);
+			searchResultsSection.innerHTML = '';
+			printLinks()
+			getProjects(skillList[i]);
+		})
+	})
+
+	const skillLinksArticle2 = document.createElement('article');
+	skillLinksArticle1.id = 'skill-links-article-2';
+	skillsList2.forEach((skill, i)=>{
+		const skillLinkDiv = document.createElement('div');
+		skillLinkDiv.classList.add = 'skill-link-div'
+		skillLinkDiv.innerHTML = `<div><a class='skill-link-a' class='skill-link-a-${i+1}' href="https://trello.com/b/rj21C03C/freelance-webpage-project">${skill}</a></div>`;
+		skillLinksArticle1.appendChild(skillLinkDiv);
+	})
+	searchResultsSection.appendChild(skillLinksArticle1);
+
+	const skillLinkAnchors2 = document.querySelectorAll('.skill-link-a-1');
+	skillLinkAnchors1.forEach((item, i)=>{
 		item.addEventListener('click', (event)=>{
 			event.preventDefault()
 			console.log(item);
