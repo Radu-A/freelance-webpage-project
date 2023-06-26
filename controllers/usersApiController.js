@@ -49,12 +49,10 @@ const createUser = async (req,res) => {
     let {email, password, user_name, admin, firstname, surename} = req.body; // {email, password, user_name, admin, firstname, surename}
     try {
         // "user_id" is automatically added by SQL DDBB
-        let createInfo = await users.createUser(email, password, user_name, admin, firstname, surename);
+        let logged = false;
+        let createInfo = await users.createUser(email, password, user_name, admin, firstname, surename, logged);
         
-        res.status(200).json({
-            "user created": createInfo,
-            "msj": "User created successfully"
-        });
+        res.status(200).redirect("/login"); //It would be great to redirect to "/login" but it doesnt work
     } catch (error) {
         console.log(`Error: ${error}`);
     }

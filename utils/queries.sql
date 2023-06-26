@@ -10,7 +10,7 @@ CREATE DATABASE freelance_projects
 CREATE TABLE users (
   id_user serial NOT NULL PRIMARY KEY, 
   email varchar(45) NOT NULL UNIQUE, 
-  password varchar(45) NOT NULL, 
+  password varchar(100) NOT NULL, 
   user_name varchar(255) UNIQUE,
   admin boolean NOT NULL, 
   firstname varchar(45) NOT NULL, 
