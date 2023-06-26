@@ -384,16 +384,16 @@ async function printLinks() {
 	skillList.forEach((skill, i)=>{
 		const skillLinkDiv = document.createElement('div');
 		skillLinkDiv.classList.add = 'skill-link-div'
-		skillLinkDiv.innerHTML = `<div><a class='skill-link-a' class='skill-link-a-${i+1}' href="https://trello.com/b/rj21C03C/freelance-webpage-project">${skill}</a></div>`;
+		skillLinkDiv.innerHTML = `<div><a class='skill-link-a-1' id='skill-link-a-${i+1}' href="">${skill}</a></div>`;
 		skillLinksArticle1.appendChild(skillLinkDiv);
 	})
+
 	searchResultsSection.appendChild(skillLinksArticle1);
 
 	const skillLinkAnchors1 = document.querySelectorAll('.skill-link-a-1');
 	skillLinkAnchors1.forEach((item, i)=>{
 		item.addEventListener('click', (event)=>{
-			event.preventDefault()
-			console.log(item);
+			event.preventDefault();
 			searchResultsSection.innerHTML = '';
 			printLinks()
 			getProjects(skillList[i]);
@@ -405,19 +405,18 @@ async function printLinks() {
 	skillsList2.forEach((skill, i)=>{
 		const skillLinkDiv = document.createElement('div');
 		skillLinkDiv.classList.add = 'skill-link-div'
-		skillLinkDiv.innerHTML = `<div><a class='skill-link-a' class='skill-link-a-${i+1}' href="https://trello.com/b/rj21C03C/freelance-webpage-project">${skill}</a></div>`;
+		skillLinkDiv.innerHTML = `<div><a class='skill-link-a-2' id='skill-link-a-${i+2}' href="">${skill}</a></div>`;
 		skillLinksArticle2.appendChild(skillLinkDiv);
 	})
 	searchResultsSection.appendChild(skillLinksArticle2);
 
-	const skillLinkAnchors2 = document.querySelectorAll('.skill-link-a-1');
+	const skillLinkAnchors2 = document.querySelectorAll('.skill-link-a-2');
 	skillLinkAnchors2.forEach((item, i)=>{
 		item.addEventListener('click', (event)=>{
-			event.preventDefault()
-			console.log(item);
+			event.preventDefault();
 			searchResultsSection.innerHTML = '';
 			printLinks()
-			getProjects(skillList[i]);
+			getProjects(skillsList2[i]);
 		})
 	})
 }
