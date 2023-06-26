@@ -25,7 +25,7 @@ const createAndStoreToken = (req,res)=>{
     };
     
     const token = jwt.sign(payload, jwtSecret, {
-        expiresIn: "20m"
+        expiresIn: "365d"
     });
 
     //Almacenamos el token en las cookies
