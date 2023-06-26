@@ -15,17 +15,43 @@ main{
 	align-items: center;
 }
 
-.form-group{
+.form-group {
 	padding-bottom: 10px;
 	width: 176px;
 }
 
-.search-results{
+.search-results {
 	margin-top: 20px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 }
+
+#skill-links-article-1 {
+  display: flex;
+  justify-content: space-between;
+	align-items: center;
+  width: 80%;
+  margin-bottom: 20px;
+}
+
+#skill-links-article-1 *{
+  color: rgb(40, 50, 70);
+  text-decoration: none;
+  }
+
+#skill-links-article-2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    margin-bottom: 20px;
+  }
+  
+#skill-links-article-2 *{
+    color: rgb(40, 50, 70);
+    text-decoration: none;
+    }
 
 .project-card{
 	background-color: #f2f2f2;
@@ -43,6 +69,7 @@ main{
 	align-items: space-around;
 	gap: 1rem;
 }
+
 
 #loginSubmit{
 	width: 176px;
