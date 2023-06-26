@@ -149,7 +149,7 @@ if(window.location.pathname == "/favs"){
 }
 
 
-async function setNavBar () {
+async function setHeader () {
 	let userInfo = await getData("http://localhost:3000/api/users/user");
 	let {id_user, email, password, user_name, admin, firstname, surename, logged} = userInfo;
 	if(admin && logged){
@@ -163,7 +163,7 @@ async function setNavBar () {
 
 	}
 }
-
+//setHeader ()
 
 
 
