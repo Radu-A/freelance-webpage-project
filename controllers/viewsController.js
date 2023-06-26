@@ -3,6 +3,7 @@ const users = require("../models/users");
 // GETs
 const getIndexView = (req,res) => {
     try {
+        
         res.render("index.pug");
     } catch (error) {
         console.log(`Error: ${error}`);
