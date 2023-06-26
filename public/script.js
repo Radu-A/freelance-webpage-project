@@ -49,7 +49,6 @@ async function deleteData(url = "", data = {}) {
 }
 
 
-
 //USER - Siendo usuario, editar mis propios datos mostrados en profile:
 const formUserData = document.getElementById("formUserData");
 const editUserData = document.getElementById("editUserData");
@@ -112,7 +111,7 @@ editUserData.addEventListener("click", function(event) {
           firstName: e.target.firstName.value,
           sureName: e.target.surname.value
       }
-  
+
       try {
           putData("http://localhost:3000/api/users/user", newInfo).then((data) => {
           console.log(data); // JSON data parsed by `data.json()` call
@@ -148,46 +147,51 @@ if(window.location.pathname == "/favs"){
 	getFavouriteProjectsInfo();
 }
 
-
+// Set the header according to the user (no logged, logged in, admin)
 async function setHeader() {
 	let userInfo = await getData("http://localhost:3000/api/users/user");
-	let { id_user, email, password, user_name, admin, firstname, surename, logged } = userInfo;
 	let header;
-  
-	if (admin && logged) {
-	  header = `
-		<section class="top-nav">
-		  <div>Logo Here</div>
-		  <input id="menu-toggle" type="checkbox"/>
-		  <label class="menu-button-container" for="menu-toggle">
-			<div class="menu-button"></div>
-		  </label>
-		  <ul class="menu">
-			<li class="menu-item"><a class="menu-link" href="/">Index</a></li>
-			<li class="menu-item"><a class="menu-link" href="/users">Users</a></li>
-			<li class="menu-item"><a class="menu-link" href="/dashboard">Dashboard</a></li>
-			<li class="menu-item"><a class="menu-link" href="/logout">Logout</a></li>
-		  </ul>
-		</section>
-	  `;
-	} else if (!admin && logged) {
-	  header = `
-		<section class="top-nav">
-		  <div>Logo Here</div>
-		  <input id="menu-toggle" type="checkbox"/>
-		  <label class="menu-button-container" for="menu-toggle">
-			<div class="menu-button"></div>
-		  </label>
-		  <ul class="menu">
-			<li class="menu-item"><a class="menu-link" href="/">Index</a></li>
-			<li class="menu-item"><a class="menu-link" href="/profile">Profile</a></li>
-			<li class="menu-item"><a class="menu-link" href="/favs">Favs</a></li>
-			<li class="menu-item"><a class="menu-link" href="/logout">Logout</a></li>
-		  </ul>
-		</section>
-	  `;
+	if (userInfo.data.email){
+		let { id_user, email, password, user_name, admin, firstname, surename, logged } = userInfo;
+
+		if (admin && logged) {
+			// admin logged in
+			header = `
+			  <section class="top-nav">
+				<div>Logo Here</div>
+				<input id="menu-toggle" type="checkbox"/>
+				<label class="menu-button-container" for="menu-toggle">
+				  <div class="menu-button"></div>
+				</label>
+				<ul class="menu">
+				  <li class="menu-item"><a class="menu-link" href="/">Index</a></li>
+				  <li class="menu-item"><a class="menu-link" href="/dashboard">Dashboard</a></li>
+				  <li class="menu-item"><a class="menu-link" href="/">Profile</a></li>
+				  <li class="menu-item"><a class="menu-link" href="/logout">Logout</a></li>
+				</ul>
+			  </section>
+			`;
+		  } else {
+			// User logged in
+			header = `
+			  <section class="top-nav">
+				<div>Logo Here</div>
+				<input id="menu-toggle" type="checkbox"/>
+				<label class="menu-button-container" for="menu-toggle">
+				  <div class="menu-button"></div>
+				</label>
+				<ul class="menu">
+				  <li class="menu-item"><a class="menu-link" href="/">Index</a></li>
+				  <li class="menu-item"><a class="menu-link" href="/profile">Profile</a></li>
+				  <li class="menu-item"><a class="menu-link" href="/favs">Favs</a></li>
+				  <li class="menu-item"><a class="menu-link" href="/logout">Logout</a></li>
+				</ul>
+			  </section>
+			`;
+		  }
 	} else {
-	  header = `
+		// user not logged in
+		header = `
 		<section class="top-nav">
 		  <div>Logo Here</div>
 		  <input id="menu-toggle" type="checkbox"/>
@@ -201,16 +205,15 @@ async function setHeader() {
 		  </ul>
 		</section>
 	  `;
+
 	}
   
 	// Add the header to the DOM
-	//document.body.insertAdjacentHTML("afterbegin", header);
-	let documentHeader = document.getElementsByTagName("header");
-	console.log(documentHeader);
+	let documentHeader = document.querySelector("header");
 	documentHeader.innerHTML+= header;
-  }
+}
 
-  //setHeader();
+setHeader();
 
 
 
