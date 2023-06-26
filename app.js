@@ -6,6 +6,7 @@ const session = require("express-session");
 const cookieParser = require("cookie-parser");
 require("./utils/auth.js");
 require("dotenv").config();
+const error404 = require('./middlewares/error404');
 
 
 // Initialize server
@@ -48,8 +49,9 @@ app.use(express.static('public'));
 app.use('/',viewsRoutes); // App views
 app.use('/api/projects',projectsApiRoutes); // Project routes
 app.use('/api/users',usersApiRoutes); // Users routes
-
 app.use('/',authRoutes); // Passport + Google routes
+
+app.use(error404);
 
 const server = app.listen(port, () => {
     console.log(`****Conected in port ${port}`);
