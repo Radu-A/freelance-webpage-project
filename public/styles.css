@@ -43,7 +43,7 @@ main{
 #skill-links-article-2 {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-content: flex-start;
     width: 80%;
     margin-bottom: 20px;
   }
