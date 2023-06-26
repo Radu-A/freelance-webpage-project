@@ -49,7 +49,6 @@ async function deleteData(url = "", data = {}) {
 }
 
 
-
 //USER - Siendo usuario, editar mis propios datos mostrados en profile:
 const formUserData = document.getElementById("formUserData");
 const editUserData = document.getElementById("editUserData");
@@ -112,7 +111,7 @@ editUserData.addEventListener("click", function(event) {
           firstName: e.target.firstName.value,
           sureName: e.target.surname.value
       }
-  
+
       try {
           putData("http://localhost:3000/api/users/user", newInfo).then((data) => {
           console.log(data); // JSON data parsed by `data.json()` call
@@ -148,13 +147,13 @@ if(window.location.pathname == "/favs"){
 	getFavouriteProjectsInfo();
 }
 
-
+// Set the header according to the user (no logged, logged in, admin)
 async function setHeader() {
 	let userInfo = await getData("http://localhost:3000/api/users/user");
 	let header;
-	if (userInfo.data){
-		console.log("+++++++",userInfo)
+	if (userInfo.data.email){
 		let { id_user, email, password, user_name, admin, firstname, surename, logged } = userInfo;
+
 		if (admin && logged) {
 			// admin logged in
 			header = `
@@ -210,14 +209,11 @@ async function setHeader() {
 	}
   
 	// Add the header to the DOM
-	//document.body.insertAdjacentHTML("afterbegin", header);
 	let documentHeader = document.querySelector("header");
-
-	console.log(documentHeader, "++", header);
 	documentHeader.innerHTML+= header;
-  }
+}
 
-  setHeader();
+setHeader();
 
 
 
