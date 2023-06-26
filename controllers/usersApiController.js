@@ -1,6 +1,19 @@
 const users = require("../models/users");
 
 //GETs
+//get user's info:
+const getUserInfo = async (req,res) => {
+    try {
+        let {email} = req.decoded.data;
+        let data = await users.getUserByEmail(email);
+        res.status(200).json({
+            "data": data,
+            "msj": "User info supplied"
+        });
+    } catch (error) {
+        console.log(`Error: ${error}`);
+    }
+}
 // get favourites Ids with user id:
 const getUserFavouritesIds = async (req,res) => {
     try {
@@ -131,6 +144,7 @@ const deleteFavorite = async(req, res) => {
 
  
  module.exports = {
+    getUserInfo,
     getUserFavouritesIds,
     recoverPassword,
     restorePassword,
