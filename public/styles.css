@@ -1,3 +1,32 @@
+@media screen and (max-width: 510px) {
+  body {
+    width: 100%;
+  }
+
+  main{
+    width: 100%;
+  }
+
+  .project-card {
+    background-color: #f2f2f2;
+    border-radius: 2px;
+    width: 290px;
+    padding: 4px;
+    margin-bottom: 10px;
+    border-width: 1px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid rgb(40, 50, 70);
+  }
+
+  .project-description{
+    flex-wrap: wrap;
+  }
+}
+
 html, body {
 	margin: 0;
 	height: 100%;
@@ -9,121 +38,7 @@ body{
 	color:rgb(40, 50, 70);
 }
 
-main{
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
-
-.form-group {
-	padding-bottom: 10px;
-	width: 176px;
-}
-
-.search-results {
-	margin-top: 20px;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
-
-#skill-links-article-1 {
-  display: flex;
-  justify-content: space-between;
-	align-items: center;
-  width: 80%;
-  margin-bottom: 20px;
-}
-
-#skill-links-article-1 *{
-  color: rgb(40, 50, 70);
-  text-decoration: none;
-  }
-
-#skill-links-article-2 {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  
-    width: 80%;
-    margin-bottom: 20px;
-  }
-  
-#skill-links-article-2 *{
-    color: rgb(40, 50, 70);
-    text-decoration: none;
-    }
-
-.project-card{
-	background-color: #f2f2f2;
-  border-radius: 5px;
-	width: 80%;
-  padding: 20px;
-  margin-bottom: 20px;
-  border: 2px solid rgb(40, 50, 70);
-}
-
-.project-skills {
-	display: flex;
-	flex-direction: row;
-	justify-content: left;
-	align-items: space-around;
-	gap: 1rem;
-}
-
-
-.skill-paragraph:hover {
-  cursor: pointer;
-}
-
-#loginSubmit{
-	width: 176px;
-}
-
-#editUserDataForm {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
-
-#editUserDataForm * {
-	margin-top: 10px;
-}
-
-/*boton de google*/
-.button {
-	display: inline-block;
-	padding: 0.5em 1em;
-	border-radius: 0.25em;
-	text-decoration: none;
-	font-weight: bold;
-	color: rgb(40, 50, 70);
-	margin-bottom: 30px;
-  }
-  
-  .google {
-	background-color: rgb(255, 255, 255);
-	border-radius: 5px;
-	width: 150px;
-    border: 1px solid rgb(40, 50, 70);
-  }
-  
-  .google .icon {
-	display: inline-block;
-	vertical-align: middle;
-  }
-  
-  .google .icon img {
-	height: 1em;
-  }
-  
-  .google .text {
-	display: inline-block;
-	vertical-align: middle;
-	margin-left: 0.5em;
-  }
-
-/*logo*/
+/*ELEMENTOS DEL HEADER*/
 #logo {
   width: 50px;
   height: 50px;
@@ -138,8 +53,7 @@ main{
   font-weight: bold;
 }
 
-
-/*HAMBURGER MENU*/
+/*hamburger menu*/
 .top-nav {
   display: flex;
   flex-direction: row;
@@ -267,18 +181,140 @@ main{
 	text-decoration: none;
 }
 
-/*DASHBOARD*/
-#create-project {
-	margin-bottom: 30px;	
+/*ELEMENTOS DEL MAIN*/
+
+main{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
+/*ELEMENTOS DEL INDEX*/
+
+.form-group {
+	padding-bottom: 10px;
+	width: 176px;
+}
+
+.search-results {
+	margin-top: 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+#skill-links-article-1 {
+  display: flex;
+  justify-content: space-between;
+	align-items: center;
+  width: 80%;
+  margin-bottom: 20px;
+}
+
+#skill-links-article-1 *{
+  color: rgb(40, 50, 70);
+  text-decoration: none;
+  }
+
+#skill-links-article-2 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 80%;
+    margin-bottom: 20px;
+  }
+  
+#skill-links-article-2 *{
+    color: rgb(40, 50, 70);
+    text-decoration: none;
+    }
+
+.project-card{
+	background-color: #f2f2f2;
+  border-radius: 5px;
+	width: 80%;
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 2px solid rgb(40, 50, 70);
+}
+
+.project-skills {
+	display: flex;
+	flex-direction: row;
+	justify-content: left;
+	align-items: space-around;
+	gap: 1rem;
+}
+
+
+.skill-paragraph:hover {
+  cursor: pointer;
+}
+
+#loginSubmit{
+	width: 176px;
+}
+
+#editUserDataForm {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+#editUserDataForm * {
+	margin-top: 10px;
+}
+
+
+
 .project-title a {
+  
 	color: rgb(40, 50, 70);
 	text-decoration: none;
+
   }
 
 .project-budget p {
 	font-weight: bold;
+}
+
+/*ELEMENTOS DEL LOGIN Y EL SIGNUP*/
+/*boton de google*/
+.button {
+	display: inline-block;
+	padding: 0.5em 1em;
+	border-radius: 0.25em;
+	text-decoration: none;
+	font-weight: bold;
+	color: rgb(40, 50, 70);
+	margin-bottom: 30px;
+  }
+  
+  .google {
+	background-color: rgb(255, 255, 255);
+	border-radius: 5px;
+	width: 150px;
+    border: 1px solid rgb(40, 50, 70);
+  }
+  
+  .google .icon {
+	display: inline-block;
+	vertical-align: middle;
+  }
+  
+  .google .icon img {
+	height: 1em;
+  }
+  
+  .google .text {
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 0.5em;
+  }
+
+/*ELEMENTOS DEL DASHBOARD*/
+#create-project {
+	margin-bottom: 30px;	
 }
 
 #create-project-form{

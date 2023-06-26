@@ -158,7 +158,8 @@ async function setHeader() {
 			// admin logged in
 			header = `
 			  <section class="top-nav">
-				<div>Logo Here</div>
+				<div id="logo"></div>
+				<p id="logotitle">Freelance Web Projects</p>
 				<input id="menu-toggle" type="checkbox"/>
 				<label class="menu-button-container" for="menu-toggle">
 				  <div class="menu-button"></div>
@@ -175,7 +176,8 @@ async function setHeader() {
 			// User logged in
 			header = `
 			  <section class="top-nav">
-				<div>Logo Here</div>
+			  	<div id="logo"></div>
+			  	<p id="logotitle">Freelance Web Projects</p>
 				<input id="menu-toggle" type="checkbox"/>
 				<label class="menu-button-container" for="menu-toggle">
 				  <div class="menu-button"></div>
@@ -193,16 +195,17 @@ async function setHeader() {
 		// user not logged in
 		header = `
 		<section class="top-nav">
-		  <div>Logo Here</div>
-		  <input id="menu-toggle" type="checkbox"/>
-		  <label class="menu-button-container" for="menu-toggle">
-			<div class="menu-button"></div>
-		  </label>
-		  <ul class="menu">
-			<li class="menu-item"><a class="menu-link" href="/">Index</a></li>
-			<li class="menu-item"><a class="menu-link" href="/signup">Signup</a></li>
-			<li class="menu-item"><a class="menu-link" href="/login">Login</a></li>
-		  </ul>
+			<div id="logo"></div>
+			<p id="logotitle">Freelance Web Projects</p>
+		  	<input id="menu-toggle" type="checkbox"/>
+		  	<label class="menu-button-container" for="menu-toggle">
+				<div class="menu-button"></div>
+		  	</label>
+		  	<ul class="menu">
+				<li class="menu-item"><a class="menu-link" href="/">Index</a></li>
+				<li class="menu-item"><a class="menu-link" href="/signup">Signup</a></li>
+				<li class="menu-item"><a class="menu-link" href="/login">Login</a></li>
+		  	</ul>
 		</section>
 	  `;
 
