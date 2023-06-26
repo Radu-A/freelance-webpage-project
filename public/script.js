@@ -221,7 +221,7 @@ setHeader();
 const searchResultsSection = document.querySelector('.search-results');
 const searchProjectsForm = document.querySelector('#search-projects');
 const skillList = ['Python', 'Java', 'PHP', 'JavaScript', '.NET', 'CSS', 'HTML5'];
-const skillsList2 = ['Linux', 'C++ Programming', 'C# Programming', 'Objective C', 'Ruby on Rails', 'Amazon Web Services', 'WordPress'];
+const skillsList2 = ['Linux', 'C++ Programming', 'C# Programming', 'Objective C', 'WordPress'];
 
 // It prints project card
 function printProjectCard(projects) {

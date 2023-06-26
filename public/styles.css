@@ -42,8 +42,9 @@ main{
 
 #skill-links-article-2 {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
-    align-content: flex-start;
+  
     width: 80%;
     margin-bottom: 20px;
   }
