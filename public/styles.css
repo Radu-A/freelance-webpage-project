@@ -44,6 +44,10 @@ main{
 	gap: 1rem;
 }
 
+.skill-paragraph:hover {
+  cursor: pointer;
+}
+
 #loginSubmit{
 	width: 176px;
 }

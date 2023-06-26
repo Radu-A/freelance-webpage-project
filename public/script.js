@@ -219,15 +219,6 @@ const searchResultsSection = document.querySelector('.search-results');
 const searchProjectsForm = document.querySelector('#search-projects');
 const skillList = ['Python', 'Java', 'PHP', 'JavaScript', '.NET', 'CSS', 'HTML5'];
 
-function autoComplete(ciudad) {
-		return skillList.filter((valor) => {
-			const valorMinuscula = valor.toLowerCase()
-			const ciudadMinuscula = valor.toLowerCase()
-	
-				return valorMinuscula.includes(ciudadMinuscula)
-			})
-	}
-
 // It prints project card
 function printProjectCard(projects) {
 	projects.forEach((project, i)=>{
@@ -256,7 +247,16 @@ function printProjectCard(projects) {
 			if (i < 6) {
 				const skillParagraph = document.createElement('p');
 				skillParagraph.innerText = skill;
+				skillParagraph.classList.add('skill-paragraph');
+				skillParagraph.id = `skill-paragraph-${i+1}`;
 				projectSkillsDiv.appendChild(skillParagraph);
+
+				skillParagraph.addEventListener('click', ()=> {
+					console.log('has pinchado: ' + skill);
+					searchResultsSection.innerHTML = '';
+					printLinks();
+					getProjects(skill);
+				})
 			}
 		})
 		articleProjectCard.appendChild(projectSkillsDiv);
@@ -307,7 +307,7 @@ function printProjectCard(projects) {
 async function getProjects(keyword) {
 	if (keyword) {
 		try {
-			const response = await fetch(`http://localhost:3000/api/projects/search?keyword=${keyword}?`);
+			const response = await fetch(`http://localhost:3000/api/projects/search?keyword=${keyword}`);
 			let projects = await response.json();
 			printProjectCard(projects);
 			return projects;
