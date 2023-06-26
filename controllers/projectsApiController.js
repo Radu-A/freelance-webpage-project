@@ -67,9 +67,8 @@ const getProjectsById = async(req, res) => {
     let projectIds = param.split(",");
     console.log("projects id",projectIds);
     try {
-        // THERE IS AN ERROR WITH THE QUERIE!
         const data = await Project.find().where("_id").in(projectIds).exec(); 
-        console.log("THIS IS WHAT YOU GET: ", data)
+        console.log("favourite projects: ", data)
         res.status(200).json(data);
         console.log(data);
     } catch (error) {

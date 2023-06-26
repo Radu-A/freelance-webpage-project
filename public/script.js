@@ -120,9 +120,54 @@ editUserData.addEventListener("click", function(event) {
           console.error(error);
       }
     });
-  
-
 });
+}
+
+const signUpForm = document.getElementById("signup_form");
+if(signUpForm){
+	signUpForm.addEventListener("submit", async (e) => {
+		e.preventDefault();
+		console.log(e.target.user_name.value)
+		
+		let newInfo = {
+			email: e.target.email.value,
+			password: e.target.password.value,
+			user_name: e.target.user_name.value,
+			admin: false,
+			firstname: e.target.firstname.value,
+			surename: e.target.surename.value,
+			logged: false
+		}
+
+		try {
+			await postData("http://localhost:3000/auth/signup", newInfo);
+		} catch (error) {
+			//console.log(error);
+		}
+	  });
+}
+
+const loginForm = document.getElementById("login_form");
+if(loginForm){
+	loginForm.addEventListener("submit", async (e) => {
+		e.preventDefault();
+		
+		let newInfo = {
+			email: e.target.email.value,
+			password: e.target.password.value
+		}
+
+		try {
+			let response = await postData("http://localhost:3000/auth/login", newInfo);
+			
+			if(!response.success){
+				window.location = "/signup";
+			}
+
+		} catch (error) {
+			console.log(error);
+		}
+	  });
 }
 
 
