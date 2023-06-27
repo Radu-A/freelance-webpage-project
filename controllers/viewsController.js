@@ -46,6 +46,7 @@ const getProfileView = async (req,res) => {
 
         // check if user is logged in 
         let data = await users.getUserByEmail(userEmail);
+        console.log(data);
         res.render("profile.pug",{"userInfo": data});
     } catch (error) {
         console.log(`Error: ${error}`);

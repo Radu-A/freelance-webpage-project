@@ -5,14 +5,12 @@ html(lang='en')
  body
     header
     main
-        h3 This is your profile section
-        p You can check your user info
+        h2 Profile section
         section.profile_info
-          p #{userInfo.id_user}
-          p #{userInfo.email}
-          p #{userInfo.user_name}
-          p #{userInfo.firstname}
-          p #{userInfo.surename}
+          p#profile-info-name #{userInfo.user_name}
+          p#profile-info-email #{userInfo.email}
+          p#profile-info-firstname #{userInfo.firstname}
+          p#profile-info-surename #{userInfo.surename}
         p Click and fill bellow if you wanna change your info.
         button#editUserData Edit your profile
         section#formUserData

@@ -58,6 +58,21 @@ if (formUserData){
 editUserData.addEventListener("click", function(event) {
     event.preventDefault();
 
+	editUserData.innerText = 'Back';
+
+	editUserData.addEventListener('click', (event)=>{
+		event.preventDefault();
+
+		window.location.reload();
+	})
+
+	const userInfoName = document.getElementById('profile-info-name').textContent;
+	const userInfoEmail = document.getElementById('profile-info-email').textContent;
+	const userInfoFirstname = document.getElementById('profile-info-firstname').textContent;
+	const userInfoSurename = document.getElementById('profile-info-surename').textContent;
+
+
+
     const form = document.createElement("form");
 	form.setAttribute("id", "editUserDataForm");
     const passwordInput = document.createElement("input");
@@ -73,15 +88,19 @@ editUserData.addEventListener("click", function(event) {
     emailInput.type = "email";
     emailInput.placeholder = "Email";
     emailInput.name = "email";
+	emailInput.value = userInfoEmail;
     userNameInput.type = "text";
     userNameInput.placeholder = "User Name";
     userNameInput.name = "userName";
+	userNameInput.value = userInfoName;
     firstNameInput.type = "text";
     firstNameInput.placeholder = "First Name";
     firstNameInput.name = "firstName";
+	firstNameInput.value = userInfoFirstname;
     surnameInput.type = "text";
     surnameInput.placeholder = "Surname";
     surnameInput.name = "surname";
+	surnameInput.value = userInfoSurename;
   
     submitButton.type = "submit";
     submitButton.innerText = "Save edit";
@@ -168,6 +187,7 @@ if(loginForm){
 			console.log(error);
 		}
 	  });
+
 }
 
 
@@ -205,7 +225,7 @@ async function setHeader() {
 			header = `
 			  <section class="top-nav">
 				<div id="logo"></div>
-				<p id="logotitle">Freelance Web Projects</p>
+				<p id="logotitle"><a href="http://localhost:3000/">Freelance Web Projects</a></p>
 				<input id="menu-toggle" type="checkbox"/>
 				<label class="menu-button-container" for="menu-toggle">
 				  <div class="menu-button"></div>
@@ -213,7 +233,6 @@ async function setHeader() {
 				<ul class="menu">
 				  <li class="menu-item"><a class="menu-link" href="/">Index</a></li>
 				  <li class="menu-item"><a class="menu-link" href="/dashboard">Dashboard</a></li>
-				  <li class="menu-item"><a class="menu-link" href="/">Profile</a></li>
 				  <li class="menu-item"><a class="menu-link" href="/logout">Logout</a></li>
 				</ul>
 			  </section>
@@ -223,7 +242,7 @@ async function setHeader() {
 			header = `
 			  <section class="top-nav">
 			  	<div id="logo"></div>
-			  	<p id="logotitle">Freelance Web Projects</p>
+			  	<p id="logotitle"><a href="http://localhost:3000/">Freelance Web Projects</a></p>
 				<input id="menu-toggle" type="checkbox"/>
 				<label class="menu-button-container" for="menu-toggle">
 				  <div class="menu-button"></div>
@@ -231,7 +250,7 @@ async function setHeader() {
 				<ul class="menu">
 				  <li class="menu-item"><a class="menu-link" href="/">Index</a></li>
 				  <li class="menu-item"><a class="menu-link" href="/profile">Profile</a></li>
-				  <li class="menu-item"><a class="menu-link" href="/favs">Favs</a></li>
+				  <li class="menu-item"><a class="menu-link" href="/favs">Favourites</a></li>
 				  <li class="menu-item"><a class="menu-link" href="/logout">Logout</a></li>
 				</ul>
 			  </section>
@@ -242,7 +261,7 @@ async function setHeader() {
 		header = `
 		<section class="top-nav">
 			<div id="logo"></div>
-			<p id="logotitle">Freelance Web Projects</p>
+			<p id="logotitle"><a href="http://localhost:3000/">Freelance Web Projects</a></p>
 		  	<input id="menu-toggle" type="checkbox"/>
 		  	<label class="menu-button-container" for="menu-toggle">
 				<div class="menu-button"></div>
@@ -524,24 +543,27 @@ async function printDashboardDetail(projects, i) {
 }
 
 if (dashboardResultsSection) {
-	const updateResultsButton = document.createElement('article');
+	const updateResultsButton = document.createElement('div');
 	updateResultsButton.innerHTML = `
-	<article>
-		<button id='update-results-button'>Update results</button>
-	</article>`
-	dashboardResultsSection.appendChild(updateResultsButton);
+		<button id='update-results-button'>Update results</button>`
+	// dashboardResultsSection.appendChild(updateResultsButton);
 	updateResultsButton.addEventListener('click', ()=>{
 		fetch(`http://localhost:3000/api/projects/search/scrap`).catch(error=>console.log(error));
 	})
 
 
 	// To create "create-project" button
-	const createButtonArticle = document.createElement('article');
+	const createButtonArticle = document.createElement('div');
 	createButtonArticle.innerHTML = `
-	<article>
-		<button id='create-project'>Create project</button>
-	</article>`;
-	dashboardResultsSection.appendChild(createButtonArticle);
+		<button id='create-project'>Create project</button>`;
+	// dashboardResultsSection.appendChild(createButtonArticle);
+
+	const buttonsAdminArticle = document.createElement('article');
+	buttonsAdminArticle.id = 'buttons-admin';
+	buttonsAdminArticle.appendChild(updateResultsButton);
+	buttonsAdminArticle.appendChild(createButtonArticle);
+	dashboardResultsSection.appendChild(buttonsAdminArticle);
+
 	// To manage the event of "create-project" button
 	createButtonArticle.addEventListener('click', ()=>{
 		// To print "create-project-form"
