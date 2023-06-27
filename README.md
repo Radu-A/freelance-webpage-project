@@ -88,8 +88,7 @@ Como Admin registrado se podrá:
 - MongoDB: Compass - Atlas
 
 ![](./screenshots/draft-admin.jpg)
-![](./screenshots/draft-user.jpg)
-![](./screenshots/erm.jpg)
+![](./screenshots/draft-user.jpg) ![](./screenshots/erm.jpg)
 
 ![](./screenshots/endpoints-api-1.jpg)
 ![](./screenshots/endpoints-api-2.jpg)
