@@ -258,7 +258,6 @@ const recoverPasswordForm = document.getElementById("recover_password_form");
 if(recoverPasswordForm){
 	recoverPasswordForm.addEventListener("submit", async (e) => {
 		e.preventDefault();
-		
 		email = e.target.email.value;
 
 		try {
@@ -276,7 +275,6 @@ if(recoverPasswordForm){
 					window.location = "/";
 				});
 				sendEmailSection.appendChild(button);
-
 				
 			} else {
 				console.log("Something went wrong...");
