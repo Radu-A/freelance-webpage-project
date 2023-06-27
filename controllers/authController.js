@@ -28,9 +28,9 @@ const createAndStoreToken = (req,res)=>{
     });
 
     //Almacenamos el token en las cookies
-    res.cookie("access-token", token, {
+    res.status(201).cookie("access-token", token, {
         httpOnly: true,
-        sameSite: "lax",
+        sameSite: "lax"
     }).redirect("/");
 }
 
