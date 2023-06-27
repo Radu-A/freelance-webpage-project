@@ -257,16 +257,6 @@ main{
 	width: 176px;
 }
 
-#editUserDataForm {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
-
-#editUserDataForm * {
-	margin-top: 10px;
-}
-
 
 
 .project-title a {
@@ -330,6 +320,44 @@ main{
 #create-project-form * {
   margin: 10px 0 0;
   width: 200px;
+}
+
+/*ELEMENTOS DE PROFILE*/
+body#favs .project-skills {
+  pointer-events: none;
+  display: none;
+}
+
+body#favs .skill-paragraph {
+  pointer-events: none;
+  display: none;
+}
+
+#favoritesguiding p {
+  line-height: 10px;
+  margin-bottom: 10px;
+}
+.profile_info{
+  background-color: #f2f2f2;
+  border-radius: 5px;
+	width: 80%;
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 2px solid rgb(40, 50, 70);
+}
+
+#editUserData {
+  width: 200px;
+}
+
+#editUserDataForm {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+#editUserDataForm * {
+	margin-top: 10px;
 }
 
 
