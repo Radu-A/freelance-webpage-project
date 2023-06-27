@@ -132,7 +132,7 @@ editUserData.addEventListener("click", function(event) {
       }
 
       try {
-          putData("http://localhost:3000/api/users/user", newInfo).then((data) => {
+          putData("https://freelance-webpage.onrender.com/api/users/user", newInfo).then((data) => {
           console.log(data); // JSON data parsed by `data.json()` call
           }); 
       } catch (error) {
@@ -209,7 +209,7 @@ if(signUpForm){
 				let newInfo = {email,password,user_name,admin,firstname,surename,logged};
 
 				// response --> {"success": false, "msj":"This email do not have an account"}
-				let response = await postData("http://localhost:3000/auth/signup", newInfo);
+				let response = await postData("https://freelance-webpage.onrender.com/auth/signup", newInfo);
 
 				if(response.success){
 					window.location = "/";
@@ -238,7 +238,7 @@ if(loginForm){
 
 		try {
 			// response --> {"success": false, "msj":"This email do not have an account"}
-			let response = await postData("http://localhost:3000/auth/login", newInfo);
+			let response = await postData("https://freelance-webpage.onrender.com/auth/login", newInfo);
 			
 			if(response.success){
 				window.location = "/";
@@ -258,11 +258,11 @@ if(loginForm){
 async function getFavouriteProjectsInfo(){
 	try {
 		//gets user's favourite projects ids
-		let favouritesIds = await getData(`http://localhost:3000/api/users/favs/`);
+		let favouritesIds = await getData(`https://freelance-webpage.onrender.com/api/users/favs/`);
 		let paramValue = favouritesIds.project_ids.toString();
 
 		//gets favourite projects Info
-		let favouritesInfo = await getData(`http://localhost:3000/api/projects/${paramValue}`);
+		let favouritesInfo = await getData(`https://freelance-webpage.onrender.com/api/projects/${paramValue}`);
 		console.log("Favs data from script.js: ", favouritesInfo)
 		
 		//prints favourite projects cards
@@ -278,7 +278,7 @@ if(window.location.pathname == "/favs"){
 
 // Set the header according to the user (no logged, logged in, admin)
 async function setHeader() {
-	let userInfo = await getData("http://localhost:3000/api/users/user");
+	let userInfo = await getData("https://freelance-webpage.onrender.com/api/users/user");
 
 	let header;
 	if (userInfo.data.email){
@@ -289,7 +289,7 @@ async function setHeader() {
 			header = `
 			  <section class="top-nav">
 				<div id="logo"></div>
-				<p id="logotitle"><a href="http://localhost:3000/">Freelance Web Projects</a></p>
+				<p id="logotitle"><a href="https://freelance-webpage.onrender.com/">Freelance Web Projects</a></p>
 				<input id="menu-toggle" type="checkbox"/>
 				<label class="menu-button-container" for="menu-toggle">
 				  <div class="menu-button"></div>
@@ -306,7 +306,7 @@ async function setHeader() {
 			header = `
 			  <section class="top-nav">
 			  	<div id="logo"></div>
-			  	<p id="logotitle"><a href="http://localhost:3000/">Freelance Web Projects</a></p>
+			  	<p id="logotitle"><a href="https://freelance-webpage.onrender.com/">Freelance Web Projects</a></p>
 				<input id="menu-toggle" type="checkbox"/>
 				<label class="menu-button-container" for="menu-toggle">
 				  <div class="menu-button"></div>
@@ -325,7 +325,7 @@ async function setHeader() {
 		header = `
 		<section class="top-nav">
 			<div id="logo"></div>
-			<p id="logotitle"><a href="http://localhost:3000/">Freelance Web Projects</a></p>
+			<p id="logotitle"><a href="https://freelance-webpage.onrender.com/">Freelance Web Projects</a></p>
 		  	<input id="menu-toggle" type="checkbox"/>
 		  	<label class="menu-button-container" for="menu-toggle">
 				<div class="menu-button"></div>
@@ -409,7 +409,7 @@ function printProjectCard(projects) {
 					"id_project": project._id
 				};
 				try {
-					postData("http://localhost:3000/api/users/favs", favouriteInfo).then((data) => {
+					postData("https://freelance-webpage.onrender.com/api/users/favs", favouriteInfo).then((data) => {
 					console.log("Post from script.js: ", data);
 					}); 
 				} catch (error) {
@@ -427,7 +427,7 @@ function printProjectCard(projects) {
 					"id_project": project._id
 				};
 				try {
-					deleteData("http://localhost:3000/api/users/favs", favouriteInfo).then((data) => {
+					deleteData("https://freelance-webpage.onrender.com/api/users/favs", favouriteInfo).then((data) => {
 					console.log("Post from script.js: ", data);
 					}); 
 
@@ -443,7 +443,7 @@ function printProjectCard(projects) {
 async function getProjects(keyword) {
 	if (keyword) {
 		try {
-			const response = await fetch(`http://localhost:3000/api/projects/search?keyword=${keyword}`);
+			const response = await fetch(`https://freelance-webpage.onrender.com/api/projects/search?keyword=${keyword}`);
 			let projects = await response.json();
 			printProjectCard(projects);
 			return projects;
@@ -452,7 +452,7 @@ async function getProjects(keyword) {
 		}
 	} else {
 		try {
-			const response = await fetch(`http://localhost:3000/api/projects/search`);
+			const response = await fetch(`https://freelance-webpage.onrender.com/api/projects/search`);
 			let projects = await response.json();
 			printProjectCard(projects);
 			return projects;
@@ -556,7 +556,7 @@ async function printDashboardDetail(projects, i) {
 	const deleteProjectButton = document.getElementById('delete-project');
 	deleteProjectButton.addEventListener('click', ()=> {
 		console.log(projects[i]._id)
-		fetch(`http://localhost:3000/api/projects/project/${projects[i]._id}`, {
+		fetch(`https://freelance-webpage.onrender.com/api/projects/project/${projects[i]._id}`, {
 			method: 'DELETE',
 		  })
 		  .then(location.reload())
@@ -589,7 +589,7 @@ async function printDashboardDetail(projects, i) {
 			const editDescription = document.getElementById('edit-description').value;
 
 
-			fetch(`http://localhost:3000/api/projects/project`,
+			fetch(`hhttps://freelance-webpage.onrender.com/api/projects/project`,
 			{
 				method: 'PUT',
 				headers: { 'Content-Type': 'application/json' },
@@ -612,7 +612,7 @@ if (dashboardResultsSection) {
 		<button id='update-results-button'>Update results</button>`
 	// dashboardResultsSection.appendChild(updateResultsButton);
 	updateResultsButton.addEventListener('click', ()=>{
-		fetch(`http://localhost:3000/api/projects/search/scrap`).catch(error=>console.log(error));
+		fetch(`https://freelance-webpage.onrender.com/api/projects/search/scrap`).catch(error=>console.log(error));
 	})
 
 
@@ -647,7 +647,7 @@ if (dashboardResultsSection) {
 			const createDescription = document.getElementById('create-description').value;
 			const createBudget = document.getElementById('create-budget').value;
 			// To save data on MongoDB
-			fetch(`http://localhost:3000/api/projects/project`,
+			fetch(`https://freelance-webpage.onrender.com/api/projects/project`,
 			{
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
