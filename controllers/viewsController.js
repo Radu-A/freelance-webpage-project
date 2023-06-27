@@ -52,6 +52,22 @@ const getProfileView = async (req,res) => {
         console.log(`Error: ${error}`);
     }
 };
+
+const getRecoverPasswordView = async (req, res) => {
+    try {
+        res.render("recoverPassword.pug");
+    } catch (error) {
+        console.log(`Error: ${error}`);
+    }
+}
+
+const getResetPasswordView = async (req, res) => {
+    try {
+        res.render("resetPassword.pug");
+    } catch (error) {
+        console.log(`Error: ${error}`);
+    }
+}
  
 const getUsersView = (req,res) => {
     //ADMIN exclusive
@@ -79,7 +95,9 @@ module.exports = {
     getSignUpView,
     getLoginView,
     getFavsView,
-    getProfileView ,
+    getProfileView,
+    getRecoverPasswordView,
+    getResetPasswordView,
     getUsersView,
     getDashboardView
 }

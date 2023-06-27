@@ -10,6 +10,8 @@ viewsRouter.get("/signup", viewsController.getSignUpView);
 viewsRouter.get("/login", viewsController.getLoginView);
 viewsRouter.get("/favs", authMiddleware.authCheck, viewsController.getFavsView);
 viewsRouter.get("/profile", authMiddleware.authCheck, viewsController.getProfileView);
+viewsRouter.get("/recoverpassword", viewsController.getRecoverPasswordView);
+viewsRouter.get("/resetpassword/:recoverToken", viewsController.getResetPasswordView);
 
 // Admin
 viewsRouter.get("/users", viewsController.getUsersView);

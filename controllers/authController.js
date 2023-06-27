@@ -1,9 +1,13 @@
 const passport = require('passport');
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-let jwtSecret = process.env.JWT_SECRET;
 let users = require("../models/users");
-
+const transporter = require('../utils/nodemailer');
+const regex = require('../utils/regex');
+const bcrypt = require('bcrypt');
+let jwtSecret = process.env.JWT_SECRET;
+let domain = process.env.DOMAIN;
+const saltRounds = 10;
 
 //GOOGLE OAUTH
 //Esta ruta tiene dos funciones, la primera es en caso de fallo nos redirecciona a /auth/failure, y la segunda, en caso de éxito realiza la función siguiente.
@@ -76,6 +80,42 @@ const createAndStoreTokenViaEmail = (req,res)=>{
 }
 
 
+//RECOVER - RESET PASSWORD
+const recoverPassword = async(req, res) => {
+    try {
+        const recoverToken = jwt.sign({email: req.params.email}, jwtSecret, {expiresIn: '60m'});
+        const url = domain + `/resetpassword/` + recoverToken;
+        await transporter.sendMail({
+            to: req.params.email,
+            subject: 'Recover Password',
+            html: `<h3>Recover Password</h3>
+                <a href = ${url}>Click to recover password</a>
+                <p>Link will expire in 60 minutes</p>`
+        });
+        res.status(200).json({"success": true, "msj":'A link for reset your password has been send to your email'})
+    } catch (error) {
+        console.log('Error:', error)
+        res.status(400).json({"success": false, "msj":'Something went wrong...'});
+    }
+};
+
+const resetPassword = async(req, res) => {
+    try {
+        const recoverToken = req.headers.token;
+        console.log("reseting password")
+        const payload = jwt.verify(recoverToken, jwtSecret);
+        const password = req.body.password;
+        const hashPassword = await bcrypt.hash(password, saltRounds);
+        await users.updateUserPassword(payload.email, hashPassword);
+        res.status(200).json({"success": true, "msj":'Password actualized'});
+    } catch (error) {
+        console.log('Error:', error);
+        res.status(400).json({"success": false, "msj":'Something went wrong...'});
+    }
+}
+
+
+
 
 module.exports = {
     promptGoogleAccounts,
@@ -83,5 +123,7 @@ module.exports = {
     createAndStoreTokenViaGoogle,
     notifyOfAuthFailure,
     destroySessionAndClearCookies,
-    createAndStoreTokenViaEmail
+    createAndStoreTokenViaEmail,
+    recoverPassword,
+    resetPassword
 }

@@ -9,6 +9,7 @@ async function getData(url = "") {
 //PUTs
 async function putData(url = "", data = {}) {
     // Default options are marked with *
+	console.log(url, data)
     let response = await fetch(url, {
       method: "PUT", // *GET, POST, PUT, DELETE, etc.
       // mode: "cors", // no-cors, *cors, same-origin
@@ -251,8 +252,88 @@ if(loginForm){
 			console.log(error);
 		}
 	  });
-
 }
+
+const recoverPasswordForm = document.getElementById("recover_password_form");
+if(recoverPasswordForm){
+	recoverPasswordForm.addEventListener("submit", async (e) => {
+		e.preventDefault();
+		email = e.target.email.value;
+
+		try {
+			// response --> {"success": false, "msj":"This email do not have an account"}
+			let response = await getData(`http://localhost:3000/recoverpassword/${email}`);
+			
+			if(response.success){
+				const recoverPasswordSection = document.querySelector("#recover_password");
+				recoverPasswordSection.remove();
+				const sendEmailSection = document.querySelector("#email_send_message");
+				sendEmailSection.innerHTML = `<h3>${response.msj}</h3>`;
+				let button = document.createElement("button");
+				button.innerText = "Accept";
+				button.addEventListener("click", () => {
+					window.location = "/";
+				});
+				sendEmailSection.appendChild(button);
+				
+			} else {
+				console.log("Something went wrong...");
+				window.location = "/recoverpassword";
+			}
+
+		} catch (error) {
+			console.log(error);
+		}
+	  });
+}
+
+const resetPasswordForm = document.querySelector("#reset_password_form");
+if(resetPasswordForm){
+	resetPasswordForm.addEventListener("submit", async (e) => {
+		e.preventDefault();
+		console.log(window.location)
+		let pathnameArr = window.location.pathname.split("/");
+		let token = pathnameArr[2];
+		console.log(token)
+
+		password = e.target.password.value;
+
+		try {
+			let response = await fetch("http://localhost:3000/resetpassword", {
+			  method: "PUT", // *GET, POST, PUT, DELETE, etc.
+			  // mode: "cors", // no-cors, *cors, same-origin
+			  // cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+			  // credentials: "same-origin", // include, *same-origin, omit
+			  headers: {
+				"Content-Type": "application/json",
+				// 'Content-Type': 'application/x-www-form-urlencoded',
+				token
+			  },
+			  // redirect: "follow", // manual, *follow, error
+			  // referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+			  body: JSON.stringify({password}), // body data type must match "Content-Type" header
+			});
+			
+			let data = await response.json(); // parses JSON response into native JavaScript objects
+		
+		
+			// response --> {"success": false, "msj":"This email do not have an account"}
+			/* let response = await putData(`http://localhost:3000/resetpassword/${token}`, password); */
+
+			console.log("----_>",data)
+			if(data.success){
+				window.location = "/login";
+			} else {
+				console.log("Something went wrong...");
+				window.location = "/resetpassword"; 
+			}
+
+		} catch (error) {
+			console.log(error);
+		}
+	  });
+}
+
 
 
 async function getFavouriteProjectsInfo(){

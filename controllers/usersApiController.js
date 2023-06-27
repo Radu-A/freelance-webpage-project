@@ -34,15 +34,6 @@ const getUserFavouritesIds = async (req,res) => {
     }
 }
 
-// recover password (user and admin)
-const recoverPassword = () => {
-
-};
-// restorepassword (user and admin)
-const restorePassword = () => {
-
-};
-
 //POSTs
 //create user
 const createUser = async (req,res) => {
@@ -141,11 +132,9 @@ const deleteFavorite = async(req, res) => {
 
 
  
- module.exports = {
+module.exports = {
     getUserInfo,
     getUserFavouritesIds,
-    recoverPassword,
-    restorePassword,
     createUser,
     saveFav,
     editUserProfile,
