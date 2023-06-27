@@ -195,9 +195,10 @@ if(window.location.pathname == "/favs"){
 // Set the header according to the user (no logged, logged in, admin)
 async function setHeader() {
 	let userInfo = await getData("http://localhost:3000/api/users/user");
+
 	let header;
 	if (userInfo.data.email){
-		let { id_user, email, password, user_name, admin, firstname, surename, logged } = userInfo;
+		let { id_user, email, password, user_name, admin, firstname, surename, logged } = userInfo.data;
 
 		if (admin && logged) {
 			// admin logged in
