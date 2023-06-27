@@ -85,7 +85,8 @@ const checkEmailLogIn = async(req, res, next) => {
             const match = await bcrypt.compare(password, data.password);
             if(match){
                 await users.logInUserTrue(email);
-                console.log("++++++>>>", req.user);
+                req.user = {email};
+                console.log("++++++>>>", data);
                 next();
             } else {
                 res.status(400).json({ msg: 'Incorrect user or password'});
@@ -107,9 +108,9 @@ const signUpUser = async(req, res, next) => {
 
         req.user = {email};
         next();
+        
         /* if(regex.validateEmail(email) && regex.validatePassword(password)){
             
-
             res.status(201).json(data);
         }else{
             res.status(400).json({msg: 'Invalid email or password'});

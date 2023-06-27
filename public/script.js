@@ -142,27 +142,81 @@ editUserData.addEventListener("click", function(event) {
 });
 }
 
+
+
+function signUpFormValidation(email, password, user_name, firstname, surename){
+	//Regex
+	const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+	const userNameRegex = /^[a-zA-Z0-9_]{2,15}$/;
+	const firstNameRegex = /^[a-zA-Z]{0,20}$/;
+
+	let result;
+	let validate = true;
+	let msg = "Form fields validation failed: ";
+	console.log(email, password, user_name, firstname, surename);
+	console.log(emailRegex.test(email));
+	console.log(passwordRegex.test(password));
+	console.log(userNameRegex.test(user_name));
+	console.log(userNameRegex.test(firstname));
+	console.log(userNameRegex.test(surename));
+	//Tests
+	if(!emailRegex.test(email)){
+		validate = false;
+		msg += "invalid email format; ";
+	}
+	if(!passwordRegex.test(password)){
+		validate = false;
+		msg += "invalid password format: Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character; ";
+	}
+	if(!userNameRegex.test(user_name)){
+		validate = false;
+		msg += "invalid user name: Minimum 5 characters, maximum 15 characters, lowercase, uppercase, numbers, underscore; ";
+	}
+	if(!firstNameRegex.test(firstname)){
+		validate = false;
+		msg += "invalid first name: Minimum 5 characters, maximum 20 characters, lowercase or uppercase; ";
+	}
+	if(!firstNameRegex.test(surename)){
+		validate = false;
+		msg += "invalid surname: Minimum 5 characters, maximum 20 characters, lowercase or uppercase; ";
+	}
+
+	validate ?
+	result = {validate, msg: "successful validation"} 
+	: {validate, msg};
+
+	return result
+}
+
 const signUpForm = document.getElementById("signup_form");
 if(signUpForm){
 	signUpForm.addEventListener("submit", async (e) => {
 		e.preventDefault();
-		console.log(e.target.user_name.value)
 		
-		let newInfo = {
-			email: e.target.email.value,
-			password: e.target.password.value,
-			user_name: e.target.user_name.value,
-			admin: false,
-			firstname: e.target.firstname.value,
-			surename: e.target.surename.value,
-			logged: false
-		}
+		
+		email = e.target.email.value,
+		password = e.target.password.value,
+		user_name = e.target.user_name.value,
+		admin = false,
+		firstname = e.target.firstname.value,
+		surename = e.target.surename.value,
+		logged = false
+		
 
-		try {
-			await postData("http://localhost:3000/auth/signup", newInfo);
-		} catch (error) {
-			//console.log(error);
+		let validation = signUpFormValidation(email, password, user_name, firstname, surename);
+		console.log(validation)
+		if(validation.validate){
+			try {
+				let newInfo = {email,password,user_name,admin,firstname,surename,logged};
+				let response = await postData("http://localhost:3000/auth/signup", newInfo);
+			} catch (error) {
+				//console.log(error);
+			}
+		} else {
+			alert(validation.msg);
 		}
+		
 	  });
 }
 
