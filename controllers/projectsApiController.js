@@ -99,13 +99,19 @@ const createNewProject = async (req,res) => {
     try {
         let newProject = await new Project ({
             "title": req.body.title,
+            "date": new Date(),
+            "source": "manual",
             "budget": req.body.budget,
-            "description": req.body.description
+            "description": req.body.description,
+            "url": "none"
           });
         const data = await newProject.save();
-        console.log(data);
+        console.log({
+            msj: `Proyecto ${data.title} guardado en el sistema con ID: ${data.id}`,
+            "product": data
+        });
         res.status(201).json({
-            msj: `Producto ${data.title} guardado en el sistema con ID: ${data.id}`,
+            msj: `Proyecto ${data.title} guardado en el sistema con ID: ${data.id}`,
             "product": data
         });
     }        

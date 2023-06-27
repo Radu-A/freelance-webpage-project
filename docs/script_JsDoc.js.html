@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: script_JsDoc.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: script_JsDoc.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Obtiene los datos de una URL.
+ * @async - Envuelve el contenido de la función en una promesa, lo que permite que la función devuelva una promesa en lugar de un valor directamente.
+ * @function getData - La función se llama getData
+ * @param {string} url - La URL de la que se obtendrán los datos.
+ * @returns {Promise} Una promesa que se resuelve con los datos obtenidos.
+ */
+async function getData(url = "") {
+    let response = await fetch(url, {
+      method: "GET"
+    });
+    return response.json();
+}
+
+/**
+ * Actualiza los datos de una URL utilizando fetch.
+ * @async
+ * @function putData
+ * @param {string} url - La URL a la que se enviarán los datos.
+ * @param {Object} data - Los datos que se enviarán a la URL.
+ * @returns {Promise} Una promesa que se resuelve con los datos actualizados.
+ */
+async function putData(url = "", data = {}) {
+	/**
+	 * La respuesta obtenida de la URL.
+	 * @type {Response}
+	 */
+	let response = await fetch(url, {
+	  method: "PUT",
+	  headers: {
+		"Content-Type": "application/json",
+	  },
+	  body: JSON.stringify(data),
+	});
+}
+
+/**
+ * Envía datos a una URL utilizando fetch.
+ * @async
+ * @function postData
+ * @param {string} url - La URL a la que se enviarán los datos.
+ * @param {Object} data - Los datos que se enviarán a la URL.
+ * @returns {Promise} Una promesa que se resuelve con los datos enviados.
+ */
+async function postData(url = "", data = {}) {
+	/**
+	 * La respuesta obtenida de la URL.
+	 * @type {Response}
+	 */
+	let response = await fetch(url, {
+	  method: "POST",
+	  headers: {
+		"Content-Type": "application/json",
+	  },
+	  body: JSON.stringify(data),
+	});
+	
+	/**
+	 * Los datos enviados obtenidos de la respuesta.
+	 * @type {Object}
+	 */
+	return response.json();
+  }
+
+/**
+ * Elimina datos de una URL utilizando fetch.
+ * @async
+ * @function deleteData
+ * @param {string} url - La URL a la que se enviarán los datos.
+ * @param {Object} data - Los datos que se enviarán a la URL.
+ * @returns {Promise} Una promesa que se resuelve con los datos eliminados.
+ */
+async function deleteData(url = "", data = {}) {
+	/**
+	 * La respuesta obtenida de la URL.
+	 * @type {Response}
+	 */
+	let response = await fetch(url, {
+	  method: "DELETE",
+	  headers: {
+		"Content-Type": "application/json",
+	  },
+	  body: JSON.stringify(data),
+	});
+	
+	/**
+	 * Los datos eliminados obtenidos de la respuesta.
+	 * @type {Object}
+	 */
+	return response.json();
+  }
+
+/**
+ * Siendo usuario, editar mis propios datos mostrados en profile:
+ * El elemento HTML que contiene el formulario de datos de usuario.
+ * @type {HTMLElement}
+ */
+const formUserData = document.getElementById("formUserData");
+
+/**
+ * El elemento HTML que contiene el botón para editar los datos de usuario.
+ * @type {HTMLElement}
+ */
+const editUserData = document.getElementById("editUserData");
+
+if (formUserData) {
+  /**
+   * Maneja el evento click del botón para editar los datos de usuario.
+   * @function
+   * @param {Event} event - El evento click.
+   */
+  editUserData.addEventListener("click", function(event) {
+    event.preventDefault();
+
+    /**
+     * El formulario para editar los datos de usuario.
+     * @type {HTMLFormElement}
+     */
+    const form = document.createElement("form");
+    form.setAttribute("id", "editUserDataForm");
+
+    /**
+     * El campo de entrada para la contraseña del usuario.
+     * @type {HTMLInputElement}
+     */
+    const passwordInput = document.createElement("input");
+    passwordInput.type = "password";
+    passwordInput.placeholder = "password";
+    passwordInput.name = "password";
+
+    /**
+     * El campo de entrada para el correo electrónico del usuario.
+     * @type {HTMLInputElement}
+     */
+    const emailInput = document.createElement("input");
+    emailInput.type = "email";
+    emailInput.placeholder = "Email";
+    emailInput.name = "email";
+
+    /**
+     * El campo de entrada para el nombre de usuario del usuario.
+     * @type {HTMLInputElement}
+     */
+    const userNameInput = document.createElement("input");
+    userNameInput.type = "text";
+    userNameInput.placeholder = "User Name";
+    userNameInput.name = "userName";
+
+    /**
+     * El campo de entrada para el nombre del usuario.
+     * @type {HTMLInputElement}
+     */
+    const firstNameInput = document.createElement("input");
+    firstNameInput.type = "text";
+    firstNameInput.placeholder = "First Name";
+    firstNameInput.name = "firstName";
+
+    /**
+     * El campo de entrada para el apellido del usuario.
+     * @type {HTMLInputElement}
+     */
+    const surnameInput = document.createElement("input");
+    surnameInput.type = "text";
+    surnameInput.placeholder = "Surname";
+    surnameInput.name = "surname";
+
+    /**
+     * El botón para guardar la edición de los datos de usuario.
+     * @type {HTMLButtonElement}
+     */
+    const submitButton = document.createElement("button");
+    submitButton.type = "submit";
+    submitButton.innerText = "Save edit";
+
+    form.appendChild(passwordInput);
+    form.appendChild(emailInput);
+    form.appendChild(userNameInput);
+    form.appendChild(firstNameInput);
+    form.appendChild(surnameInput);
+    form.appendChild(submitButton);
+
+	/**
+	* Elimina el evento click del botón para editar los datos de usuario después de que se haya hecho clic en él una vez.
+	* @function
+	* @param {Event} event - El evento click.
+	*/
+	editUserData.removeEventListener("click", arguments.callee);
+
+	form.addEventListener("submit", (e) => {
+	  e.preventDefault();
+
+	  let newInfo = {
+		  email: e.target.email.value,
+		  password: e.target.password.value,
+		  userName: e.target.userName.value,
+		  firstName: e.target.firstName.value,
+		  sureName: e.target.surname.value
+	  }
+
+	  try {
+          /**
+           * Envía una solicitud PUT al servidor con los nuevos datos del usuario y registra la respuesta en la consola.
+           * @function
+           * @async
+           * @param {string} url - La URL a la que se enviará la solicitud PUT.
+           * @param {Object} data - Los nuevos datos del usuario a enviar al servidor.
+           */
+          putData("http://localhost:3000/api/users/user", newInfo).then((data) => {
+          console.log(data);
+          }); 
+      } catch (error) {
+          console.error(error);
+      }
+	});
+  });
+}
+
+/**
+ * El elemento HTML que contiene el formulario de registro de usuario.
+ * @type {HTMLElement}
+ */
+const signUpForm = document.getElementById("signup_form");
+
+if(signUpForm){
+  /**
+   * Maneja el evento submit del formulario de registro de usuario.
+   * @function
+   * @param {Event} e - El evento submit.
+   */
+  signUpForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    console.log(e.target.user_name.value)
+    
+    /**
+     * Los nuevos datos del usuario a enviar al servidor.
+     * @type {Object}
+     * @property {string} email - El correo electrónico del usuario.
+     * @property {string} password - La contraseña del usuario.
+     * @property {string} user_name - El nombre de usuario del usuario.
+     * @property {boolean} admin - Si el usuario es un administrador o no.
+     * @property {string} firstname - El nombre del usuario.
+     * @property {string} surename - El apellido del usuario.
+     * @property {boolean} logged - Si el usuario ha iniciado sesión o no.
+     */
+    let newInfo = {
+      email: e.target.email.value,
+      password: e.target.password.value,
+      user_name: e.target.user_name.value,
+      admin: false,
+      firstname: e.target.firstname.value,
+      surename: e.target.surename.value,
+      logged: false
+    }
+
+    try {
+      await postData("http://localhost:3000/auth/signup", newInfo);
+    } catch (error) {
+
+    }
+  });
+}
+
+/**
+ * El elemento HTML que contiene el formulario de inicio de sesión de usuario.
+ * @type {HTMLElement}
+ */
+const loginForm = document.getElementById("login_form");
+
+if(loginForm){
+  /**
+   * Maneja el evento submit del formulario de inicio de sesión de usuario.
+   * @function
+   * @param {Event} e - El evento submit.
+   */
+  loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    
+    /**
+     * Los nuevos datos del usuario a enviar al servidor.
+     * @type {Object}
+     * @property {string} email - El correo electrónico del usuario.
+     * @property {string} password - La contraseña del usuario.
+     */
+    let newInfo = {
+      email: e.target.email.value,
+      password: e.target.password.value
+    }
+
+    try {
+      let response = await postData("http://localhost:3000/auth/login", newInfo);
+      
+      if(!response.success){
+        window.location = "/signup";
+      }
+
+    } catch (error) {
+      console.log(error);
+    }
+  });
+}
+
+/**
+ * Obtiene la información de los proyectos favoritos del usuario.
+ * @async
+ * @function
+ */
+async function getFavouriteProjectsInfo(){
+	try {
+	  // Obtiene los ids de los proyectos favoritos del usuario.
+	  let favouritesIds = await getData(`http://localhost:3000/api/users/favs/`);
+	  let paramValue = favouritesIds.project_ids.toString();
+  
+	  // Obtiene la información de los proyectos favoritos.
+	  let favouritesInfo = await getData(`http://localhost:3000/api/projects/${paramValue}`);
+	  console.log("Favs data from script.js: ", favouritesInfo)
+	  
+	  // Imprime las tarjetas de los proyectos favoritos.
+	  printProjectCard(favouritesInfo);
+	} catch (error) {
+	  console.error(error);
+	}
+  }
+  
+  if(window.location.pathname == "/favs"){
+	getFavouriteProjectsInfo();
+  }
+
+/**
+ * Set the header according to the user (no logged, logged in, admin)
+ * Asynchronously sets the header.
+ * @async
+ * @function setHeader
+ * @returns {Promise&lt;string>} The header HTML string.
+ */
+async function setHeader() {
+	/**
+	 * La información del usuario.
+	 * @type {Object}
+	 * @property {number} id_user - El ID del usuario.
+	 * @property {string} email - El correo electrónico del usuario.
+	 * @property {string} password - La contraseña del usuario.
+	 * @property {string} user_name - El nombre de usuario.
+	 * @property {boolean} admin - Si el usuario es un administrador.
+	 * @property {string} firstname - El primer nombre del usuario.
+	 * @property {string} surename - El apellido del usuario.
+	 * @property {boolean} logged - Si el usuario ha iniciado sesión.
+	 */
+	let userInfo = await getData("http://localhost:3000/api/users/user");
+  
+	let header;
+	if (userInfo.data.email){
+	  let { id_user, email, password, user_name, admin, firstname, surename, logged } = userInfo.data;
+  
+	  if (admin &amp;&amp; logged) {
+		/**
+	   * La cadena HTML del header cuando el usuario inicia sesión siendo admin.
+	   * @type {string}
+	   */
+		header = `
+		  &lt;section class="top-nav">
+			&lt;div id="logo">&lt;/div>
+			&lt;p id="logotitle">Freelance Web Projects&lt;/p>
+			&lt;input id="menu-toggle" type="checkbox"/>
+			&lt;label class="menu-button-container" for="menu-toggle">
+			  &lt;div class="menu-button">&lt;/div>
+			&lt;/label>
+			&lt;ul class="menu">
+			  &lt;li class="menu-item">&lt;a class="menu-link" href="/">Index&lt;/a>&lt;/li>
+			  &lt;li class="menu-item">&lt;a class="menu-link" href="/dashboard">Dashboard&lt;/a>&lt;/li>
+			  &lt;li class="menu-item">&lt;a class="menu-link" href="/">Profile&lt;/a>&lt;/li>
+			  &lt;li class="menu-item">&lt;a class="menu-link" href="/logout">Logout&lt;/a>&lt;/li>
+			&lt;/ul>
+		  &lt;/section>
+		`;
+	  } else {
+		/**
+	   * La cadena HTML del header cuando el usuario ha iniciado sesión.
+	   * @type {string}
+	   */
+		header = `
+		  &lt;section class="top-nav">
+			&lt;div id="logo">&lt;/div>
+			&lt;p id="logotitle">Freelance Web Projects&lt;/p>
+			&lt;input id="menu-toggle" type="checkbox"/>
+			&lt;label class="menu-button-container" for="menu-toggle">
+			  &lt;div class="menu-button">&lt;/div>
+			&lt;/label>
+			&lt;ul class="menu">
+			  &lt;li class="menu-item">&lt;a class="menu-link" href="/">Index&lt;/a>&lt;/li>
+			  &lt;li class="menu-item">&lt;a class="menu-link" href="/profile">Profile&lt;/a>&lt;/li>
+			  &lt;li class="menu-item">&lt;a class="menu-link" href="/favs">Favs&lt;/a>&lt;/li>
+			  &lt;li class="menu-item">&lt;a class="menu-link" href="/logout">Logout&lt;/a>&lt;/li>
+			&lt;/ul>
+		  &lt;/section>
+		`;
+	  }
+	} else {
+	  /**
+	   * La cadena HTML del header cuando el usuario no ha iniciado sesión.
+	   * @type {string}
+	   */
+	  header = `
+		&lt;section class="top-nav">
+		  &lt;div id="logo">&lt;/div>
+		  &lt;p id="logotitle">Freelance Web Projects&lt;/p>
+		  &lt;input id="menu-toggle" type="checkbox"/>
+		  &lt;label class="menu-button-container" for="menu-toggle">
+			&lt;div class="menu-button">&lt;/div>
+		  &lt;/label>
+		  &lt;ul class="menu">
+			&lt;li class="menu-item">&lt;a class="menu-link" href="/">Index&lt;/a>&lt;/li>
+			&lt;li class="menu-item">&lt;a class="menu-link" href="/signup">Signup&lt;/a>&lt;/li>
+			&lt;li class="menu-item">&lt;a class="menu-link" href="/login">Login&lt;/a>&lt;/li>
+		  &lt;/ul>
+		&lt;/section>
+	  `;
+	}
+	/**
+   * Seleccionar el header y agregar el string HTML generada al final de él vía DOM.
+   */
+	let documentHeader = document.querySelector("header");
+	documentHeader.innerHTML+= header;
+}
+
+setHeader();
+
+
+/**
+ * La sección de resultados de búsqueda.
+ * @type {HTMLElement}
+ */
+const searchResultsSection = document.querySelector('.search-results');
+
+/**
+ * El formulario de búsqueda de proyectos.
+ * @type {HTMLFormElement}
+ */
+const searchProjectsForm = document.querySelector('#search-projects');
+
+/**
+ * La lista de habilidades.
+ * @type {Array&lt;string>}
+ */
+const skillList = ['Python', 'Java', 'PHP', 'JavaScript', '.NET', 'CSS', 'HTML5'];
+
+/**
+ * La segunda lista de habilidades.
+ * @type {Array&lt;string>}
+ */
+const skillsList2 = ['Linux', 'C++ Programming', 'C# Programming', 'Objective C', 'WordPress'];
+
+
+/**
+ * La función que se encarga de imprimir las tarjetas de los proyectos.
+ * @function printProjectCard
+ * @param {Array&lt;Object>} projects - Los proyectos a imprimir.
+ */
+function printProjectCard(projects) {
+	projects.forEach((project, i) => {
+	  project.description = project.description.substr(0, 550);
+  
+	  /**
+	   * El artículo que contiene la tarjeta del proyecto.
+	   * @type {HTMLElement}
+	   */
+	  const articleProjectCard = document.createElement('article');
+  
+	  articleProjectCard.classList.add('project-card');
+	  articleProjectCard.id = `project-card-${i + 1}`;
+	  articleProjectCard.innerHTML = `
+		&lt;div class="project-title">
+		  &lt;h2>&lt;a href="${project.url}" target="_blank">${project.title}&lt;/a>&lt;/h2>
+		&lt;/div>
+		&lt;div class="project-description">
+		  &lt;p>${project.description}&lt;/p>
+		&lt;/div>
+		&lt;div class="project-budget">
+		  &lt;p>${project.budget}&lt;/p>
+		&lt;/div>
+		&lt;div class="project-buttons">
+		  &lt;button id="add_delete">&lt;/button>
+		&lt;/div>
+	  `;
+  
+	  /**
+	   * El div que contiene las habilidades del proyecto.
+	   * @type {HTMLElement}
+	   */
+	  const projectSkillsDiv = document.createElement('div');
+  
+	  projectSkillsDiv.classList.add('project-skills');
+  
+	  project.skills.forEach((skill, i) => {
+		if (i &lt; 6) {
+		  const skillParagraph = document.createElement('p');
+  
+		  skillParagraph.innerText = skill;
+		  skillParagraph.classList.add('skill-paragraph');
+		  skillParagraph.id = `skill-paragraph-${i + 1}`;
+		  projectSkillsDiv.appendChild(skillParagraph);
+  
+		  skillParagraph.addEventListener('click', () => {
+			console.log(`has pinchado: ${skill}`);
+			searchResultsSection.innerHTML = '';
+			printLinks();
+			getProjects(skill);
+		  });
+		}
+	  });
+  
+	  articleProjectCard.appendChild(projectSkillsDiv);
+	  searchResultsSection.appendChild(articleProjectCard);
+  
+	  /**
+	   * El botón para añadir o eliminar un proyecto.
+	   * @type {HTMLElement}
+	   */
+	  let addDeleteButton = document.querySelector(`#project-card-${i + 1} div.project-buttons button#add_delete`);
+  
+	  if (window.location.pathname == '/') {
+		addDeleteButton.textContent = 'Add to favourites';
+		addDeleteButton.addEventListener('click', (event) => {
+		  event.preventDefault();
+  
+		  let favouriteInfo = {
+			'id_user': 10,
+			'id_project': project._id,
+		  };
+  
+		  try {
+			postData('http://localhost:3000/api/users/favs', favouriteInfo).then((data) => {
+			  console.log('Post from script.js: ', data);
+			});
+		  } catch (error) {
+			console.error(error);
+		  }
+		});
+	  }
+  
+	  if (window.location.pathname == '/favs') {
+		addDeleteButton.textContent = 'Delete from favourites';
+		addDeleteButton.addEventListener('click', (event) => {
+		  event.preventDefault();
+  
+		  let favouriteInfo = {
+			'id_user': 10,
+			'id_project': project._id,
+		  };
+  
+		  try {
+			deleteData('http://localhost:3000/api/users/favs', favouriteInfo).then((data) => {
+			  console.log('Post from script.js: ', data);
+			});
+  
+			articleProjectCard.remove();
+		  } catch (error) {
+			console.error(error);
+		  }
+		});
+	  }
+	});
+  }
+
+/**
+ * La función que se encarga de obtener los proyectos.
+ * @async
+ * @function getProjects
+ * @param {string} keyword - La palabra clave para buscar proyectos.
+ * @returns {Promise&lt;Array&lt;Object>>} - Los proyectos encontrados.
+ * @throws {Error} - Si hay un error al obtener los proyectos.
+ */
+async function getProjects(keyword) {
+	if (keyword) {
+	  try {
+		const response = await fetch(`http://localhost:3000/api/projects/search?keyword=${keyword}`);
+		let projects = await response.json();
+		printProjectCard(projects);
+		return projects;
+	  } catch (error) {
+		/**
+		 * El error que se produce al obtener los proyectos.
+		 * @type {Error}
+		 */
+		throw new Error(`ERROR: ${error.stack}`);
+	  }
+	} else {
+	  try {
+		const response = await fetch(`http://localhost:3000/api/projects/search`);
+		let projects = await response.json();
+		printProjectCard(projects);
+		return projects;
+	  } catch (error) {
+		/**
+		 * El error que se produce al obtener los proyectos.
+		 * @type {Error}
+		 */
+		throw new Error(`ERROR: ${error.stack}`);
+	  }
+	}
+  }
+  
+
+/**
+ * La función que se encarga de imprimir los enlaces de habilidades y obtener los proyectos.
+ * @async
+ * @function printLinks
+ */
+async function printLinks() {
+	/**
+	 * El artículo que contiene los enlaces de habilidades.
+	 * @type {HTMLElement}
+	 */
+	const skillLinksArticle1 = document.createElement('article');
+	skillLinksArticle1.id = 'skill-links-article-1';
+	skillList.forEach((skill, i) => {
+	  /**
+	   * El div que contiene el enlace de habilidad.
+	   * @type {HTMLElement}
+	   */
+	  const skillLinkDiv = document.createElement('div');
+	  skillLinkDiv.classList.add = 'skill-link-div';
+	  skillLinkDiv.innerHTML = `&lt;div>&lt;a class='skill-link-a-1' id='skill-link-a-${i + 1}' href="">${skill}&lt;/a>&lt;/div>`;
+	  skillLinksArticle1.appendChild(skillLinkDiv);
+	});
+  
+	searchResultsSection.appendChild(skillLinksArticle1);
+  
+	/**
+	 * Los enlaces de habilidades.
+	 * @type {NodeListOf&lt;HTMLAnchorElement>}
+	 */
+	const skillLinkAnchors1 = document.querySelectorAll('.skill-link-a-1');
+	skillLinkAnchors1.forEach((item, i) => {
+	  item.addEventListener('click', (event) => {
+		event.preventDefault();
+		searchResultsSection.innerHTML = '';
+		printLinks();
+		getProjects(skillList[i]);
+	  });
+	});
+  
+	/**
+	 * El artículo que contiene los enlaces de habilidades.
+	 * @type {HTMLElement}
+	 */
+	const skillLinksArticle2 = document.createElement('article');
+	skillLinksArticle2.id = 'skill-links-article-2';
+	skillsList2.forEach((skill, i) => {
+	  /**
+	   * El div que contiene el enlace de habilidad.
+	   * @type {HTMLElement}
+	   */
+	  const skillLinkDiv = document.createElement('div');
+	  skillLinkDiv.classList.add = 'skill-link-div';
+	  skillLinkDiv.innerHTML = `&lt;div>&lt;a class='skill-link-a-2' id='skill-link-a-${i + 2}' href="">${skill}&lt;/a>&lt;/div>`;
+	  skillLinksArticle2.appendChild(skillLinkDiv);
+	});
+	searchResultsSection.appendChild(skillLinksArticle2);
+  
+	/**
+	 * Los enlaces de habilidades.
+	 * @type {NodeListOf&lt;HTMLAnchorElement>}
+	 */
+	const skillLinkAnchors2 = document.querySelectorAll('.skill-link-a-2');
+	skillLinkAnchors2.forEach((item, i) => {
+	  item.addEventListener('click', (event) => {
+		event.preventDefault();
+		searchResultsSection.innerHTML = '';
+		printLinks();
+		getProjects(skillsList2[i]);
+	  });
+	});
+  }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#deleteData">deleteData</a></li><li><a href="global.html#editUserData">editUserData</a></li><li><a href="global.html#formUserData">formUserData</a></li><li><a href="global.html#getData-Lafunci%25C3%25B3nsellamagetData">getData - La función se llama getData</a></li><li><a href="global.html#getFavouriteProjectsInfo">getFavouriteProjectsInfo</a></li><li><a href="global.html#getProjects">getProjects</a></li><li><a href="global.html#loginForm">loginForm</a></li><li><a href="global.html#postData">postData</a></li><li><a href="global.html#printLinks">printLinks</a></li><li><a href="global.html#printProjectCard">printProjectCard</a></li><li><a href="global.html#putData">putData</a></li><li><a href="global.html#searchProjectsForm">searchProjectsForm</a></li><li><a href="global.html#searchResultsSection">searchResultsSection</a></li><li><a href="global.html#setHeader">setHeader</a></li><li><a href="global.html#signUpForm">signUpForm</a></li><li><a href="global.html#skillList">skillList</a></li><li><a href="global.html#skillsList2">skillsList2</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Jun 27 2023 22:11:07 GMT+0200 (hora de verano de Europa central)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

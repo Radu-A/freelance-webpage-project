@@ -26,7 +26,7 @@ async function saveProject(project) {
 		console.log(title);
 		console.log('Esto es lo que devuelve la búsqueda');
 		console.log(data);
-        if (data.length === 0) {
+        if (data.length === 0 && title && description && budget) {
 			// Pasamos los datos a la base de datos en Atlas
 			const newProject = new Project({
 				title,

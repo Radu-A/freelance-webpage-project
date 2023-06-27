@@ -28,8 +28,7 @@ const objectSchema = {
         required: true
     },
     skills: {
-        type: Array,
-        required: true
+        type: Array
     }
 }
 // Creamos el esqueña
@@ -38,11 +37,16 @@ const projectSchema = mongoose.Schema(objectSchema);
 // Creamos el modelo
 const Project = mongoose.model('Project', projectSchema);
 
-// const newProject = new Project({
-//     title: "Desarrollador Web",
-//     budget: "Sueldazo",
-//     description: "No tendrá que hacer nada"
-// });
+const newProject = new Project({
+    "title": "Desarrollador Web",
+    "date": '2023-06-27T19:23:07.948Z',
+    "source": "manual",
+    "budget": "Sueldazo",
+    "desciption": 'no hay que hacer nada',
+    "url": "none"
+  });
+
+
 
 // newProject.save().then((data)=>console.log(data));
 
