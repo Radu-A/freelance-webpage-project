@@ -76,11 +76,27 @@ const createUser = async(email, password, user_name, admin, firstname, surename,
 const updateUser = async(id_user, email, password, user_name, firstname, surename) => {
     let client, result;
     try{
-        console.log("<<__",id_user, email, password, user_name, firstname, surename)
         client = await pool.connect();
         // Admin field is not here cause the user is not allowed to change it
         const data = await client.query(usersQueries.updateUser,
         [id_user, email, password, user_name, firstname, surename]);
+        result = data.rowCount;
+        console.log(result);
+    }catch(err){
+        console.log(err);
+        throw(err);
+    }finally{
+        client.release()
+    }
+    return result
+};
+
+// Update user password
+const updateUserPassword = async(email, password) => {
+    let client, result;
+    try{
+        client = await pool.connect();
+        const data = await client.query(usersQueries.updateUserPassword,[email, password]);
         result = data.rowCount;
         console.log(result);
     }catch(err){
@@ -228,5 +244,6 @@ module.exports = {
     getAllFavouritesIds,
     changeUserState,
     logInUserTrue,
-    logInUserFalse
+    logInUserFalse,
+    updateUserPassword
 }

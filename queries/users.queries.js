@@ -46,6 +46,10 @@ const usersQueries = {
         firstname=$5, 
         surename=$6
     WHERE id_user=$1;`,
+    updateUserPassword:`
+    UPDATE users
+    SET password=$2,
+    WHERE email=$1;`,
     deleteUser:`
     DELETE FROM users
     WHERE id_user=$1;`,

@@ -14,8 +14,10 @@ authRouter.get('/auth/failure', authController.notifyOfAuthFailure);
 //Definimos la ruta de logout, donde eliminamos la sesión y limpiamos el token de las cookies.
 authRouter.get('/logout', authMiddleware.authCheck, authController.destroySessionAndClearCookies);
 
-//EMAIL AND PASSWORD - PASSPORT OAUTH 
+//EMAIL AND PASSWORD AUTH
 authRouter.post("/auth/login", authMiddleware.checkEmailLogIn, authController.createAndStoreTokenViaEmail);
 authRouter.post("/auth/signup", authMiddleware.signUpUser, authController.createAndStoreTokenViaEmail);
+authRouter.get("/recoverpassword/:email", authController.recoverPassword);
+authRouter.put("/resetpassword/:recoverToken", authController.resetPassword);
 
 module.exports = authRouter

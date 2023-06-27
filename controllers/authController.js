@@ -1,9 +1,13 @@
 const passport = require('passport');
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-let jwtSecret = process.env.JWT_SECRET;
 let users = require("../models/users");
-
+const transporter = require('../utils/nodemailer');
+const regex = require('../utils/regex');
+const bcrypt = require('bcrypt');
+let jwtSecret = process.env.JWT_SECRET;
+let domain = process.env.DOMAIN;
+const saltRounds = 10;
 
 //GOOGLE OAUTH
 //Esta ruta tiene dos funciones, la primera es en caso de fallo nos redirecciona a /auth/failure, y la segunda, en caso de éxito realiza la función siguiente.
@@ -76,6 +80,49 @@ const createAndStoreTokenViaEmail = (req,res)=>{
 }
 
 
+//RECOVER - RESET PASSWORD
+const recoverPassword = async(req, res) => {
+    try {
+        const recoverToken = jwt.sign({email: req.params.email}, jwtSecret, {expiresIn: '60m'});
+        const url = domain + `/resetpassword/` + recoverToken;
+        await transporter.sendMail({
+            to: req.params.email,
+            subject: 'Recover Password',
+            html: `<h3>Recover Password</h3>
+                <a href = ${url}>Click to recover password</a>
+                <p>Link will expire in 60 minutes</p>`
+        });
+        res.status(200).json({
+            message: 'A recovery email has been sent to your mail direction'
+        })
+    } catch (error) {
+        console.log('Error:', error)
+    }
+};
+
+const resetPassword = async(req, res) => {
+    try {
+        const recoverToken = req.params.recoverToken;
+        const payload = jwt.verify(recoverToken, jwtSecret);
+        const password = req.body.password;
+        console.log("reseting password")
+        if(regex.validatePassword(password)){
+            const hashPassword = await bcrypt.hash(password, saltRounds);
+            await users.updateUserPassword(
+                {email: payload.email},
+                {password: hashPassword}
+            );
+        }else{
+            res.status(400).json({msg: 'Password must have at least 8 characters, one uppercase, one lowercase and one special character'});
+        }
+        res.status(200).json({message: 'Password actualized'});
+    } catch (error) {
+        console.log('Error:', error);
+    }
+}
+
+
+
 
 module.exports = {
     promptGoogleAccounts,
@@ -83,5 +130,7 @@ module.exports = {
     createAndStoreTokenViaGoogle,
     notifyOfAuthFailure,
     destroySessionAndClearCookies,
-    createAndStoreTokenViaEmail
+    createAndStoreTokenViaEmail,
+    recoverPassword,
+    resetPassword
 }

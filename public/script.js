@@ -254,6 +254,56 @@ if(loginForm){
 
 }
 
+const recoverPasswordForm = document.getElementById("recover_password_form");
+if(recoverPasswordForm){
+	recoverPasswordForm.addEventListener("submit", async (e) => {
+		e.preventDefault();
+		
+		email = e.target.email.value;
+
+		try {
+			// response --> {"success": false, "msj":"This email do not have an account"}
+			let response = await getData(`http://localhost:3000/recoverpassword/${email}`);
+			
+			if(response.success){
+				window.location = "/";
+			} else {
+				console.log("Something went wrong...");
+				window.location = "/recoverpassword"; 
+			}
+
+		} catch (error) {
+			console.log(error);
+		}
+	  });
+}
+
+const resetPasswordForm = document.querySelector("#reset_password_form");
+console.log(window.location)
+if(resetPasswordForm){
+	resetPasswordForm.addEventListener("submit", async (e) => {
+		e.preventDefault();
+		
+		password = e.target.password.value;
+		
+		try {
+			// response --> {"success": false, "msj":"This email do not have an account"}
+			let response = await putData(`http://localhost:3000/resetpassword/`);
+
+			if(response.success){
+				window.location = "/";
+			} else {
+				console.log("Something went wrong...");
+				window.location = "/resetpassword"; 
+			}
+
+		} catch (error) {
+			console.log(error);
+		}
+	  });
+}
+
+
 
 async function getFavouriteProjectsInfo(){
 	try {
