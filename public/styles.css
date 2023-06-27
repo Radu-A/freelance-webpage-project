@@ -383,9 +383,9 @@ body#favs .skill-paragraph {
   margin-bottom: 10px;
 }
 .profile_info{
+  width: 350px;
   background-color: #f2f2f2;
   border-radius: 5px;
-	width: 80%;
   padding: 20px;
   margin-bottom: 20px;
   border: 2px solid rgb(40, 50, 70);

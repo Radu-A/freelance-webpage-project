@@ -9,6 +9,8 @@ async function scrapeAll(browserInstance, keyword){
     let browser;
     try {
         browser = await browserInstance;
+
+        
         await pageScraper.scraperObjectFreelancer.scraper(browser, keyword);
         await pageScraper.scraperObjectUpwork.scraper(browser, keyword);
     } catch (error) {
