@@ -335,7 +335,7 @@ function printProjectCard(projects) {
 		};
 
 		if(window.location.pathname == "/favs"){ //Check the visited page
-			addDeleteButton.textContent = "Delete from favourites";
+			addDeleteButton.textContent = "Delete from favorites";
 			addDeleteButton.addEventListener("click", (event) => {
 				event.preventDefault();
 				let favouriteInfo = {

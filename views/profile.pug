@@ -5,14 +5,16 @@ html(lang='en')
  body
     header
     main
-        h2 fwp profile
+        h3 This is your profile section
+        p You can check your user info
         section.profile_info
           p #{userInfo.id_user}
           p #{userInfo.email}
           p #{userInfo.user_name}
           p #{userInfo.firstname}
           p #{userInfo.surename}
-          button#editUserData Edit User Data
+        p Click and fill bellow if you wanna change your info.
+        button#editUserData Edit your profile
         section#formUserData
 	        
     footer
