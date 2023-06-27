@@ -175,7 +175,6 @@ if(signUpForm){
 	signUpForm.addEventListener("submit", async (e) => {
 		e.preventDefault();
 		
-		
 		email = e.target.email.value,
 		password = e.target.password.value,
 		user_name = e.target.user_name.value,
@@ -183,14 +182,21 @@ if(signUpForm){
 		firstname = e.target.firstname.value,
 		surename = e.target.surename.value,
 		logged = false
-		
 
 		let validation = signUpFormValidation(email, password, user_name, firstname, surename);
 		console.log(validation)
 		if(validation.validate){
 			try {
 				let newInfo = {email,password,user_name,admin,firstname,surename,logged};
+
+				// response --> {"success": false, "msj":"This email do not have an account"}
 				let response = await postData("http://localhost:3000/auth/signup", newInfo);
+
+				if(response.success){
+					window.location = "/";
+				} else {
+					console.log("Something went wrong")
+				}
 			} catch (error) {
 				//console.log(error);
 			}
@@ -212,10 +218,14 @@ if(loginForm){
 		}
 
 		try {
+			// response --> {"success": false, "msj":"This email do not have an account"}
 			let response = await postData("http://localhost:3000/auth/login", newInfo);
 			
-			if(!response.success){
-				window.location = "/signup";
+			if(response.success){
+				window.location = "/";
+			} else {
+				console.log("Account not found");
+				window.location = "/signup"; 
 			}
 
 		} catch (error) {
