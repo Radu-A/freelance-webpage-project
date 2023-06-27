@@ -281,7 +281,7 @@ function printProjectCard(projects) {
 		articleProjectCard.id = `project-card-${i+1}`
 		articleProjectCard.innerHTML = `
 		<div class="project-title">
-			<h2><a href="${project.url}">${project.title}</a></h2>
+			<h2><a href="${project.url}" target="_blank">${project.title}</a></h2>
 		</div>
 		<div class="project-description">
 			<p>${project.description}</p>

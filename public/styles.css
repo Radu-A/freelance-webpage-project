@@ -1,41 +1,32 @@
-@media screen and (max-width: 510px) {
-  body {
-    width: 100%;
-  }
-
-  main{
-    width: 100%;
-  }
-
-  .project-card {
-    background-color: #f2f2f2;
-    border-radius: 2px;
-    width: 290px;
-    padding: 4px;
-    margin-bottom: 10px;
-    border-width: 1px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border: 2px solid rgb(40, 50, 70);
-  }
-
-  .project-description{
-    flex-wrap: wrap;
-  }
-}
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Ysabeau+SC:wght@400;500;600;700&display=swap');
 
 html, body {
 	margin: 0;
+  padding: 0;
 	height: 100%;
   }
 
 body{
-	background-color: rgb(190, 200, 210);
+	background-color: #e1effd;
 	font: 13px/20px "Lucida Grande", Tahoma, Verdana, sans-serif;
-	color:rgb(40, 50, 70);
+}
+
+h1 {
+  margin-top: 3rem;
+  text-align: center;
+  color:#1e2635;
+}
+
+h2 {
+  padding: 0 1rem;
+  color:#1e2635;
+}
+
+button {
+  /* background-color: #e1effd; */
+  background-color: #ffffff;
+  border: 1px solid black;
+  border-radius: 3px;
 }
 
 /*ELEMENTOS DEL HEADER*/
@@ -50,6 +41,7 @@ body{
 }
 
 #logotitle {
+  font-size: 2rem;
   font-weight: bold;
 }
 
@@ -187,6 +179,7 @@ main{
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+  box-sizing: border-box;
 }
 
 /*ELEMENTOS DEL INDEX*/
@@ -197,6 +190,8 @@ main{
 }
 
 .search-results {
+  width: 100%;
+  box-sizing: border-box;
 	margin-top: 20px;
 	display: flex;
 	flex-direction: column;
@@ -230,12 +225,14 @@ main{
     }
 
 .project-card{
-	background-color: #f2f2f2;
+  box-sizing: border-box;
+	background-color: #ffffff;
   border-radius: 5px;
 	width: 80%;
   padding: 20px;
   margin-bottom: 20px;
-  border: 2px solid rgb(40, 50, 70);
+  /* border: 2px solid #283246; */
+  box-shadow: 0 3px 3px rgba(0,0,0,0.2);
 }
 
 .project-skills {
@@ -243,9 +240,14 @@ main{
 	flex-direction: row;
 	justify-content: left;
 	align-items: space-around;
+  flex-wrap: wrap;
 	gap: 1rem;
 }
 
+.skill-paragraph {
+  color: #1a84ee;
+  font-weight: 600;
+}
 
 .skill-paragraph:hover {
   cursor: pointer;
@@ -271,6 +273,7 @@ main{
   
 	color: rgb(40, 50, 70);
 	text-decoration: none;
+  font-weight: 500;
 
   }
 
@@ -330,3 +333,25 @@ main{
 }
 
 
+@media screen and (max-width: 510px) {
+  body {
+    width: 100vw;
+  }
+
+  main{
+    width: 100%;
+  }
+
+  #logotitle {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  .project-card {
+    width: 100%;
+  }
+
+  .project-description{
+    flex-wrap: wrap;
+  }
+}
