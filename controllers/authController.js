@@ -92,11 +92,10 @@ const recoverPassword = async(req, res) => {
                 <a href = ${url}>Click to recover password</a>
                 <p>Link will expire in 60 minutes</p>`
         });
-        res.status(200).json({
-            message: 'A recovery email has been sent to your mail direction'
-        })
+        res.status(200).json({"success": true, "msj":'A link for reset your password has been send to your email'})
     } catch (error) {
         console.log('Error:', error)
+        res.status(400).json({"success": false, "msj":'Something went wrong...'});
     }
 };
 
@@ -106,13 +105,12 @@ const resetPassword = async(req, res) => {
         console.log("reseting password")
         const payload = jwt.verify(recoverToken, jwtSecret);
         const password = req.body.password;
-        console.log(recoverToken, password)
         const hashPassword = await bcrypt.hash(password, saltRounds);
-
         await users.updateUserPassword(payload.email, hashPassword);
         res.status(200).json({"success": true, "msj":'Password actualized'});
     } catch (error) {
         console.log('Error:', error);
+        res.status(400).json({"success": false, "msj":'Something went wrong...'});
     }
 }
 

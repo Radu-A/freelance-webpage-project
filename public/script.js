@@ -266,10 +266,21 @@ if(recoverPasswordForm){
 			let response = await getData(`http://localhost:3000/recoverpassword/${email}`);
 			
 			if(response.success){
-				window.location = "/";
+				const recoverPasswordSection = document.querySelector("#recover_password");
+				recoverPasswordSection.remove();
+				const sendEmailSection = document.querySelector("#email_send_message");
+				sendEmailSection.innerHTML = `<h3>${response.msj}</h3>`;
+				let button = document.createElement("button");
+				button.innerText = "Accept";
+				button.addEventListener("click", () => {
+					window.location = "/";
+				});
+				sendEmailSection.appendChild(button);
+
+				
 			} else {
 				console.log("Something went wrong...");
-				window.location = "/recoverpassword"; 
+				window.location = "/recoverpassword";
 			}
 
 		} catch (error) {
@@ -279,7 +290,6 @@ if(recoverPasswordForm){
 }
 
 const resetPasswordForm = document.querySelector("#reset_password_form");
-
 if(resetPasswordForm){
 	resetPasswordForm.addEventListener("submit", async (e) => {
 		e.preventDefault();
@@ -313,12 +323,12 @@ if(resetPasswordForm){
 			/* let response = await putData(`http://localhost:3000/resetpassword/${token}`, password); */
 
 			console.log("----_>",data)
-			/* if(data.success){
-				window.location = "/";
+			if(data.success){
+				window.location = "/login";
 			} else {
 				console.log("Something went wrong...");
 				window.location = "/resetpassword"; 
-			} */
+			}
 
 		} catch (error) {
 			console.log(error);
