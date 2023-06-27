@@ -10,9 +10,9 @@ async function scrapeAll(browserInstance, keyword){
     try {
         browser = await browserInstance;
 
-        
-        await pageScraper.scraperObjectFreelancer.scraper(browser, keyword);
+
         await pageScraper.scraperObjectUpwork.scraper(browser, keyword);
+        await pageScraper.scraperObjectFreelancer.scraper(browser, keyword);
     } catch (error) {
         console.log("Could not resolve the browser instance => ", error);
     }
