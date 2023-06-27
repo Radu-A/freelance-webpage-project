@@ -102,20 +102,15 @@ const recoverPassword = async(req, res) => {
 
 const resetPassword = async(req, res) => {
     try {
-        const recoverToken = req.params.recoverToken;
+        const recoverToken = req.headers.token;
+        console.log("reseting password")
         const payload = jwt.verify(recoverToken, jwtSecret);
         const password = req.body.password;
-        console.log("reseting password")
-        if(regex.validatePassword(password)){
-            const hashPassword = await bcrypt.hash(password, saltRounds);
-            await users.updateUserPassword(
-                {email: payload.email},
-                {password: hashPassword}
-            );
-        }else{
-            res.status(400).json({msg: 'Password must have at least 8 characters, one uppercase, one lowercase and one special character'});
-        }
-        res.status(200).json({message: 'Password actualized'});
+        console.log(recoverToken, password)
+        const hashPassword = await bcrypt.hash(password, saltRounds);
+
+        await users.updateUserPassword(payload.email, hashPassword);
+        res.status(200).json({"success": true, "msj":'Password actualized'});
     } catch (error) {
         console.log('Error:', error);
     }

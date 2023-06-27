@@ -18,6 +18,6 @@ authRouter.get('/logout', authMiddleware.authCheck, authController.destroySessio
 authRouter.post("/auth/login", authMiddleware.checkEmailLogIn, authController.createAndStoreTokenViaEmail);
 authRouter.post("/auth/signup", authMiddleware.signUpUser, authController.createAndStoreTokenViaEmail);
 authRouter.get("/recoverpassword/:email", authController.recoverPassword);
-authRouter.put("/resetpassword/:recoverToken", authController.resetPassword);
+authRouter.put("/resetpassword", authController.resetPassword);
 
 module.exports = authRouter

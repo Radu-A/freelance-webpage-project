@@ -48,7 +48,7 @@ const usersQueries = {
     WHERE id_user=$1;`,
     updateUserPassword:`
     UPDATE users
-    SET password=$2,
+    SET password=$2
     WHERE email=$1;`,
     deleteUser:`
     DELETE FROM users
