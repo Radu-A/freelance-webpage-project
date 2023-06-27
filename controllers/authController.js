@@ -13,7 +13,7 @@ const promptGoogleAccounts = passport.authenticate("google", { scope: ['email', 
 const redirectBecauseOfFailure = passport.authenticate('google', { failureRedirect: '/auth/failure' });
 
 //Función exitosa
-const createAndStoreToken = (req,res)=>{
+const createAndStoreTokenViaGoogle = (req,res)=>{
     //En el cuerpo de esta función podemos almacenar usuarios en nuestra bbdd con el objeto que nos proporciona req.user (Para ello es necesario hacer la función asíncrona)
 
     //Estos son los pasos para crear un token si la autenticación es exitosa
@@ -53,12 +53,35 @@ const destroySessionAndClearCookies = (req, res) => {
 }
 
 
+//EMAIL AND PASSWORD AUTH
+const createAndStoreTokenViaEmail = (req,res)=>{
+    //En el cuerpo de esta función podemos almacenar usuarios en nuestra bbdd con el objeto que nos proporciona req.user (Para ello es necesario hacer la función asíncrona)
+
+    //Estos son los pasos para crear un token si la autenticación es exitosa
+    const payload = {
+        //save here data
+        check: true,
+        email: req.user.email
+    };
+    
+    const token = jwt.sign(payload, jwtSecret, {
+        expiresIn: "365d"
+    });
+
+    //Almacenamos el token en las cookies
+    res.status(201).cookie("access-token", token, {
+        httpOnly: true,
+        sameSite: "lax"
+    }).json({"success": true, "msj":"Welcome, you are logged in"});
+}
+
 
 
 module.exports = {
     promptGoogleAccounts,
     redirectBecauseOfFailure,
-    createAndStoreToken,
+    createAndStoreTokenViaGoogle,
     notifyOfAuthFailure,
-    destroySessionAndClearCookies
+    destroySessionAndClearCookies,
+    createAndStoreTokenViaEmail
 }
