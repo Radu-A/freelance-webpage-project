@@ -612,7 +612,7 @@ if (dashboardResultsSection) {
 		<button id='update-results-button'>Update results</button>`
 	// dashboardResultsSection.appendChild(updateResultsButton);
 	updateResultsButton.addEventListener('click', ()=>{
-		fetch(`http://localhost:3000/api/projects/search/scrap`).catch(error=>console.log(error));
+		fetch(`https://freelance-webpage-1-1.onrender.com/api/projects/search/scrap`).catch(error=>console.log(error));
 	})
 
 
