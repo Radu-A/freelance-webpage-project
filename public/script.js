@@ -527,7 +527,7 @@ function printProjectCard(projects) {
 async function getProjects(keyword) {
 	if (keyword) {
 		try {
-			const response = await fetch(`${domain}/api/projects/search?keyword=${keyword}`);
+			const response = await fetch(`https://freelance-webpage-1-0.onrender.com/api/projects/search?keyword=${keyword}`);
 			let projects = await response.json();
 			printProjectCard(projects);
 			return projects;
@@ -536,7 +536,7 @@ async function getProjects(keyword) {
 		}
 	} else {
 		try {
-			const response = await fetch(`${domain}/api/projects/search`);
+			const response = await fetch(`https://freelance-webpage-1-0.onrender.com/api/projects/search`);
 			let projects = await response.json();
 			printProjectCard(projects);
 			return projects;
