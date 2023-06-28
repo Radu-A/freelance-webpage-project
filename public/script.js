@@ -1,3 +1,6 @@
+
+const domain = `http://localhost:3000`
+
 // REQUESTS
 //GETs
 async function getData(url = "") {
@@ -133,7 +136,7 @@ editUserData.addEventListener("click", function(event) {
       }
 
       try {
-          putData("http://localhost:3000/api/users/user", newInfo).then((data) => {
+          putData(`http://localhost:3000/api/users/user`, newInfo).then((data) => {
           console.log(data); // JSON data parsed by `data.json()` call
           }); 
       } catch (error) {
@@ -210,7 +213,7 @@ if(signUpForm){
 				let newInfo = {email,password,user_name,admin,firstname,surename,logged};
 
 				// response --> {"success": false, "msj":"This email do not have an account"}
-				let response = await postData("http://localhost:3000/auth/signup", newInfo);
+				let response = await postData(`http://localhost:3000/auth/signup`, newInfo);
 
 				if(response.success){
 					window.location = "/";
@@ -239,7 +242,7 @@ if(loginForm){
 
 		try {
 			// response --> {"success": false, "msj":"This email do not have an account"}
-			let response = await postData("http://localhost:3000/auth/login", newInfo);
+			let response = await postData(`http://localhost:3000/auth/login`, newInfo);
 			
 			if(response.success){
 				window.location = "/";
@@ -299,7 +302,7 @@ if(resetPasswordForm){
 		password = e.target.password.value;
 
 		try {
-			let response = await fetch("http://localhost:3000/resetpassword", {
+			let response = await fetch(`http://localhost:3000/resetpassword`, {
 			  method: "PUT", // *GET, POST, PUT, DELETE, etc.
 			  // mode: "cors", // no-cors, *cors, same-origin
 			  // cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -359,7 +362,7 @@ if(window.location.pathname == "/favs"){
 
 // Set the header according to the user (no logged, logged in, admin)
 async function setHeader() {
-	let userInfo = await getData("http://localhost:3000/api/users/user");
+	let userInfo = await getData(`http://localhost:3000/api/users/user`);
 
 	let header;
 	if (userInfo.data.email){
@@ -490,7 +493,7 @@ function printProjectCard(projects) {
 					"id_project": project._id
 				};
 				try {
-					postData("http://localhost:3000/api/users/favs", favouriteInfo).then((data) => {
+					postData(`http://localhost:3000/api/users/favs`, favouriteInfo).then((data) => {
 					console.log("Post from script.js: ", data);
 					}); 
 				} catch (error) {
@@ -508,7 +511,7 @@ function printProjectCard(projects) {
 					"id_project": project._id
 				};
 				try {
-					deleteData("http://localhost:3000/api/users/favs", favouriteInfo).then((data) => {
+					deleteData(`http://localhost:3000/api/users/favs`, favouriteInfo).then((data) => {
 					console.log("Post from script.js: ", data);
 					}); 
 
@@ -524,7 +527,7 @@ function printProjectCard(projects) {
 async function getProjects(keyword) {
 	if (keyword) {
 		try {
-			const response = await fetch(`http://localhost:3000/api/projects/search?keyword=${keyword}`);
+			const response = await fetch(`${domain}/api/projects/search?keyword=${keyword}`);
 			let projects = await response.json();
 			printProjectCard(projects);
 			return projects;
@@ -533,7 +536,7 @@ async function getProjects(keyword) {
 		}
 	} else {
 		try {
-			const response = await fetch(`http://localhost:3000/api/projects/search`);
+			const response = await fetch(`${domain}/api/projects/search`);
 			let projects = await response.json();
 			printProjectCard(projects);
 			return projects;
