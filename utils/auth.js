@@ -34,7 +34,7 @@ async function addGoogleUserToDDBB(profile, done){
 passport.use(new GoogleStrategy({
     clientID: `${process.env.CLIENT_ID}`,
     clientSecret: `${process.env.CLIENT_SECRET}`,
-    callbackURL: `http://localhost:3000/google/callBack`,
+    callbackURL: `https://freelance-webpage-1-1.onrender.com/google/callBack`,
     proxy: true
   },
   function(request, accessToken, refreshToken, profile, done) {
