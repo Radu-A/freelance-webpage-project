@@ -20,3 +20,11 @@ describe('GET all projects', ()=> {
             .expect(200)
     })
 })
+
+describe('GET all projects', ()=> {
+    it('gets the test endpoint /', async()=>{
+        await request
+            .get('/api/projects/search?keyword=phone')
+            .expect(200)
+    })
+})
